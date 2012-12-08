@@ -1,0 +1,355 @@
+# 1. Overall dwelling dimensions
+
+<
+|Area (m2)||Average storey height (m)||Volume (m3)
+Basement|(1a)|×|(2a)|=|(3a)
+Ground floor|(1b)|×|(2b)|=|(3b)
+First floor|(1c)|×|(2c)|=|(3c)
+Second floor|(1d)|×|(2d)|=|(3d)
+Third floor|(1e)|×|(2e)|=|(3e)
+Other floor 1|(1f)|×|(2f)|=|(3f)
+Other floor 2|(1g)|×|(2g)|=|(3g)
+Other floor 3|(1h)|×|(2h)|=|(3h)
+Total floor area TFA =|(4)||||
+Dwelling volume ||||=|(5)
+>
+
+$ (3a)=(1a)x(2a)
+$ (3b)=(1b)x(2b)
+$ (3c)=(1c)x(2c)
+$ (3d)=(1d)x(2d)
+$ (3e)=(1e)x(2e)
+$ (3f)=(1f)x(2f)
+$ (3g)=(1g)x(2g)
+$ (3h)=(1h)x(2h)
+$ (4)=(1a)+(1b)+(1c)+(1d)+(1e)+(1f)+(1g)+(1h)
+$ (5)=(3a)+(3b)+(3c)+(3d)+(3e)+(3f)+(3g)+(3h)
+
+# 2. Ventilation rate
+<
+|main heating||secondary heating||other||total||||m3 per hour
+Number of chimneys|(6aa)|+|(6ab)|+|(6ac)|=|(6ad)|×|40|=|(6a)
+Number of open flues|(6ba)|+|(6bb)|+|(6bc)|=|(6bd)|×|20|=|(6b)
+Number of intermittent fans|||||||(7aa)|×|10|=|(7a)
+Number of passive vents|||||||(7ba)|×|10|=|(7b)
+Number of flueless gas fires|||||||(7ca)|×|40|=|(7c)
+>
+
+<
+|||||Air changes per hour|
+Infiltration due to chimneys, flues, fans, PSVs|(8a)|÷|(5)|=|(8)
+>
+
+$ (6ad)=(6aa)+(6ab)+(6ac)
+$ (6a)=(6ad)x(v40)
+$ (6bd)=(6ba)+(6bb)+(6bc)
+$ (6b)=(6bd)x(v20)
+$ (7a)=(7aa)x(v10)
+$ (7b)=(7ba)x(v10)
+$ (7c)=(7ac)x(v40)
+$ (8a)=(6a)+(6b)+(7a)+(7b)+(7c)
+$ (8)=(8a)÷(5)
+
+p if a pressurisation test has been carried out or is intended, proceed to (17), otherwise continue from (9) to (16)
+
+<
+Number of storeys in the dwelling (ns)|(9)
+Additional infiltration|(10)
+Structural infiltration: 0.25 for steel or timber frame or 0.35 for masonry construction|(11)
+>
+
+$ (10)=(9)-(v1)x(v0.1)
+
+p if both types of wall are present, use the value corresponding to the greater wall area (after deducting areas of openings); if equal use 0.35 
+ 
+<
+If suspended wooden floor, enter 0.2 (unsealed) or 0.1 (sealed), else enter 0|(12)
+If no draught lobby, enter 0.05, else enter 0|(13)
+Percentage of windows and doors draught proofed|(14)
+Window infiltration 0.25 - [0.2 × (14) ÷ 100] = |(15)
+Infiltration rate (8) + (10) + (11) + (12) + (13) + (15) = |(16)
+Air permeability value, q50, expressed in cubic metres per hour per square metre of envelope area|(17)
+If based on air permeability value, then (18) = [(17) ÷ 20]+(8), otherwise <b>(18) = (16)</b>|(18)
+>
+
+$ (15)=(v-0.2)x(14)÷(v100)+(v0.25)
+$ (16)=(8)+(10)+(11)+(12)+(13)+(15) 
+$ (18)=(16)x(v1)
+
+p Air permeability value applies if a pressurisation test has been done, or a design or specified air permeability is being used
+
+<
+Number of sides on which dwelling is sheltered|(19)
+Shelter factor (20) = 1 - [0.075 × (19)] = |(20)
+Infiltration rate incorporating shelter factor (18) × (20) |(21)
+>
+
+$ (20)=(v-0.075)x(19)+(v1)
+$ (21)=(18)x(20)
+
+# Infiltration rate modified for monthly wind speed:
+p Monthly average wind speed from Table U2
+
+t 1
+
+<
+Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec
+(22o1)|(22o2)|(22o3)|(22o4)|(22o5)|(22o6)|(22o7)|(22o8)|(22o9)|(22o10)|(22o11)|(22o12)
+>
+p Wind Factor (22a)m = (22)m ÷ 4
+<
+(22a1)|(22a2)|(22a3)|(22a4)|(22a5)|(22a6)|(22a7)|(22a8)|(22a9)|(22a10)|(22a11)|(22a12)
+>
+$ (22a1)=(22o1)÷(v4)
+$ (22a2)=(22o2)÷(v4)
+$ (22a3)=(22o3)÷(v4)
+$ (22a4)=(22o4)÷(v4)
+$ (22a5)=(22o5)÷(v4)
+$ (22a6)=(22o6)÷(v4)
+$ (22a7)=(22o7)÷(v4)
+$ (22a8)=(22o8)÷(v4)
+$ (22a9)=(22o9)÷(v4)
+$ (22a10)=(22o10)÷(v4)
+$ (22a11)=(22o11)÷(v4)
+$ (22a12)=(22o12)÷(v4)
+
+p Adjusted infiltration rate (allowing for shelter and wind speed) = (21) × (22a)m
+<
+(22b1)|(22b2)|(22b3)|(22b4)|(22b5)|(22b6)|(22b7)|(22b8)|(22b9)|(22b10)|(22b11)|(22b12)
+>
+
+t 0
+
+$ (22b1)=(22a1)x(21)
+$ (22b2)=(22a2)x(21)
+$ (22b3)=(22a3)x(21)
+$ (22b4)=(22a4)x(21)
+$ (22b5)=(22a5)x(21)
+$ (22b6)=(22a6)x(21)
+$ (22b7)=(22a7)x(21)
+$ (22b8)=(22a8)x(21)
+$ (22b9)=(22a9)x(21)
+$ (22b10)=(22a10)x(21)
+$ (22b11)=(22a11)x(21)
+$ (22b12)=(22a12)x(21)
+
+p Calculate effective air change rate for the applicable case:
+
+<
+If mechanical ventilation: air change rate through system|(23a)
+If exhaust air heat pump using Appendix N, (23b) = (23a) × Fmv (equation (N4)) , otherwise (23b) = (23a)|(23b)
+If balanced with heat recovery: efficiency in % allowing for in-use factor (from Table 4h) =|(23c)
+>
+
+p a) If balanced mechanical ventilation with heat recovery (MVHR) (24a)m = (22b)m + (23b) × [1 – (23c) ÷ 100]
+22
+
+t 1
+<
+(24a1)|(24a2)|(24a3)|(24a4)|(24a5)|(24a6)|(24a7)|(24a8)|(24a9)|(24a10)|(24a11)|(24a12)
+>
+
+$ (24a1)=(23c)÷(v-100)+(v1)x(23b)+(22b1)
+$ (24a2)=(23c)÷(v-100)+(v1)x(23b)+(22b2)
+$ (24a3)=(23c)÷(v-100)+(v1)x(23b)+(22b3)
+$ (24a4)=(23c)÷(v-100)+(v1)x(23b)+(22b4)
+$ (24a5)=(23c)÷(v-100)+(v1)x(23b)+(22b5)
+$ (24a6)=(23c)÷(v-100)+(v1)x(23b)+(22b6)
+$ (24a7)=(23c)÷(v-100)+(v1)x(23b)+(22b7)
+$ (24a8)=(23c)÷(v-100)+(v1)x(23b)+(22b8)
+$ (24a9)=(23c)÷(v-100)+(v1)x(23b)+(22b9)
+$ (24a10)=(23c)÷(v-100)+(v1)x(23b)+(22b10)
+$ (24a11)=(23c)÷(v-100)+(v1)x(23b)+(22b11)
+$ (24a12)=(23c)÷(v-100)+(v1)x(23b)+(22b12)
+
+p b) If balanced mechanical ventilation without heat recovery (MV) (24b)m = (22b)m + (23b)
+
+<
+(24b1)|(24b2)|(24b3)|(24b4)|(24b5)|(24b6)|(24b7)|(24b8)|(24b9)|(24b10)|(24b11)|(24b12)
+>
+
+$ (24b1)=(22b1)+(23b)
+$ (24b2)=(22b2)+(23b)
+$ (24b3)=(22b3)+(23b)
+$ (24b4)=(22b4)+(23b)
+$ (24b5)=(22b5)+(23b)
+$ (24b6)=(22b6)+(23b)
+$ (24b7)=(22b7)+(23b)
+$ (24b8)=(22b8)+(23b)
+$ (24b9)=(22b9)+(23b)
+$ (24b10)=(22b10)+(23b)
+$ (24b11)=(22b11)+(23b)
+$ (24b12)=(22b12)+(23b)
+
+p c) If whole house extract ventilation or positive input ventilation from outside<br>if (22b)m < 0.5 × (23b), then (24c) = (23b); otherwise (24c) = (22b) m + 0.5 × (23b) <b>EQUATION NOT FUNCTIONAL</b>
+
+<
+(24c1)|(24c2)|(24c3)|(24c4)|(24c5)|(24c6)|(24c7)|(24c8)|(24c9)|(24c10)|(24c11)|(24c12)
+>
+
+p d) If natural ventilation or whole house positive input ventilation from loft<br>if (22b)m ≥ 1, then (24d)m = (22b)m otherwise (24d)m = 0.5 + [(22b)m2 × 0.5] <b>EQUATION NOT FUNCTIONAL</b>
+
+<
+(24d1)|(24d2)|(24d3)|(24d4)|(24d5)|(24d6)|(24d7)|(24d8)|(24d9)|(24d10)|(24d11)|(24d12)
+>
+
+p Effective air change rate - enter (24a) or (24b) or (24c) or (24d) in box (25)
+
+<
+(25o1)|(25o2)|(25o3)|(25o4)|(25o5)|(25o6)|(25o7)|(25o8)|(25o9)|(25o10)|(25o11)|(25o12)
+>
+
+p <br><br>If Appendix Q applies in relation to air change rate, the effective air change rate is calculated via Appendix Q and use the following instead:
+
+p Effective air change rate from Appendix Q calculation sheet:
+
+<
+(25o1)|(25o2)|(25o3)|(25o4)|(25o5)|(25o6)|(25o7)|(25o8)|(25o9)|(25o10)|(25o11)|(25o12)
+>
+
+# 3. Heat losses and heat loss parameter
+p Items in the table below are to be expanded as necessary to allow for all different types of element e.g. 4 wall types.
+
+p The κ-value is the heat capacity per unit area, see Table 1e
+
+t 1
+<
+Element|Gross<br>area, m2||Openings<br>m2||Net area<br>A, m2||U-value<br>W/m2K|=|A×U<br>W/K|κ-value<br>kJ/m2·K|A×κ<br>kJ/K
+Door|||||(26-1)|×|(26-2)|=|(26)||
+Window|||||(27-1)|×|(27-2)|=|(27)||
+Roof window|||||(27a-1)|×|(27a-2)|=|(27a)||
+Basement floor|||||(28-1)|×|(28-2)|=|(28)|(28-3)|(28-4)
+Ground floor|||||(28a-1)|×|(28a-2)|=|(28a)|(28a-3)|(28a-4)
+Exposed floor|||||(28b-1)|×|(28b-2)|=|(28b)|(28b-3)|(28b-4)
+Basement wall|(29-1)|-|(29-2)|=|(29-3)|×|(29-4)|=|(29)|(29-5)|(29-6)
+External wall|(29a-1)|-|(29a-2)|=|(29a-3)|×|(29a-4)|=|(29a)|(29a-5)|(29a-6)
+Roof|(30-1)|-|(30-2)|=|(30-3)|×|(30-4)|=|(30)|(30-5)|(30-6)
+>
+
+$ (26)=(26-1)x(26-2)
+$ (27)=(27-1)x(27-2)
+$ (27a)=(27a-1)x(27a-2)
+$ (28)=(28-1)x(28-2)
+$ (28a)=(28a-1)x(28a-2)
+$ (28b)=(28b-1)x(28b-2)
+
+$ (29-3)=(29-1)-(29-2)
+$ (29a-3)=(29a-1)-(29a-2)
+$ (30-3)=(30-1)-(30-2)
+
+$ (29)=(29-3)x(29-4)
+$ (29a)=(29a-3)x(29a-4)
+$ (30)=(30-3)x(30-4)
+
+t 0
+<
+Total area of external elements ΣA, m2|(31)
+>
+
+$ (31)=(26-1)+(27-1)+(27a-1)+(28-1)+(28a-1)+(28b-1)+(29-3)+(29a-3)+(30-3)
+
+p (party wall U-value from Table 3.6, κ according to its construction)
+
+t 1
+<
+Party wall|||||(32-1)|×|(32-2)|=|(32)|(32-3)|(32-4)
+Party floor|||||(32a-1)|||||(32a-2)|(32a-3)
+Party ceiling|||||(32b-1)|||||(32b-2)|(32b-3)
+Internal wall **|||||(32c-1)|||||(32c-2)|(32c-3)
+Internal floor|||||(32d-1)|||||(32d-2)|(32d-3)
+Internal ceiling|||||(32e-1)|||||(32e-2)|(32e-3)
+>
+
+$ (32)=(32-1)x(32-2)
+$ (33)=(26)+(27)+(27a)+(28)+(28a)+(28b)+(29)+(29a)+(30)+(32)
+$ (34)=(28-4)+(28a-4)+(28b-4)+(29-6)+(29a-6)+(30-6)+(32-4)+(32a-3)+(32b-3)+(32c-3)+(32d-3)+(32e-3)
+$ (35)=(34)÷(v4)
+
+p * for windows and roof windows, use effective window U-value calculated using formula 1/[(1/U-value)+0.04] as given in paragraph 3.2
+p ** include the areas on both sides of internal walls and partitions
+t 0
+<
+Fabric heat loss, W/K = Σ (A × U) (26)...(30) + (32)|=|(33)
+Heat capacity Cm = Σ(A × κ ) (28)...(30) + (32) + (32a)...(32e)|=|(34)
+Thermal mass parameter (TMP = Cm ÷ TFA) in kJ/m2K = (34) ÷ (4)|=|(35)
+>
+
+p For design assessments where the details of the construction are not known precisely the indicative values of TMP in Table 1f can be used instead of a detailed calculation. Also TMP calculated separately can be used in (35).
+
+<
+Thermal bridges : Σ (L × Ψ) calculated using Appendix K|(36)
+>
+
+p if details of thermal bridging are not known (36) = 0.15 × (31)
+
+<
+Total fabric heat loss (33) + (36) = |(37)
+>
+
+$ (37)=(33)+(36)
+
+p Ventilation heat loss calculated monthly (38)m = 0.33 × (25)m × (5)
+
+t 1
+<
+Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec
+(38o1)|(38o2)|(38o3)|(38o4)|(38o5)|(38o6)|(38o7)|(38o8)|(38o9)|(38o10)|(38o11)|(38o12)
+>
+
+$ (38o1)=(v0.33)x(25o1)x(v5)
+$ (38o2)=(v0.33)x(25o2)x(v5)
+$ (38o3)=(v0.33)x(25o3)x(v5)
+$ (38o4)=(v0.33)x(25o4)x(v5)
+$ (38o5)=(v0.33)x(25o5)x(v5)
+$ (38o6)=(v0.33)x(25o6)x(v5)
+$ (38o7)=(v0.33)x(25o7)x(v5)
+$ (38o8)=(v0.33)x(25o8)x(v5)
+$ (38o9)=(v0.33)x(25o9)x(v5)
+$ (38o10)=(v0.33)x(25o10)x(v5)
+$ (38o11)=(v0.33)x(25o11)x(v5)
+$ (38o12)=(v0.33)x(25o12)x(v5)
+
+p Heat transfer coefficient, W/K (39)m = (37) + (38)m
+<
+(39o1)|(39o2)|(39o3)|(39o4)|(39o5)|(39o6)|(39o7)|(39o8)|(39o9)|(39o10)|(39o11)|(39o12)
+|||||||||||Average = Σ(39)1..12/12|(39)
+>
+
+$ (39o1)=(37)+(38o1)
+$ (39o2)=(37)+(38o2)
+$ (39o3)=(37)+(38o3)
+$ (39o4)=(37)+(38o4)
+$ (39o5)=(37)+(38o5)
+$ (39o6)=(37)+(38o6)
+$ (39o7)=(37)+(38o7)
+$ (39o8)=(37)+(38o8)
+$ (39o9)=(37)+(38o9)
+$ (39o10)=(37)+(38o10)
+$ (39o11)=(37)+(38o11)
+$ (39o12)=(37)+(38o12)
+
+$ (39)=(39o1)+(39o2)+(39o3)+(39o4)+(39o5)+(39o6)+(39o7)+(39o8)+(39o9)+(39o10)+(39o11)+(39o12)
+
+p Heat loss parameter (HLP), W/m2K (40)m = (39)m ÷ (4)
+<
+(40o1)|(40o2)|(40o3)|(40o4)|(40o5)|(40o6)|(40o7)|(40o8)|(40o9)|(40o10)|(40o11)|(40o12)
+|||||||||||Average = Σ(40)1..12/12|(40)
+>
+
+$ (40o1)=(39o1)÷(v4)
+$ (40o2)=(39o2)÷(v4)
+$ (40o3)=(39o3)÷(v4)
+$ (40o4)=(39o4)÷(v4)
+$ (40o5)=(39o5)÷(v4)
+$ (40o6)=(39o6)÷(v4)
+$ (40o7)=(39o7)÷(v4)
+$ (40o8)=(39o8)÷(v4)
+$ (40o9)=(39o9)÷(v4)
+$ (40o10)=(39o10)÷(v4)
+$ (40o11)=(39o11)÷(v4)
+$ (40o12)=(39o12)÷(v4)
+
+$ (40)=(40o1)+(40o2)+(40o3)+(40o4)+(40o5)+(40o6)+(40o7)+(40o8)+(40o9)+(40o10)+(40o11)+(40o12)
+
+# Number of days in month
+
