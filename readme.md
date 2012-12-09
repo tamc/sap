@@ -55,7 +55,7 @@ JavaScript then executes this equation automatically putting the result of the s
 Here's the descriptor syntax so far:
 
 <pre>
-hash - heading
+# - heading
 p - paragraph
 &lt; - open table
 &gt; - close table
