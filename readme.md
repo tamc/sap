@@ -34,11 +34,11 @@ Number of sides on which dwelling is sheltered|(19)
 >
 
 This is parsed into:
-
+<XMP>
 <table>
 <tr><td>Number of sides on which dwelling is sheltered</td><td><input id='(19)' type='text' /> (19)</td></tr>
 </table>
-
+</XMP>
 The second main feature of the descriptor is the specification of equations, lets say (19)=(17)+(18), we write:
 
 $ (19)=(17)+(18)
@@ -47,7 +47,7 @@ php converts this into an array and passes it to the JavaScript part: [{'result'
 JavaScript then executes this equation automatically putting the result of the sum of the values entered in form input 17 and 18 into form input 19.
 
 Here's the descriptor syntax so far:
-
+<XMP>
 hash - heading
 p - paragraph
 < - open table
@@ -55,7 +55,7 @@ p - paragraph
 $ equation
 t 0 - input labels in-line
 t 1 - input labels below input box
-
+</XMP>
 If you would like to get involved with developing this, please get in contact on the OpenEnergyMonitor forums.
 
 Thanks!
