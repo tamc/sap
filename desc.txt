@@ -353,3 +353,775 @@ $ (40)=(40o1)+(40o2)+(40o3)+(40o4)+(40o5)+(40o6)+(40o7)+(40o8)+(40o9)+(40o10)+(4
 
 # Number of days in month
 
+<
+Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec
+(41o1)|(41o2)|(41o3)|(41o4)|(41o5)|(41o6)|(41o7)|(41o8)|(41o9)|(41o10)|(41o11)|(41o12)
+>
+
+$ (41)=(41o1)+(41o2)+(41o3)+(41o4)+(41o5)+(41o6)+(41o7)+(41o8)+(41o9)+(41o10)+(41o11)+(41o12)
+
+# 4. Water heating energy requirement kWh/year
+
+<
+Assumed occupancy, N |(42)
+>
+if TFA > 13.9, N = 1 + 1.76 × [1 - exp(-0.000349 × (TFA -13.9)2)] + 0.0013 × (TFA -13.9)
+if TFA ≤ 13.9, N = 1
+
+<
+ Annual average hot water usage in litres per day V d,average <b>EQUATION NOT FUNCTIONAL</b> = (25 × N) + 36 |(43)
+>
+
+p Reduce the annual average hot water usage by 5% if the dwelling is designed to achieve a water use target of not more that 125 litres per person per day (all water use, hot and cold)
+<
+Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec
+>
+p Hot water usage in litres per day for each month V d,m = factor from Table 1c × (43) <b>EQUATION NOT FUNCTIONAL</b>
+<
+(44o1)|(44o2)|(44o3)|(44o4)|(44o5)|(44o6)|(44o7)|(44o8)|(44o9)|(44o10)|(44o11)|(44o12)
+|||||||||||Average = Σ(44)1..12/12|(44)
+>
+
+$ (44)=(44o1)+(44o2)+(44o3)+(44o4)+(44o5)+(44o6)+(44o7)+(44o8)+(44o9)+(44o10)+(44o11)+(44o12)
+
+p Energy content of hot water used - calculated monthly = 4.190 × Vd,m × nm × ∆Tm / 3600 kWh/month (see Tables 1b, 1c, 1d) <b>EQUATION NOT FUNCTIONAL</b>
+
+<
+(45o1)|(45o2)|(45o3)|(45o4)|(45o5)|(45o6)|(45o7)|(45o8)|(45o9)|(45o10)|(45o11)|(45o12)
+|||||||||||Average = Σ(45)1..12/12|(45)
+>
+
+$ (45)=(45o1)+(45o2)+(45o3)+(45o4)+(45o5)+(45o6)+(45o7)+(45o8)+(45o9)+(45o10)+(45o11)+(45o12)
+
+p If instantaneous water heating at point of use (no hot water storage), enter “0” in boxes (46) to (61)
+p For community heating include distribution loss whether or not hot water tank is present
+
+p Distribution loss (46)m = 0.15 x (45)m
+
+<
+(46o1)|(46o2)|(46o3)|(46o4)|(46o5)|(46o6)|(46o7)|(46o8)|(46o9)|(46o10)|(46o11)|(46o12)
+>
+
+$ (46o1)=(v0.15)x(45o1)
+$ (46o2)=(v0.15)x(45o2)
+$ (46o3)=(v0.15)x(45o3)
+$ (46o4)=(v0.15)x(45o4)
+$ (46o5)=(v0.15)x(45o5)
+$ (46o6)=(v0.15)x(45o6)
+$ (46o7)=(v0.15)x(45o7)
+$ (46o8)=(v0.15)x(45o8)
+$ (46o9)=(v0.15)x(45o9)
+$ (46o10)=(v0.15)x(45o10)
+$ (46o11)=(v0.15)x(45o11)
+$ (46o12)=(v0.15)x(45o12)
+
+$ (46)=(46o1)+(46o2)+(46o3)+(46o4)+(46o5)+(46o6)+(46o7)+(46o8)+(46o9)+(46o10)+(46o11)+(46o12)
+
+#Water storage loss:
+
+p a) 
+
+t 0
+<
+If manufacturer’s declared loss factor is known (kWh/day):|(47)
+Temperature factor from Table 2b:|(48)
+Energy lost from water storage, kWh/day (47) × (48) = |(49)
+>
+$ (49)=(47)+(48)
+
+p b) 
+
+t 0
+<
+If manufacturer’s declared cylinder loss factor is not known:|(50)
+Cylinder volume (litres) including any solar storage within same cylinder:|(51)
+>
+p If community heating and no tank in dwelling, enter 110 litres in box (50)
+p Otherwise if no stored hot water (this includes instantaneous combi boilers) enter ‘0’ in box (50)
+
+<
+Hot water storage loss factor from Table 2 (kWh/litre/day):(51)
+>
+p If community heating see section 4.3 
+
+<
+Volume factor from Table 2a:|(52)
+Temperature factor from Table 2b:|(53)
+Energy lost from water storage, kWh/day (50) × (51) × (52) × (53) =|(54)
+>
+$ (54)=(50)+(51)+(52)+(53)
+
+<
+Enter (49) or (54) in :|(55)
+>
+p Water storage loss calculated for each month (56)m = (55) × (41)m
+t 1
+<
+(56o1)|(56o2)|(56o3)|(56o4)|(56o5)|(56o6)|(56o7)|(56o8)|(56o9)|(56o10)|(56o11)|(56o12)
+>
+$ (56o1)=(55)x(41o1)
+$ (56o2)=(55)x(41o2)
+$ (56o3)=(55)x(41o3)
+$ (56o4)=(55)x(41o4)
+$ (56o5)=(55)x(41o5)
+$ (56o6)=(55)x(41o6)
+$ (56o7)=(55)x(41o7)
+$ (56o8)=(55)x(41o8)
+$ (56o9)=(55)x(41o9)
+$ (56o10)=(55)x(41o10)
+$ (56o11)=(55)x(41o11)
+$ (56o12)=(55)x(41o12)
+
+$ (56)=(56o1)+(56o2)+(56o3)+(56o4)+(56o5)+(56o6)+(56o7)+(56o8)+(56o9)+(56o10)+(56o11)+(56o12)
+
+p If cylinder contains dedicated solar storage, (57)m = (56)m × [(50) – (H11)] ÷ (50), else (57)m = (56)m where (H11) is from Appendix H
+
+<
+(57o1)|(57o2)|(57o3)|(57o4)|(57o5)|(57o6)|(57o7)|(57o8)|(57o9)|(57o10)|(57o11)|(57o12)
+>
+
+$ (57o1)=(50)-(H11)÷(50)x(56o1)
+$ (57o2)=(50)-(H11)÷(50)x(56o2)
+$ (57o3)=(50)-(H11)÷(50)x(56o3)
+$ (57o4)=(50)-(H11)÷(50)x(56o4)
+$ (57o5)=(50)-(H11)÷(50)x(56o5)
+$ (57o6)=(50)-(H11)÷(50)x(56o6)
+$ (57o7)=(50)-(H11)÷(50)x(56o7)
+$ (57o8)=(50)-(H11)÷(50)x(56o8)
+$ (57o9)=(50)-(H11)÷(50)x(56o9)
+$ (57o10)=(50)-(H11)÷(50)x(56o10)
+$ (57o11)=(50)-(H11)÷(50)x(56o11)
+$ (57o12)=(50)-(H11)÷(50)x(56o12)
+
+$ (57)=(57o1)+(57o2)+(57o3)+(57o4)+(57o5)+(57o6)+(57o7)+(57o8)+(57o9)+(57o10)+(57o11)+(57o12)
+
+t 0
+<
+Primary circuit loss (annual) from Table 3:|(58)
+>
+
+p Primary circuit loss for each month (59)m = (58) ÷ 365 × (41)m 
+p  (modified by factor from Table H5 if there is solar water heating and a cylinder thermostat) 
+
+t 1
+<
+(59o1)|(59o2)|(59o3)|(59o4)|(59o5)|(59o6)|(59o7)|(59o8)|(59o9)|(59o10)|(59o11)|(59o12)
+>
+
+$ (59o1)=(58)÷365x(41o1)
+$ (59o2)=(58)÷365x(41o2)
+$ (59o3)=(58)÷365x(41o3)
+$ (59o4)=(58)÷365x(41o4)
+$ (59o5)=(58)÷365x(41o5)
+$ (59o6)=(58)÷365x(41o6)
+$ (59o7)=(58)÷365x(41o7)
+$ (59o8)=(58)÷365x(41o8)
+$ (59o9)=(58)÷365x(41o9)
+$ (59o10)=(58)÷365x(41o10)
+$ (59o11)=(58)÷365x(41o11)
+$ (59o12)=(58)÷365x(41o12)
+
+$ (59)=(59o1)+(59o2)+(59o3)+(59o4)+(59o5)+(59o6)+(59o7)+(59o8)+(59o9)+(59o10)+(59o11)+(59o12)
+
+p Combi loss for each month from Table 3a, 3b or 3c (enter “0” if not a combi boiler) 
+
+<
+(61o1)|(61o2)|(61o3)|(61o4)|(61o5)|(61o6)|(61o7)|(61o8)|(61o9)|(61o10)|(61o11)|(61o12)
+>
+
+$ (61)=(61o1)+(61o2)+(61o3)+(61o4)+(61o5)+(61o6)+(61o7)+(61o8)+(61o9)+(61o10)+(61o11)+(61o12)
+
+p Total heat required for water heating calculated for each month (62)m = 0.85 × (45)m + (46)m + (57)m + (59)m + (61)m
+
+<
+(62o1)|(62o2)|(62o3)|(62o4)|(62o5)|(62o6)|(62o7)|(62o8)|(62o9)|(62o10)|(62o11)|(62o12)
+>
+
+$ (62o1)=(45o1)+(46o1)+(57o1)+(59o1)+(61o1)x(v0.85)
+$ (62o2)=(45o2)+(46o2)+(57o2)+(59o2)+(61o2)x(v0.85)
+$ (62o3)=(45o3)+(46o3)+(57o3)+(59o3)+(61o3)x(v0.85)
+$ (62o4)=(45o4)+(46o4)+(57o4)+(59o4)+(61o4)x(v0.85)
+$ (62o5)=(45o5)+(46o5)+(57o5)+(59o5)+(61o5)x(v0.85)
+$ (62o6)=(45o6)+(46o6)+(57o6)+(59o6)+(61o6)x(v0.85)
+$ (62o7)=(45o7)+(46o7)+(57o7)+(59o7)+(61o7)x(v0.85)
+$ (62o8)=(45o8)+(46o8)+(57o8)+(59o8)+(61o8)x(v0.85)
+$ (62o9)=(45o9)+(46o9)+(57o9)+(59o9)+(61o9)x(v0.85)
+$ (62o10)=(45o10)+(46o10)+(57o10)+(59o10)+(61o10)x(v0.85)
+$ (62o11)=(45o11)+(46o11)+(57o11)+(59o11)+(61o11)x(v0.85)
+$ (62o12)=(45o12)+(46o12)+(57o12)+(59o12)+(61o12)x(v0.85)
+
+$ (62)=(62o1)+(62o2)+(62o3)+(62o4)+(62o5)+(62o6)+(62o7)+(62o8)+(62o9)+(62o10)+(62o11)+(62o12)
+
+p Solar DHW input calculated using Appendix G or Appendix H (negative quantity) (enter “0” if no solar contribution to water heating)
+p (add additional lines if FGHRS and/or WWHRS applies, see Appendix G)
+
+<
+(63o1)|(63o2)|(63o3)|(63o4)|(63o5)|(63o6)|(63o7)|(63o8)|(63o9)|(63o10)|(63o11)|(63o12)
+>
+
+$ (63)=(63o1)+(63o2)+(63o3)+(63o4)+(63o5)+(63o6)+(63o7)+(63o8)+(63o9)+(63o10)+(63o11)+(63o12)
+
+p Output from water heater for each month, kWh/month (64)m = (62)m + (63)m
+
+<
+(64o1)|(64o2)|(64o3)|(64o4)|(64o5)|(64o6)|(64o7)|(64o8)|(64o9)|(64o10)|(64o11)|(64o12)
+|||||||||||Average = Σ(64)1..12/12|(64)
+>
+
+$ (64o1)=(62o1)+(63o1)
+$ (64o2)=(62o2)+(63o2)
+$ (64o3)=(62o3)+(63o3)
+$ (64o4)=(62o4)+(63o4)
+$ (64o5)=(62o5)+(63o5)
+$ (64o6)=(62o6)+(63o6)
+$ (64o7)=(62o7)+(63o7)
+$ (64o8)=(62o8)+(63o8)
+$ (64o9)=(62o9)+(63o9)
+$ (64o10)=(62o10)+(63o10)
+$ (64o11)=(62o11)+(63o11)
+$ (64o12)=(62o12)+(63o12)
+
+$ (64)=(64o1)+(64o2)+(64o3)+(64o4)+(64o5)+(64o6)+(64o7)+(64o8)+(64o9)+(64o10)+(64o11)+(64o12)
+
+p if (64)m < 0 then set to 0
+p Heat gains from water heating, kWh/month 0.25 × [0.85 × (45)m + (61)m] + 0.8 × [(46)m + (57)m + (59)m ]
+
+t 0
+<
+Equation part A|(65pA)
+>
+
+t 1
+<
+(65pAo1)|(65pAo2)|(65pAo3)|(65pAo4)|(65pAo5)|(65pAo6)|(65pAo7)|(65pAo8)|(65pAo9)|(65pAo10)|(65pAo11)|(65pAo12)
+>
+
+$ (65pAo1)=(61o1)+(45o1)x(v0.25) 
+$ (65pAo2)=(61o1)+(45o2)x(v0.25)
+$ (65pAo3)=(61o1)+(45o3)x(v0.25)
+$ (65pAo4)=(61o1)+(45o4)x(v0.25)
+$ (65pAo5)=(61o1)+(45o5)x(v0.25)
+$ (65pAo6)=(61o1)+(45o6)x(v0.25)
+$ (65pAo7)=(61o1)+(45o7)x(v0.25)
+$ (65pAo8)=(61o1)+(45o8)x(v0.25)
+$ (65pAo9)=(61o1)+(45o9)x(v0.25)
+$ (65pAo10)=(61o1)+(45o10)x(v0.25)
+$ (65pAo11)=(61o1)+(45o11)x(v0.25)
+$ (65pAo12)=(61o1)+(45o12)x(v0.25)
+
+$ (65pA)=(65pAo1)+(65pAo2)+(65pAo3)+(65pAo4)+(65pAo5)+(65pAo6)+(65pAo7)+(65pAo8)+(65pAo9)+(65pAo10)+(65pAo11)+(65pAo12)
+
+p include (57)m in calculation of (65)m only if cylinder is in the dwelling or hot water is from community heating
+
+t 0
+<
+Equation part B|(65pB)
+>
+
+t 1
+<
+(65pBo1)|(65pBo2)|(65pBo3)|(65pBo4)|(65pBo5)|(65pBo6)|(65pBo7)|(65pBo8)|(65pBo9)|(65pBo10)|(65pBo11)|(65pBo12)
+>
+$ (65pBo1)=(59o1)+(57o1)+(46o1)x(v0.8)
+$ (65pBo2)=(59o1)+(57o1)+(46o1)x(v0.8)
+$ (65pBo3)=(59o1)+(57o1)+(46o1)x(v0.8)
+$ (65pBo4)=(59o1)+(57o1)+(46o1)x(v0.8)
+$ (65pBo5)=(59o1)+(57o1)+(46o1)x(v0.8)
+$ (65pBo6)=(59o1)+(57o1)+(46o1)x(v0.8)
+$ (65pBo7)=(59o1)+(57o1)+(46o1)x(v0.8)
+$ (65pBo8)=(59o1)+(57o1)+(46o1)x(v0.8)
+$ (65pBo9)=(59o1)+(57o1)+(46o1)x(v0.8)
+$ (65pBo10)=(59o1)+(57o1)+(46o1)x(v0.8)
+$ (65pBo11)=(59o1)+(57o1)+(46o1)x(v0.8)
+$ (65pBo12)=(59o1)+(57o1)+(46o1)x(v0.8)
+
+t 0
+<
+Equation part C|(65)
+>
+
+t 1
+<
+(65o1)|(65o2)|(65o3)|(65o4)|(65o5)|(65o6)|(65o7)|(65o8)|(65o9)|(65o10)|(65o11)|(65o12)
+>
+
+$ (65o1)=(65pBo1)+(65pAo1)
+$ (65o2)=(65pBo2)+(65pAo2)
+$ (65o3)=(65pBo3)+(65pAo3)
+$ (65o4)=(65pBo4)+(65pAo4)
+$ (65o5)=(65pBo5)+(65pAo5)
+$ (65o6)=(65pBo6)+(65pAo6)
+$ (65o7)=(65pBo7)+(65pAo7)
+$ (65o8)=(65pBo8)+(65pAo8)
+$ (65o9)=(65pBo9)+(65pAo9)
+$ (65o10)=(65pBo10)+(65pAo10)
+$ (65o11)=(65pBo11)+(65pAo11)
+$ (65o12)=(65pBo12)+(65pAo12)
+
+$ (65)=(65o1)+(65o2)+(65o3)+(65o4)+(65o5)+(65o6)+(65o7)+(65o8)+(65o9)+(65o10)+(65o11)+(65o12)
+
+# 5. Internal gains (see Table 5 and 5a)
+
+p Metabolic gains (Table 5), watts
+
+t 1
+<
+Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec
+(66o1)|(66o2)|(66o3)|(66o4)|(66o5)|(66o6)|(66o7)|(66o8)|(66o9)|(66o10)|(66o11)|(66o12)
+>
+
+p Lighting gains (calculated in Appendix L, equation L9 or L9a), also see Table 5
+
+<
+(67o1)|(67o2)|(67o3)|(67o4)|(67o5)|(67o6)|(67o7)|(67o8)|(67o9)|(67o10)|(67o11)|(67o12)
+>
+
+p Appliances gains (calculated in Appendix L, equation L13 or L13a), also see Table 5
+
+<
+(68o1)|(68o2)|(68o3)|(68o4)|(68o5)|(68o6)|(68o7)|(68o8)|(68o9)|(68o10)|(68o11)|(68o12)
+>
+
+p Cooking gains (calculated in Appendix L, equation L15 or L15a), also see Table 5
+
+<
+(69o1)|(69o2)|(69o3)|(69o4)|(69o5)|(69o6)|(69o7)|(69o8)|(69o9)|(69o10)|(69o11)|(69o12)
+>
+
+p Pumps and fans gains (Table 5a)
+
+<
+(70o1)|(70o2)|(70o3)|(70o4)|(70o5)|(70o6)|(70o7)|(70o8)|(70o9)|(70o10)|(70o11)|(70o12)
+>
+
+p Losses e.g. evaporation (negative values) (Table 5)
+
+<
+(71o1)|(71o2)|(71o3)|(71o4)|(71o5)|(71o6)|(71o7)|(71o8)|(71o9)|(71o10)|(71o11)|(71o12)
+>
+
+p Water heating gains (Table 5)
+
+<
+(72o1)|(72o2)|(72o3)|(72o4)|(72o5)|(72o6)|(72o7)|(72o8)|(72o9)|(72o10)|(72o11)|(72o12)
+>
+
+p Total internal gains = (66)m + (67)m + (68)m + (69)m + (70)m + (71)m + (72)m
+
+<
+(73o1)|(73o2)|(73o3)|(73o4)|(73o5)|(73o6)|(73o7)|(73o8)|(73o9)|(73o10)|(73o11)|(73o12)
+>
+
+$ (73o1)=(66o1)+(67o1)+(68o1)+(69o1)+(70o1)+(71o1)+(72o1)
+$ (73o2)=(66o2)+(67o2)+(68o2)+(69o2)+(70o2)+(71o2)+(72o2)
+$ (73o3)=(66o3)+(67o3)+(68o3)+(69o3)+(70o3)+(71o3)+(72o3)
+$ (73o4)=(66o4)+(67o4)+(68o4)+(69o4)+(70o4)+(71o4)+(72o4)
+$ (73o5)=(66o5)+(67o5)+(68o5)+(69o5)+(70o5)+(71o5)+(72o5)
+$ (73o6)=(66o6)+(67o6)+(68o6)+(69o6)+(70o6)+(71o6)+(72o6)
+$ (73o7)=(66o7)+(67o7)+(68o7)+(69o7)+(70o7)+(71o7)+(72o7)
+$ (73o8)=(66o8)+(67o8)+(68o8)+(69o8)+(70o8)+(71o8)+(72o8)
+$ (73o9)=(66o9)+(67o9)+(68o9)+(69o9)+(70o9)+(71o9)+(72o9)
+$ (73o10)=(66o10)+(67o10)+(68o10)+(69o10)+(70o10)+(71o10)+(72o10)
+$ (73o11)=(66o11)+(67o11)+(68o11)+(69o11)+(70o11)+(71o11)+(72o11)
+$ (73o12)=(66o12)+(67o12)+(68o12)+(69o12)+(70o12)+(71o12)+(72o12)
+
+
+# 6. Solar gains
+
+p Solar gains are calculated using solar flux from U3 in Appendix U and associated equations to convert to the applicable orientation. Rows
+p (74) to (82) are used 12 times, one for each month, repeating as needed if there is more than one window type,
+
+<
+|Access factor<br />Table 6d||Area m2||Solar flux<br />W/m2||||g⊥ Specific<br />data or<br />Table 6b||FF Specific<br />data or<br />Table 6c||Gains (W)
+North|(74a)|x|(74b)|x|(74c)|x|0.9|x|(74d)|x|(74e)|=|(74)
+Northeast|(75a)|x|(75b)|x|(75c)|x|0.9|x|(75d)|x|(75e)|=|(75)
+East|(76a)|x|(76b)|x|(76c)|x|0.9|x|(76d)|x|(76e)|=|(76)
+Southeast|(77a)|x|(77b)|x|(77c)|x|0.9|x|(77d)|x|(77e)|=|(77)
+South|(78a)|x|(78b)|x|(78c)|x|0.9|x|(78d)|x|(78e)|=|(78)
+Southwest|(79a)|x|(79b)|x|(79c)|x|0.9|x|(79d)|x|(79e)|=|(79)
+West|(80a)|x|(80b)|x|(80c)|x|0.9|x|(80d)|x|(80e)|=|(80)
+Northwest|(81a)|x|(81b)|x|(81c)|x|0.9|x|(81d)|x|(81e)|=|(81)
+Rooflights|(82a)|x|(82b)|x|(82c)|x|0.9|x|(82d)|x|(82e)|=|(82)
+>
+p Solar gains in watts, calculated for each month (83)m = Σ(74)m ...(82)m
+
+t 1
+<
+(83o1)|(83o2)|(83o3)|(83o4)|(83o5)|(83o6)|(83o7)|(83o8)|(83o9)|(83o10)|(83o11)|(83o12)
+>
+
+$ (83o1)=(74o1)+(75o1)+(76o1)+(77o1)+(78o1)+(79o1)+(80o1)+(81o1)+(82o1)
+$ (83o2)=(74o2)+(75o2)+(76o2)+(77o1)+(78o2)+(79o2)+(80o2)+(81o1)+(82o2)
+$ (83o3)=(74o3)+(75o3)+(76o3)+(77o1)+(78o3)+(79o3)+(80o3)+(81o1)+(82o3)
+$ (83o4)=(74o4)+(75o4)+(76o4)+(77o1)+(78o4)+(79o4)+(80o4)+(81o1)+(82o4)
+$ (83o5)=(74o5)+(75o5)+(76o5)+(77o1)+(78o5)+(79o5)+(80o5)+(81o1)+(82o5)
+$ (83o6)=(74o6)+(75o6)+(76o6)+(77o1)+(78o6)+(79o6)+(80o6)+(81o1)+(82o6)
+$ (83o7)=(74o7)+(75o7)+(76o7)+(77o1)+(78o7)+(79o7)+(80o7)+(81o1)+(82o7)
+$ (83o8)=(74o8)+(75o8)+(76o8)+(77o1)+(78o8)+(79o8)+(80o8)+(81o1)+(82o8)
+$ (83o9)=(74o9)+(75o9)+(76o9)+(77o1)+(78o9)+(79o9)+(80o9)+(81o1)+(82o9)
+$ (83o10)=(74o10)+(75o10)+(76o10)+(77o10)+(78o10)+(79o10)+(80o10)+(81o10)+(82o10)
+$ (83o11)=(74o11)+(75o11)+(76o11)+(77o11)+(78o11)+(79o11)+(80o11)+(81o11)+(82o11)
+$ (83o12)=(74o12)+(75o12)+(76o12)+(77o12)+(78o12)+(79o12)+(80o12)+(81o12)+(82o12)
+
+$ (83)=(83o1)+(83o2)+(83o3)+(83o4)+(83o5)+(83o6)+(83o7)+(83o8)+(83o9)+(83o10)+(83o11)+(83o12)
+
+# 7. Mean internal temperature (heating season)
+
+<
+Temperature during heating periods in the living area from Table 9, T h1 (°C)|(85)
+>
+
+p Utilisation factor for gains for living area, η1,m (see Table 9a)
+
+t 1
+<
+Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec
+(86o1)|(86o2)|(86o3)|(86o4)|(86o5)|(86o6)|(86o7)|(86o8)|(86o9)|(86o10)|(86o11)|(86o12)
+>
+
+p Mean internal temperature in living area T 1 (follow steps 3 to 7 in Table 9c)
+
+
+
+<
+(87o1)|(87o2)|(87o3)|(87o4)|(87o5)|(87o6)|(87o7)|(87o8)|(87o9)|(87o10)|(87o11)|(87o12)
+>
+
+p Temperature during heating periods in rest of dwelling from Table 9, T h2 (°C)
+
+<
+(88o1)|(88o2)|(88o3)|(88o4)|(88o5)|(88o6)|(88o7)|(88o8)|(88o9)|(88o10)|(88o11)|(88o12)
+>
+
+p Utilisation factor for gains for rest of dwelling, η2,m (see Table 9a) 
+
+<
+(89o1)|(89o2)|(89o3)|(89o4)|(89o5)|(89o6)|(89o7)|(89o8)|(89o9)|(89o10)|(89o11)|(89o12)
+>
+
+p Mean internal temperature in the rest of dwelling T2
+p (follow steps 8 to 9 in Table 9c, if two main heating systems see further notes in Table 9c) 
+
+<
+(90o1)|(90o2)|(90o3)|(90o4)|(90o5)|(90o6)|(90o7)|(90o8)|(90o9)|(90o10)|(90o11)|(90o12)
+>
+
+t 0
+<
+Living area fraction  fLA = Living area ÷ (4) = |(91)
+>
+
+t 1
+p Mean internal temperature (for the whole dwelling) = fLA × T1 + (1 – fLA) × T2 
+
+<
+(92o1)|(92o2)|(92o3)|(92o4)|(92o5)|(92o6)|(92o7)|(92o8)|(92o9)|(92o10)|(92o11)|(92o12)
+>
+
+p Apply adjustment to the mean internal temperature from Table 4e, where appropriate 
+
+<
+(93o1)|(93o2)|(93o3)|(93o4)|(93o5)|(93o6)|(93o7)|(93o8)|(93o9)|(93o10)|(93o11)|(93o12)
+>
+
+# 8. Space heating requirement
+p Set Ti to the mean internal temperature obtained at step 11 of Table 9b, so that T i,m=(93)m and re-calculate the utilisation factor for gains using Table 9a
+<
+Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec
+>
+p Utilisation factor for gains, ηm:
+
+<
+(94o1)|(94o2)|(94o3)|(94o4)|(94o5)|(94o6)|(94o7)|(94o8)|(94o9)|(94o10)|(94o11)|(94o12)
+>
+
+p Useful gains, ηmGm , W = (94)m × (84)m
+
+<
+(95o1)|(95o2)|(95o3)|(95o4)|(95o5)|(95o6)|(95o7)|(95o8)|(95o9)|(95o10)|(95o11)|(95o12)
+>
+
+$ (95o1)=(94o1)x(84o1)
+$ (95o2)=(94o2)x(84o2)
+$ (95o3)=(94o3)x(84o3)
+$ (95o4)=(94o4)x(84o4)
+$ (95o5)=(94o5)x(84o5)
+$ (95o1)=(94o1)x(84o1)
+$ (95o2)=(94o2)x(84o2)
+$ (95o3)=(94o3)x(84o3)
+$ (95o4)=(94o4)x(84o4)
+$ (95o5)=(94o5)x(84o5)
+
+p Monthly average external temperature from Table U1
+
+<
+(96o1)|(96o2)|(96o3)|(96o4)|(96o5)|(96o6)|(96o7)|(96o8)|(96o9)|(96o10)|(96o11)|(96o12)
+>
+
+p Heat loss rate for mean internal temperature, L m , W = [(39)m × [(93)m – (96)m ]
+
+<
+(97o1)|(97o2)|(97o3)|(97o4)|(97o5)|(97o6)|(97o7)|(97o8)|(97o9)|(97o10)|(97o11)|(97o12)
+>
+
+$ (97o1)=(93o1)-(96o1)x(39o1)
+$ (97o2)=(93o2)-(96o2)x(39o2)
+$ (97o3)=(93o3)-(96o3)x(39o3)
+$ (97o4)=(93o4)-(96o4)x(39o4)
+$ (97o5)=(93o5)-(96o5)x(39o5)
+$ (97o6)=(93o6)-(96o6)x(39o6)
+$ (97o7)=(93o7)-(96o7)x(39o7)
+$ (97o8)=(93o8)-(96o8)x(39o8)
+$ (97o9)=(93o9)-(96o9)x(39o9)
+$ (97o10)=(93o10)-(96o10)x(39o10)
+$ (97o11)=(93o11)-(96o11)x(39o11)
+$ (97o12)=(93o12)-(96o12)x(39o12)
+
+p Fraction of month for heating (Table 9d)
+
+<
+(97a1)|(97a2)|(97a3)|(97a4)|(97a5)|(97a6)|(97a7)|(97a8)|(97a9)|(97a10)|(97a11)|(97a12)
+>
+
+p Space heating requirement for each month, kWh/month = 0.024 × [(97)m – (95)m] × (41)m × (97a)m
+
+<
+(98o1)|(98o2)|(98o3)|(98o4)|(98o5)|(98o6)|(98o7)|(98o8)|(98o9)|(98o10)|(98o11)|(98o12)
+>
+
+$ (98o1)=(97o1)-(95o1)x(v0.024)x(41o1)x(97a1)
+$ (98o2)=(97o2)-(95o2)x(v0.024)x(41o2)x(97a2)
+$ (98o3)=(97o3)-(95o3)x(v0.024)x(41o3)x(97a3)
+$ (98o4)=(97o4)-(95o4)x(v0.024)x(41o4)x(97a4)
+$ (98o5)=(97o5)-(95o5)x(v0.024)x(41o5)x(97a5)
+$ (98o6)=(97o6)-(95o6)x(v0.024)x(41o6)x(97a6)
+$ (98o7)=(97o7)-(95o7)x(v0.024)x(41o7)x(97a7)
+$ (98o8)=(97o8)-(95o8)x(v0.024)x(41o8)x(97a8)
+$ (98o9)=(97o9)-(95o9)x(v0.024)x(41o9)x(97a9)
+$ (98o10)=(97o10)-(95o10)x(v0.024)x(41o10)x(97a10)
+$ (98o11)=(97o11)-(95o11)x(v0.024)x(41o11)x(97a11)
+$ (98o12)=(97o12)-(95o12)x(v0.024)x(41o12)x(97a12)
+
+t 0
+<
+Total per year (kWh/year) = Σ(98)1...12 = |(98)
+Space heating requirement in kWh/m2/year (98)÷(4)=|(99)
+>
+
+$ (98)=(98o1)+(98o2)+(98o3)+(98o4)+(98o5)+(98o6)+(98o7)+(98o8)+(98o9)+(98o10)+(98o11)+(98o12)
+$ (99)=(98)÷(4)
+
+p For range cooker boilers where efficiency is obtained from the Boiler Efficiency Database or manufacturer’s declared value, multiply the results in (98)m by (1 – Φcase/Φwater) where Φcase is the heat emission from the case of the range cooker at full load (in kW); and Φwater is the heat transferred to water at full load (in kW). Φcase and Φwater are obtained from the database record for the range cooker boiler or manufacturer’s declared values. Where there are two main heating systems, this applies if the range cooker boiler is system 1 or system 2.
+
+# 8f. Fabric Energy Efficiency (calculated only under special conditions, see section 11) 
+t 0
+<
+Fabric Energy Efficiency (99) + (108) = |(109)
+>
+$ (109)=(99)+(108)
+
+# 9a. Energy requirements – Individual heating systems including micro-CHP
+p For any space heating, space cooling or water heating provided by community heating use the alternative worksheet 9b.
+p <b>Space heating:</b>
+<
+Fraction of space heat from secondary/supplementary system (Table 11) <i>“0” if none</i>|(201)
+Fraction of space heat from main system(s) (202) = 1 – (201) = |(202)
+Fraction of main heating from main system 2 <i>if no second main system enter “0”</i>|(203)
+Fraction of total space heat from main system 1 (204) = (202) × [1 – (203)] =|(204)
+Fraction of total space heat from main system 2 (205) = (202) × (203) =|(205)
+Efficiency of main space heating system 1 (in %)|(206)
+
+>
+
+$ (202)=(201)-(v1)
+$ (204)=(203)-(v1)x(202)
+$ (205)=(202)x(203)
+
+p (from database or Table 4a/4b, adjusted where appropriate by the amount shown in the ‘space efficiency adjustment’ column of Table 4c; for gas and oil boilers see 9.2.1)
+
+<
+If there is a second main system complete (207) 
+Efficiency of main space heating system 2 (in %)|(207)
+>
+
+p (from database or Table 4a/4b, adjusted where appropriate by the amount shown in the ‘space efficiency adjustment’ column of Table 4c; for gas and oil boilers see 9.2.1)
+
+<
+Efficiency of secondary/supplementary heating system, % (from Table 4a or Appendix E)|(208)
+Cooling System Energy Efficiency Ratio (see Table 10c)|(209)
+>
+
+t 1
+
+<
+Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec
+(98o1)|(98o2)|(98o3)|(98o4)|(98o5)|(98o6)|(98o7)|(98o8)|(98o9)|(98o10)|(98o11)|(98o12)
+>
+
+p Space heating fuel (main heating system 1), kWh/month (211)m = (98)m × (204) × 100 ÷ (206)
+
+<
+(211o1)|(211o2)|(211o3)|(211o4)|(211o5)|(211o6)|(211o7)|(211o8)|(211o9)|(211o10)|(211o11)|(211o12)
+|||||||||||Total kWh/year = Σ(211)1..12/12|(211)
+>
+
+$ (211o1)=(98o1)x(204)x(v100)÷(206)
+$ (211o2)=(98o2)x(204)x(v100)÷(206)
+$ (211o3)=(98o3)x(204)x(v100)÷(206)
+$ (211o4)=(98o4)x(204)x(v100)÷(206)
+$ (211o5)=(98o5)x(204)x(v100)÷(206)
+$ (211o6)=(98o6)x(204)x(v100)÷(206)
+$ (211o7)=(98o7)x(204)x(v100)÷(206)
+$ (211o8)=(98o8)x(204)x(v100)÷(206)
+$ (211o9)=(98o9)x(204)x(v100)÷(206)
+$ (211o10)=(98o10)x(204)x(v100)÷(206)
+$ (211o11)=(98o11)x(204)x(v100)÷(206)
+$ (211o12)=(98o12)x(204)x(v100)÷(206)
+
+$ (211)=(211o1)+(211o2)+(211o3)+(211o4)+(211o5)+(211o6)+(211o7)+(211o8)+(211o9)+(211o10)+(211o11)+(211o12)
+
+p Space heating fuel (main heating system 2), kWh/month, omit if no second main heating system 
+p (213)m = (98)m × (205) × 100 ÷ (207) 
+
+<
+(213o1)|(213o2)|(213o3)|(213o4)|(213o5)|(213o6)|(213o7)|(213o8)|(213o9)|(213o10)|(213o11)|(213o12)
+|||||||||||Total kWh/year = Σ(213)1..12/12|(213)
+>
+
+$ (213o1)=(98o1)x(205)x(v100)÷(207)
+$ (213o2)=(98o2)x(205)x(v100)÷(207)
+$ (213o3)=(98o3)x(205)x(v100)÷(207)
+$ (213o4)=(98o4)x(205)x(v100)÷(207)
+$ (213o5)=(98o5)x(205)x(v100)÷(207)
+$ (213o6)=(98o6)x(205)x(v100)÷(207)
+$ (213o7)=(98o7)x(205)x(v100)÷(207)
+$ (213o8)=(98o8)x(205)x(v100)÷(207)
+$ (213o9)=(98o9)x(205)x(v100)÷(207)
+$ (213o10)=(98o10)x(205)x(v100)÷(207)
+$ (213o11)=(98o11)x(205)x(v100)÷(207)
+$ (213o12)=(98o12)x(205)x(v100)÷(207)
+
+$ (213)=(213o1)+(213o2)+(213o3)+(213o4)+(213o5)+(213o6)+(213o7)+(213o8)+(213o9)+(213o10)+(213o11)+(213o12)
+
+p Space heating fuel (secondary), kWh/month
+p (215)m = (98)m × (201) × 100 ÷ (208)
+ 
+<
+(215o1)|(215o2)|(215o3)|(215o4)|(215o5)|(215o6)|(215o7)|(215o8)|(215o9)|(215o10)|(215o11)|(215o12)
+|||||||||||Total kWh/year = Σ(215)1..12/12|(215)
+>
+
+$ (215o1)=(98o1)x(201)x(v100)÷(208)
+$ (215o2)=(98o2)x(201)x(v100)÷(208)
+$ (215o3)=(98o3)x(201)x(v100)÷(208)
+$ (215o4)=(98o4)x(201)x(v100)÷(208)
+$ (215o5)=(98o5)x(201)x(v100)÷(208)
+$ (215o6)=(98o6)x(201)x(v100)÷(208)
+$ (215o7)=(98o7)x(201)x(v100)÷(208)
+$ (215o8)=(98o8)x(201)x(v100)÷(208)
+$ (215o9)=(98o9)x(201)x(v100)÷(208)
+$ (215o10)=(98o10)x(201)x(v100)÷(208)
+$ (215o11)=(98o11)x(201)x(v100)÷(208)
+$ (215o12)=(98o12)x(201)x(v100)÷(208)
+
+$ (215)=(215o1)+(215o2)+(215o3)+(215o4)+(215o5)+(215o6)+(215o7)+(215o8)+(215o9)+(215o10)+(215o11)+(215o12)
+
+p <b>Water heating</b>
+p Output from water heater (calculated above)
+
+<
+(64o1)|(64o2)|(64o3)|(64o4)|(64o5)|(64o6)|(64o7)|(64o8)|(64o9)|(64o10)|(64o11)|(64o12)
+|||||||||||Efficiency of water heater|(217)
+>
+p (From database or Table 4a/4b, adjusted where appropriate by the amount shown in the ‘DHW efficiency adjustment’ column of Table 4c,
+p for gas and oil boilers use the summer efficiency, see 9.2.1)
+
+$ (217)=(64o1)+(64o2)+(64o3)+(64o4)+(64o5)+(64o6)+(64o7)+(64o8)+(64o9)+(64o10)+(64o11)+(64o12)
+
+p if water heating by a hot-water-only boiler, (217) m = value from database record for boiler or Table 4a
+p otherwise if gas/oil boiler main system used for water heating, (217) m = value calculated for each month using equation (8) in section 9.2.1
+p otherwise if separate hot water only heater (including immersion) (217) m = applicable value from Table 4a
+p otherwise (other main system 1 or 2 used for water heating) (217) m = (216)
+p WHAT THE HELL IS GOING ON HERE?
+
+<
+(217o1)|(217o2)|(217o3)|(217o4)|(217o5)|(217o6)|(217o7)|(217o8)|(217o9)|(217o10)|(217o11)|(217o12)
+>
+
+$ (217)=(217o1)+(217o2)+(217o3)+(217o4)+(217o5)+(217o6)+(217o7)+(217o8)+(217o9)+(217o10)+(217o11)+(217o12)
+
+p Fuel for water heating, kWh/month
+p (219)m = (64)m × 100 ÷ (217)m
+
+<
+(219o1)|(219o2)|(219o3)|(219o4)|(219o5)|(219o6)|(219o7)|(219o8)|(219o9)|(219o10)|(219o11)|(219o12)
+|||||||||||Total kWh/year = Σ(219)1..12/12|(219)
+>
+p (for a DHW-only community scheme use (305), (306) and (310a) or (310b), with (304a)=1.0 or (304b)=1.0, instead of (219)
+
+
+$ (219o1)=(64o1)x(v100)÷(217o1)
+$ (219o2)=(64o2)x(v100)÷(217o2)
+$ (219o3)=(64o3)x(v100)÷(217o3)
+$ (219o4)=(64o4)x(v100)÷(217o4)
+$ (219o5)=(64o5)x(v100)÷(217o5)
+$ (219o6)=(64o6)x(v100)÷(217o6)
+$ (219o7)=(64o7)x(v100)÷(217o7)
+$ (219o8)=(64o8)x(v100)÷(217o8)
+$ (219o9)=(64o9)x(v100)÷(217o9)
+$ (219o10)=(64o10)x(v100)÷(217o10)
+$ (219o11)=(64o11)x(v100)÷(217o11)
+$ (219o12)=(64o12)x(v100)÷(217o12)
+
+$ (219)=(219o1)+(219o2)+(219o3)+(219o4)+(219o5)+(219o6)+(219o7)+(219o8)+(219o9)+(219o10)+(219o11)+(219o12)
+
+p <b>Space cooling</b>
+p Space cooling fuel, kWh/month
+p (221)m = (107)m ÷ (209)
+
+<
+(221o1)|(221o2)|(221o3)|(221o4)|(221o5)|(221o6)|(221o7)|(221o8)|(221o9)|(221o10)|(221o11)|(221o12)
+|||||||||||Total kWh/year = Σ(221)1..12/12|(221)
+>
+
+$ (221o1)=(107o1)x(v100)÷(209)
+$ (221o2)=(107o2)x(v100)÷(209)
+$ (221o3)=(107o3)x(v100)÷(209)
+$ (221o4)=(107o4)x(v100)÷(209)
+$ (221o5)=(107o5)x(v100)÷(209)
+$ (221o6)=(107o6)x(v100)÷(209)
+$ (221o7)=(107o7)x(v100)÷(209)
+$ (221o8)=(107o8)x(v100)÷(209)
+$ (221o9)=(107o9)x(v100)÷(209)
+$ (221o10)=(107o10)x(v100)÷(209)
+$ (221o11)=(107o11)x(v100)÷(209)
+$ (221o12)=(107o12)x(v100)÷(209)
+
+$ (221)=(221o1)+(221o2)+(221o3)+(221o4)+(221o5)+(221o6)+(221o7)+(221o8)+(221o9)+(221o10)+(221o11)+(221o12)
+
+t 0
+<
+Annual totals |kWh/year
+Space heating fuel used, main system 1 |(211)
+Space heating fuel used, main system 2 |(213)
+Space heating fuel used, secondary |(215)
+Water heating fuel used |(219)
+Space cooling fuel used  - if there is a fixed cooling system, if not enter 0 |(221)
+>
+
+p <b>Electricity for pumps, fans and electric keep-hot - Table 4f:</b>
+
+<
+mechanical ventilation fans balanced, extract or positive input from outside |(230a)
+warm air heating system fans |(230b)
+central heating pump |(230c)
+oil boiler pump |(230d)
+boiler flue fan |(230e)
+maintaining electric keep-hot facility for gas combi boiler |(230f)
+pump for solar water heating |(230g)
+Total electricity for the above, kWh/year = |(230)
+>
+
+$(230)=(230a)+(230b)+(230c)+(230d)+(230e)+(230f)+(230g)
+
+
