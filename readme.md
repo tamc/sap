@@ -29,33 +29,40 @@ The idea behind the initial approach for implementing the worksheet is to first 
 
 The descriptor syntax also aims for easy of entry so is very minimal. For example to create a table with input boxes that are identifiable by the SAP worksheet numbering scheme the descriptor looks like this:
 
-<
+<pre>
+&lt;
 Number of sides on which dwelling is sheltered|(19)
->
+&gt;
+</pre>
 
 This is parsed into:
 
-// <table>
-// <tr><td>Number of sides on which dwelling is sheltered</td><td><input id='(19)' type='text' /> (19)</td></tr>
-// </table>
+<pre>
+&lt;table&gt;
+&lt;tr>&lt;td&gt;Number of sides on which dwelling is sheltered</td>&lt;td&gt;&lt;input id='(19)' type='text' /&gt; (19)&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+</pre>
 
 The second main feature of the descriptor is the specification of equations, lets say (19)=(17)+(18), we write:
 
+<pre>
 $ (19)=(17)+(18)
+</pre>
 
 php converts this into an array and passes it to the JavaScript part: [{'result':'(19)', 'items':['(17)','x','(18)']}]
 JavaScript then executes this equation automatically putting the result of the sum of the values entered in form input 17 and 18 into form input 19.
 
 Here's the descriptor syntax so far:
 
-// hash - heading
-// p - paragraph
-// < - open table
-// > - close table
-// $ equation
-// t 0 - input labels in-line
-// t 1 - input labels below input box
-
+<pre>
+# - heading
+p - paragraph
+&lt; - open table
+&gt; - close table
+$ equation
+t 0 - input labels in-line
+t 1 - input labels below input box
+</pre>
 If you would like to get involved with developing this, please get in contact on the OpenEnergyMonitor forums.
 
 Thanks!
