@@ -93,9 +93,10 @@ p Monthly average wind speed from Table U2
 t 1
 
 <
-Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec
-(22o1)|(22o2)|(22o3)|(22o4)|(22o5)|(22o6)|(22o7)|(22o8)|(22o9)|(22o10)|(22o11)|(22o12)
+|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec
 >
+m (22)
+
 p Wind Factor (22a)m = (22)m ÷ 4
 
 m (22a)
@@ -231,24 +232,27 @@ p Ventilation heat loss calculated monthly (38)m = 0.33 × (25)m × (5)
 
 t 1
 <
-Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec
-(38o1)|(38o2)|(38o3)|(38o4)|(38o5)|(38o6)|(38o7)|(38o8)|(38o9)|(38o10)|(38o11)|(38o12)
+|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec
 >
+m (38)
+
 $ (m38)=(v0.33)x(m25)x(v5)
 
 p Heat transfer coefficient, W/K (39)m = (37) + (38)m
+
+m (39)
 <
-(39o1)|(39o2)|(39o3)|(39o4)|(39o5)|(39o6)|(39o7)|(39o8)|(39o9)|(39o10)|(39o11)|(39o12)
-|||||||||||Average = Σ(39)1..12/12|(39)
+Average = Σ(39)1..12/12|(39)
 >
 $ (m39)=(37)+(m38)
 
 $ (39)=(39o1)+(39o2)+(39o3)+(39o4)+(39o5)+(39o6)+(39o7)+(39o8)+(39o9)+(39o10)+(39o11)+(39o12)
 
 p Heat loss parameter (HLP), W/m2K (40)m = (39)m ÷ (4)
+
+m (40)
 <
-(40o1)|(40o2)|(40o3)|(40o4)|(40o5)|(40o6)|(40o7)|(40o8)|(40o9)|(40o10)|(40o11)|(40o12)
-|||||||||||Average = Σ(40)1..12/12|(40)
+Average = Σ(40)1..12/12|(40)
 >
 $ (m40)=(m39)÷(v4)
 
@@ -257,9 +261,9 @@ $ (40)=(40o1)+(40o2)+(40o3)+(40o4)+(40o5)+(40o6)+(40o7)+(40o8)+(40o9)+(40o10)+(4
 # Number of days in month
 
 <
-Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec
-(41o1)|(41o2)|(41o3)|(41o4)|(41o5)|(41o6)|(41o7)|(41o8)|(41o9)|(41o10)|(41o11)|(41o12)
+|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec
 >
+m (41)
 
 $ (41)=(41o1)+(41o2)+(41o3)+(41o4)+(41o5)+(41o6)+(41o7)+(41o8)+(41o9)+(41o10)+(41o11)+(41o12)
 
@@ -277,21 +281,22 @@ if TFA ≤ 13.9, N = 1
 
 p Reduce the annual average hot water usage by 5% if the dwelling is designed to achieve a water use target of not more that 125 litres per person per day (all water use, hot and cold)
 <
-Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec
+|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec
 >
 p Hot water usage in litres per day for each month V d,m = factor from Table 1c × (43) <b>EQUATION NOT FUNCTIONAL</b>
+
+m (44)
 <
-(44o1)|(44o2)|(44o3)|(44o4)|(44o5)|(44o6)|(44o7)|(44o8)|(44o9)|(44o10)|(44o11)|(44o12)
-|||||||||||Average = Σ(44)1..12/12|(44)
+Average = Σ(44)1..12/12|(44)
 >
 
 $ (44)=(44o1)+(44o2)+(44o3)+(44o4)+(44o5)+(44o6)+(44o7)+(44o8)+(44o9)+(44o10)+(44o11)+(44o12)
 
 p Energy content of hot water used - calculated monthly = 4.190 × Vd,m × nm × ∆Tm / 3600 kWh/month (see Tables 1b, 1c, 1d) <b>EQUATION NOT FUNCTIONAL</b>
 
+m (45)
 <
-(45o1)|(45o2)|(45o3)|(45o4)|(45o5)|(45o6)|(45o7)|(45o8)|(45o9)|(45o10)|(45o11)|(45o12)
-|||||||||||Average = Σ(45)1..12/12|(45)
+Average = Σ(45)1..12/12|(45)
 >
 
 $ (45)=(45o1)+(45o2)+(45o3)+(45o4)+(45o5)+(45o6)+(45o7)+(45o8)+(45o9)+(45o10)+(45o11)+(45o12)
@@ -395,8 +400,9 @@ $ (63)=(63o1)+(63o2)+(63o3)+(63o4)+(63o5)+(63o6)+(63o7)+(63o8)+(63o9)+(63o10)+(6
 p Output from water heater for each month, kWh/month (64)m = (62)m + (63)m
 
 <
-(64o1)|(64o2)|(64o3)|(64o4)|(64o5)|(64o6)|(64o7)|(64o8)|(64o9)|(64o10)|(64o11)|(64o12)
-|||||||||||Average = Σ(64)1..12/12|(64)
+m (64)
+<
+Average = Σ(64)1..12/12|(64)
 >
 
 $ (m64)=(m62)+(m63)
@@ -441,9 +447,9 @@ p Metabolic gains (Table 5), watts
 
 t 1
 <
-Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec
-(66o1)|(66o2)|(66o3)|(66o4)|(66o5)|(66o6)|(66o7)|(66o8)|(66o9)|(66o10)|(66o11)|(66o12)
+|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec
 >
+m (66)
 
 p Lighting gains (calculated in Appendix L, equation L9 or L9a), also see Table 5
 m (67)
@@ -501,9 +507,9 @@ p Utilisation factor for gains for living area, η1,m (see Table 9a)
 
 t 1
 <
-Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec
-(86o1)|(86o2)|(86o3)|(86o4)|(86o5)|(86o6)|(86o7)|(86o8)|(86o9)|(86o10)|(86o11)|(86o12)
+|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec
 >
+m (86)
 
 p Mean internal temperature in living area T 1 (follow steps 3 to 7 in Table 9c)
 m (87)
@@ -533,7 +539,7 @@ m (93)
 # 8. Space heating requirement
 p Set Ti to the mean internal temperature obtained at step 11 of Table 9b, so that T i,m=(93)m and re-calculate the utilisation factor for gains using Table 9a
 <
-Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec
+|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec
 >
 p Utilisation factor for gains, ηm:
 m (94)
@@ -608,15 +614,15 @@ Cooling System Energy Efficiency Ratio (see Table 10c)|(209)
 t 1
 
 <
-Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec
-(98o1)|(98o2)|(98o3)|(98o4)|(98o5)|(98o6)|(98o7)|(98o8)|(98o9)|(98o10)|(98o11)|(98o12)
+|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec
 >
+m (98)
 
 p Space heating fuel (main heating system 1), kWh/month (211)m = (98)m × (204) × 100 ÷ (206)
 
+m (211)
 <
-(211o1)|(211o2)|(211o3)|(211o4)|(211o5)|(211o6)|(211o7)|(211o8)|(211o9)|(211o10)|(211o11)|(211o12)
-|||||||||||Total kWh/year = Σ(211)1..12/12|(211)
+Total kWh/year = Σ(211)1..12/12|(211)
 >
 
 $ (m211)=(m98)x(204)x(v100)÷(206)
@@ -626,9 +632,9 @@ $ (211)=(211o1)+(211o2)+(211o3)+(211o4)+(211o5)+(211o6)+(211o7)+(211o8)+(211o9)+
 p Space heating fuel (main heating system 2), kWh/month, omit if no second main heating system 
 p (213)m = (98)m × (205) × 100 ÷ (207) 
 
+m (213)
 <
-(213o1)|(213o2)|(213o3)|(213o4)|(213o5)|(213o6)|(213o7)|(213o8)|(213o9)|(213o10)|(213o11)|(213o12)
-|||||||||||Total kWh/year = Σ(213)1..12/12|(213)
+Total kWh/year = Σ(213)1..12/12|(213)
 >
 
 $ (m213)=(m98)x(205)x(v100)÷(207)
@@ -636,10 +642,10 @@ $ (213)=(213o1)+(213o2)+(213o3)+(213o4)+(213o5)+(213o6)+(213o7)+(213o8)+(213o9)+
 
 p Space heating fuel (secondary), kWh/month
 p (215)m = (98)m × (201) × 100 ÷ (208)
- 
+
+m (215)
 <
-(215o1)|(215o2)|(215o3)|(215o4)|(215o5)|(215o6)|(215o7)|(215o8)|(215o9)|(215o10)|(215o11)|(215o12)
-|||||||||||Total kWh/year = Σ(215)1..12/12|(215)
+Total kWh/year = Σ(215)1..12/12|(215)
 >
 
 $ (m215)=(m98)x(201)x(v100)÷(208)
@@ -649,9 +655,9 @@ $ (215)=(215o1)+(215o2)+(215o3)+(215o4)+(215o5)+(215o6)+(215o7)+(215o8)+(215o9)+
 p <b>Water heating</b>
 p Output from water heater (calculated above)
 
+m (64)
 <
-(64o1)|(64o2)|(64o3)|(64o4)|(64o5)|(64o6)|(64o7)|(64o8)|(64o9)|(64o10)|(64o11)|(64o12)
-|||||||||||Efficiency of water heater|(217)
+Efficiency of water heater|(217)
 >
 p (From database or Table 4a/4b, adjusted where appropriate by the amount shown in the ‘DHW efficiency adjustment’ column of Table 4c,
 p for gas and oil boilers use the summer efficiency, see 9.2.1)
@@ -670,10 +676,12 @@ $ (217)=(217o1)+(217o2)+(217o3)+(217o4)+(217o5)+(217o6)+(217o7)+(217o8)+(217o9)+
 p Fuel for water heating, kWh/month
 p (219)m = (64)m × 100 ÷ (217)m
 
+m (219)
+t 0
 <
-(219o1)|(219o2)|(219o3)|(219o4)|(219o5)|(219o6)|(219o7)|(219o8)|(219o9)|(219o10)|(219o11)|(219o12)
-|||||||||||Total kWh/year = Σ(219)1..12/12|(219)
+Total kWh/year = Σ(219)1..12/12|(219)
 >
+
 p (for a DHW-only community scheme use (305), (306) and (310a) or (310b), with (304a)=1.0 or (304b)=1.0, instead of (219)
 
 
@@ -685,9 +693,10 @@ p <b>Space cooling</b>
 p Space cooling fuel, kWh/month
 p (221)m = (107)m ÷ (209)
 
+m (221)
+t 0
 <
-(221o1)|(221o2)|(221o3)|(221o4)|(221o5)|(221o6)|(221o7)|(221o8)|(221o9)|(221o10)|(221o11)|(221o12)
-|||||||||||Total kWh/year = Σ(221)1..12/12|(221)
+Total kWh/year = Σ(221)1..12/12|(221)
 >
 
 $ (m221)=(m107)x(v100)÷(209)

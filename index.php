@@ -82,7 +82,6 @@ while(!feof($fh))
     // If result of equation has m for monthly as the precending character then equation is of monthly type
     if ($items[2][0]=='m')
     {
-      echo "here";
       // Create an equation for each month
       for ($m=1; $m<13; $m++)
       {
@@ -128,8 +127,7 @@ while(!feof($fh))
       if ($td[0]=='(') 
       {
         $id = getid($td);
-        if (!$br) echo "<td><input id='".$id."' type='text' />".$td."</td>";
-        if ($br) echo "<td><input style='width:60px' id='".$id."' type='text' /><br><span style='font-size:12px; color:#444;'>".$td."</span></td>";
+        echo "<td style='padding:8px 6px 0px 6px; width:60px'><input style='width:60px' id='".$id."' type='text' placeholder='".$id."' /></td>";
       }
       else
       {
@@ -139,7 +137,7 @@ while(!feof($fh))
     echo "</tr>";
   }
 
-  if ($line[0] == '<') {$table = true; echo "<table>";}
+  if ($line[0] == '<') {$table = true; echo "<table class='table table-bordered'>";}
 
   // Parse monthly table automatically
   if ($line[0] == 'm' && !$table)
