@@ -69,8 +69,8 @@ while(!feof($fh))
   $line = trim($line);
 
   // Headings
-  if ($line[0] == '#') {$line[0]=null; echo "<h3>".$line."</h3>";}
-  if ($line[0] == 'p') {$line[0]=null; echo "<p style='color:#222'><i>".$line."</i></p>";}
+  if ($line[0] == '#' && !$table) {$line[0]=null; echo "<h3>".$line."</h3>";}
+  if ($line[0] == 'p' && !$table) {$line[0]=null; echo "<p style='color:#222'><i>".$line."</i></p>";}
 
   if ($line[0] == 't' && $line[2]=='1')  {$br = 1;}
   if ($line[0] == 't' && $line[2]=='0')  {$br = 0;}

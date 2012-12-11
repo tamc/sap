@@ -36,7 +36,7 @@ Number of flueless gas fires|||||||(7ca)|×|40|=|(7c)
 >
 
 <
-|||||Air changes per hour|
+|||||Air changes per hour
 Infiltration due to chimneys, flues, fans, PSVs|(8a)|÷|(5)|=|(8)
 >
 
@@ -399,7 +399,7 @@ $ (63)=(63o1)+(63o2)+(63o3)+(63o4)+(63o5)+(63o6)+(63o7)+(63o8)+(63o9)+(63o10)+(6
 
 p Output from water heater for each month, kWh/month (64)m = (62)m + (63)m
 
-<
+
 m (64)
 <
 Average = Σ(64)1..12/12|(64)
@@ -495,7 +495,10 @@ p Solar gains in watts, calculated for each month (83)m = Σ(74)m ...(82)m
 
 m (83)
 $ (m83)=(m74)+(m75)+(m76)+(m77)+(m78)+(m79)+(m80)+(m81)+(m82)
-$ (83)=(83o1)+(83o2)+(83o3)+(83o4)+(83o5)+(83o6)+(83o7)+(83o8)+(83o9)+(83o10)+(83o11)+(83o12)
+
+p Total gains – internal and solar (84)m = (73)m + (83)m , watts
+m (84)
+$ (m84)=(m73)+(m83)
 
 # 7. Mean internal temperature (heating season)
 
@@ -573,6 +576,60 @@ $ (99)=(98)÷(4)
 
 p For range cooker boilers where efficiency is obtained from the Boiler Efficiency Database or manufacturer’s declared value, multiply the results in (98)m by (1 – Φcase/Φwater) where Φcase is the heat emission from the case of the range cooker at full load (in kW); and Φwater is the heat transferred to water at full load (in kW). Φcase and Φwater are obtained from the database record for the range cooker boiler or manufacturer’s declared values. Where there are two main heating systems, this applies if the range cooker boiler is system 1 or system 2.
 
+# 8c. Space cooling requirement
+p Calculated for June, July and August. See Table 10b
+
+<
+|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec
+>
+
+p Heat loss rate Lm (calculated using 24°C internal temperature and external temperature for the applicable climate region from Table U1)
+m (100)
+
+p Utilisation factor for loss ηm
+m (101)
+
+p Useful loss, ηmLm (watts) = (100)m × (101)m 
+m (102)
+$ (m102)=(m100)x(m101)
+
+p Gains (internal gains as for heating except that column (A) of Table 5 is always used; solar gains calculated for
+applicable weather region)
+m (103)
+
+p Fraction of month for cooling (Table 10d)
+m (103a)
+
+p Space cooling requirement for month, whole dwelling, continuous ( kWh) = 0.024 × [(103)m – (102)m ] × (41)m × (103a)m
+set (104)m to zero if (104)m < 3 × (98)m with (98)m calculated using weather data for the applicable climate region from Appendix U <b>EQUATION NOT IMPLEMENTED</b>
+m (104)
+<
+Total = Σ(104)1...12 = |(104)
+f C = cooled area ÷ (4) = |(105)
+>
+
+$ (104)=(104o1)+(104o2)+(104o3)+(104o4)+(104o5)+(104o6)+(104o7)+(104o8)+(104o9)+(104o10)+(104o11)+(104o12)
+
+p Intermittency factor (Table 10b)
+m (106)
+<
+Total =Σ(106)1...12 = |(106)
+>
+$ (106)=(106o1)+(106o2)+(106o3)+(106o4)+(106o5)+(106o6)+(106o7)+(106o8)+(106o9)+(106o10)+(106o11)+(106o12)
+
+p Space cooling requirement for month = (104)m × (105) × (106)m
+m (107)
+$ (m107)=(m104)x(105)x(m106)
+
+<
+Total = Σ(107)1...12 = |(107)
+Space cooling requirement in kWh/m2/year (107) ÷ (4) = |(108)
+>
+
+$ (107)=(107o1)+(107o2)+(107o3)+(107o4)+(107o5)+(107o6)+(107o7)+(107o8)+(107o9)+(107o10)+(107o11)+(107o12)
+
+$ (108)=(107)÷(4)
+
 # 8f. Fabric Energy Efficiency (calculated only under special conditions, see section 11) 
 t 0
 <
@@ -616,6 +673,7 @@ t 1
 <
 |Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec
 >
+p Space heating requirement (calculated above)
 m (98)
 
 p Space heating fuel (main heating system 1), kWh/month (211)m = (98)m × (204) × 100 ÷ (206)

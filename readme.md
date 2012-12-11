@@ -20,7 +20,7 @@ By implementing the worksheet as a module within emoncms we could potentially li
 
 # Development
 
-The worksheet is not yet complete we have reached section 9 of ... its quite a long form!
+The worksheet is not yet complete we have reached end of section 9a of 12a in a rough way (there are still more complex equations to complete) its quite a long form!
 See development section below for details on how to help with development.
 
 The initial plan is to create the worksheet in a rough and just functional form, nothing fancy to start with and to fill the form close reference to the SAP specification document will be needed in order to understand what the inputs are and to get the table data etc. In future version we can imagine there being options to automatically bring in the table data depending on your location, ability to minimize/maximise sections, miss out and hide sections that are not applicable and so on.
