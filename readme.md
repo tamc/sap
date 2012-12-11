@@ -62,6 +62,8 @@ p - paragraph
 $ equation
 t 0 - input labels in-line
 t 1 - input labels below input box
+m (23a) - automatic monthly table for item id 23a
+$ (m23a)=(m22a)x(v4) - automatic monthly calculations (note preceding m befor monthly item)
 </pre>
 If you would like to get involved with developing this, please get in contact on the OpenEnergyMonitor forums.
 

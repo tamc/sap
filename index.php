@@ -79,12 +79,42 @@ while(!feof($fh))
     $line = preg_replace('/[^\w\s=+÷.-]/','|',$line);
     $items = explode('|', $line);
 
-    $equation_items = array();
-    for ($i=4; $i<count($items)-1; $i++)
+    // If result of equation has m for monthly as the precending character then equation is of monthly type
+    if ($items[2][0]=='m')
     {
-      $equation_items[] = $items[$i];
+      echo "here";
+      // Create an equation for each month
+      for ($m=1; $m<13; $m++)
+      {
+        $result = $items[2];
+        $result = substr($result,1);
+        $d=''; if (is_numeric($result)) $d='o';
+        $result = $result.$d.$m;
+
+        $equation_items = array();
+        for ($i=4; $i<count($items)-1; $i++)
+        {
+          $item = $items[$i];
+          if ($items[$i][0]=='m')
+          {
+            $item = substr($items[$i],1);
+            $d=''; if (is_numeric($item)) $d='o';
+            $item = $item.$d.$m;
+          }
+          $equation_items[] = $item;
+        }
+        $equations[] = array('result'=>$result,'items'=>$equation_items);
+      }
     }
-    $equations[] = array('result'=>$items[2],'items'=>$equation_items);
+    else
+    {
+      $equation_items = array();
+      for ($i=4; $i<count($items)-1; $i++)
+      {
+        $equation_items[] = $items[$i];
+      }
+      $equations[] = array('result'=>$items[2],'items'=>$equation_items);
+    }
   }
 
   if ($line[0] == '>') {$table = false; echo "</table>";}
@@ -111,6 +141,19 @@ while(!feof($fh))
 
   if ($line[0] == '<') {$table = true; echo "<table>";}
 
+  // Parse monthly table automatically
+  if ($line[0] == 'm' && !$table)
+  {
+    $tag = substr($line, 3,-1);
+    $d=''; if (is_numeric($tag)) $d='o';
+    echo "<table class='table table-bordered'><tr><td style='padding-top:13px'>(".$tag.")m</td>";
+    for ($i=1; $i<13; $i++)
+    {
+      $id = $tag.$d.$i;
+      echo "<td style='padding:8px 0px 0px 6px'><input style='width:45px;' id='".$id."' type='text' placeholder='".$id."' /></td>";
+    }
+    echo "</tr></table>";
+  }
 }
 
 fclose($fh);
