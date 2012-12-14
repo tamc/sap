@@ -46,7 +46,7 @@ $ (6bd)=(6ba)+(6bb)+(6bc)
 $ (6b)=(6bd)x(v20)
 $ (7a)=(7aa)x(v10)
 $ (7b)=(7ba)x(v10)
-$ (7c)=(7ac)x(v40)
+$ (7c)=(7ca)x(v40)
 $ (8a)=(6a)+(6b)+(7a)+(7b)+(7c)
 $ (8)=(8a)÷(5)
 
@@ -374,7 +374,7 @@ p  (modified by factor from Table H5 if there is solar water heating and a cylin
 t 1
 
 m (59)
-$ (m59)=(58)÷365x(m41)
+$ (m59)=(58)÷(v365)x(m41)
 
 $ (59)=(59o1)+(59o2)+(59o3)+(59o4)+(59o5)+(59o6)+(59o7)+(59o8)+(59o9)+(59o10)+(59o11)+(59o12)
 

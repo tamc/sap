@@ -1,13 +1,3 @@
-<!-----------------------------------------------------------------------------
-
-  All SAP Emoncms module code is released under the GNU Affero General Public License.
-  See COPYRIGHT.txt and LICENSE.txt.
-
-  ---------------------------------------------------------------------
-  Part of the OpenEnergyMonitor project:
-  http://openenergymonitor.org
- 
-------------------------------------------------------------------------------->
 
 <!DOCTYPE html>
 <html>
@@ -17,10 +7,17 @@
     <!-- Bootstrap -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="equations.js"></script>
     <style>
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
+
+      p {
+        color:#222;
+        font-style:italic;
+      }
+ 
     </style>
   </head>
   <body>
@@ -55,176 +52,35 @@
 
       <h1>SAP Worksheet 2012</h1>
 
-<?php
-$myFile = "desc.txt";
-$fh = fopen($myFile, 'r');
+      <?php require "form.html"; ?>
 
-$equations = array();
+    </div>
 
-$br = 0;
+    <script>
+    var data = {};
+    data = calculate(data);
+    for (z in data) $('#'+z).attr("readonly","readonly");
 
-while(!feof($fh))
-{
-  $line = fgets($fh);
-  $line = trim($line);
-
-  // Headings
-  if ($line[0] == '#' && !$table) {$line[0]=null; echo "<h3>".$line."</h3>";}
-  if ($line[0] == 'p' && !$table) {$line[0]=null; echo "<p style='color:#222'><i>".$line."</i></p>";}
-
-  if ($line[0] == 't' && $line[2]=='1')  {$br = 1;}
-  if ($line[0] == 't' && $line[2]=='0')  {$br = 0;}
-
-  if ($line[0] == '$') {
-    $line = preg_replace('/[^\w\s=+÷.-]/','|',$line);
-    $items = explode('|', $line);
-
-    // If result of equation has m for monthly as the precending character then equation is of monthly type
-    if ($items[2][0]=='m')
+    $('input').each(function()
     {
-      // Create an equation for each month
-      for ($m=1; $m<13; $m++)
+      var id = $(this).attr('id');
+      data[id] = $(this).val()*1;
+    });
+
+    $('input').change(function()
+    {
+      var id = $(this).attr('id');
+      data[id] = $(this).val()*1;
+      var last = JSON.parse(JSON.stringify(data));
+      data = calculate(data);
+      for (z in data)
       {
-        $result = $items[2];
-        $result = substr($result,1);
-        $d=''; if (is_numeric($result)) $d='o';
-        $result = $result.$d.$m;
-
-        $equation_items = array();
-        for ($i=4; $i<count($items)-1; $i++)
-        {
-          $item = $items[$i];
-          if ($items[$i][0]=='m')
-          {
-            $item = substr($items[$i],1);
-            $d=''; if (is_numeric($item)) $d='o';
-            $item = $item.$d.$m;
-          }
-          $equation_items[] = $item;
-        }
-        $equations[] = array('result'=>$result,'items'=>$equation_items);
+        if (z!=id && last[z]!=data[z]) $("#"+z).val(data[z]);
       }
-    }
-    else
-    {
-      $equation_items = array();
-      for ($i=4; $i<count($items)-1; $i++)
-      {
-        $equation_items[] = $items[$i];
-      }
-      $equations[] = array('result'=>$items[2],'items'=>$equation_items);
-    }
-  }
+    });
 
-  if ($line[0] == '>') {$table = false; echo "</table>";}
 
-  if ($table) 
-  {
-    $items = explode('|', $line);
-    echo "<tr>";
-    foreach ($items as $td)
-    {
-      if ($td[0]=='(') 
-      {
-        $id = getid($td);
-        echo "<td style='padding:8px 6px 0px 6px; width:60px'><input style='width:60px' id='".$id."' type='text' placeholder='".$id."' /></td>";
-      }
-      else
-      {
-        echo "<td>".$td."</td>";
-      }
-    }
-    echo "</tr>";
-  }
+    </script>
 
-  if ($line[0] == '<') {$table = true; echo "<table class='table table-bordered'>";}
-
-  // Parse monthly table automatically
-  if ($line[0] == 'm' && !$table)
-  {
-    $tag = substr($line, 3,-1);
-    $d=''; if (is_numeric($tag)) $d='o';
-    echo "<table class='table table-bordered'><tr><td style='padding-top:13px'>(".$tag.")m</td>";
-    for ($i=1; $i<13; $i++)
-    {
-      $id = $tag.$d.$i;
-      echo "<td style='padding:8px 0px 0px 6px'><input style='width:45px;' id='".$id."' type='text' placeholder='".$id."' /></td>";
-    }
-    echo "</tr></table>";
-  }
-}
-
-fclose($fh);
-
-function getid($str)
-{
-  $id = '';
-  for ($i=1; $i<strlen($str)-1; $i++)
-  {
-    $id .= $str[$i];
-  }
-  return $id;
-}
-
-?>
-
-<script>
-
-var equation_list = <?php echo json_encode($equations); ?>;
-console.log(equation_list);
-
-$('input').keyup(function()
-{
-
-for (z in equation_list)
-{
-  var equation = equation_list[z];
-  var len = equation['items'].length;
-
-    var value = 0;
-    if (equation['items'][0][0] == 'v')
-    {
-      var str = equation['items'][0];
-      value = parseFloat(str.replace('v',''));
-    }
-    else
-    {
-      value = parseFloat($("#"+equation['items'][0]).val());
-    }
-    if (isNaN(value)) value = 0;
-
-  var result = value;
-
-  for (var i=1; i<len; i=i+2)
-  {
-    var operator = equation['items'][i];
-
-    // detect if value is input element id or fixed value denoted by v character
-    var value = 0;
-    if (equation['items'][i+1][0] == 'v')
-    {
-      var str = equation['items'][i+1];
-      value = parseFloat(str.replace('v',''));
-    }
-    else
-    {
-      value = parseFloat($("#"+equation['items'][i+1]).val());
-    }
-    if (isNaN(value)) value = 0;
-
-    if (operator == '+') result = result + value;
-    if (operator == '-') result = result - value;
-    if (operator == 'x') result = result * value;
-    if (operator == '÷') result = result / value;
-  }
-  
-  $("#"+equation['result']).val(result);
-}
-
-});
-</script>
-
-</div>
-
-</body>
+  </body>
 </html>
