@@ -28,6 +28,23 @@ for (var i=1; i<13; i++) { data['22a-'+i] = data['22-'+i] / 4; }
 for (var i=1; i<13; i++) { data['22b-'+i] = data['22a-'+i] * data['21']; }
 for (var i=1; i<13; i++) { data['24a-'+i] = data['23c'] / -100 + 1 * data['23b'] + data['22b-'+i]; }
 for (var i=1; i<13; i++) { data['24b-'+i] = data['22b-'+i] + data['23b']; }
+
+for (var i=1; i<13; i++) 
+{ 
+  if (data['24b-'+i] < (0.5*data['23b'])) 
+    data['24c-'+i] = data['23b']; 
+  else 
+    data['24c-'+i] = data['22b-'+i] + 0.5*data['23b'];
+}
+
+for (var i=1; i<13; i++) 
+{ 
+  if (data['22b-'+i] >= 1) 
+    data['24d-'+i] = data['22b-'+i]; 
+  else 
+    data['24d-'+i] = 0.5 + (data['22b-'+i]*data['22b-'+i]*0.5);
+}
+
 data['26'] = data['26-1'] * data['26-2'];
 data['27'] = data['27-1'] * data['27-2'];
 data['27a'] = data['27a-1'] * data['27a-2'];

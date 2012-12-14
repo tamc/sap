@@ -129,11 +129,11 @@ p b) If balanced mechanical ventilation without heat recovery (MV) (24b)m = (22b
 m (24b)
 $ (m24b)=(m22b)+(23b)
 
-p c) If whole house extract ventilation or positive input ventilation from outside<br>if (22b)m < 0.5 × (23b), then (24c) = (23b); otherwise (24c) = (22b) m + 0.5 × (23b) <b>EQUATION NOT FUNCTIONAL</b>
+p c) If whole house extract ventilation or positive input ventilation from outside<br>if (22b)m < 0.5 × (23b), then (24c) = (23b); otherwise (24c) = (22b) m + 0.5 × (23b)
 
 m (24c)
 
-p d) If natural ventilation or whole house positive input ventilation from loft<br>if (22b)m ≥ 1, then (24d)m = (22b)m otherwise (24d)m = 0.5 + [(22b)m2 × 0.5] <b>EQUATION NOT FUNCTIONAL</b>
+p d) If natural ventilation or whole house positive input ventilation from loft<br>if (22b)m ≥ 1, then (24d)m = (22b)m otherwise (24d)m = 0.5 + [(22b)m2 × 0.5]
 
 m (24d)
 
