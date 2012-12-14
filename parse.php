@@ -79,7 +79,7 @@ while(!feof($fh))
       if ($td[0]=='(') 
       {
         $id = getid($td);
-        $out .= "    <td style='padding:8px 6px 0px 6px; width:60px'><input style='width:60px' id='".$id."' type='text' placeholder='".$id."' value='0' /></td>\n";
+        $out .= "    <td style='padding:8px 6px 6px 6px; width:60px'><input style='width:60px' class='".$id."' type='text' placeholder='".$id."' value='0' /></td>\n";
       }
       else
       {
@@ -100,7 +100,7 @@ while(!feof($fh))
     for ($i=1; $i<13; $i++)
     {
       $id = $tag.$d.$i;
-      $out .= "    <td style='padding:8px 0px 0px 6px'><input style='width:45px;' id='".$id."' type='text' placeholder='".$id."' value='0' /></td>\n";
+      $out .= "    <td style='padding:8px 0px 6px 6px'><input style='width:45px;' class='".$id."' type='text' placeholder='".$id."' value='0' /></td>\n";
     }
     $out .= "  </tr>\n</table>\n";
   }
