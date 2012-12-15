@@ -48,29 +48,77 @@ for (var i=1; i<13; i++)
 data['26'] = data['26-1'] * data['26-2'];
 data['27'] = data['27-1'] * data['27-2'];
 data['27a'] = data['27a-1'] * data['27a-2'];
+
 data['28'] = data['28-1'] * data['28-2'];
+data['28-4'] = data['28-1'] * data['28-3'];
+
 data['28a'] = data['28a-1'] * data['28a-2'];
+data['28a-4'] = data['28a-1'] * data['28a-3'];
+
 data['28b'] = data['28b-1'] * data['28b-2'];
+data['28b-4'] = data['28b-1'] * data['28b-3'];
+
 data['29-3'] = data['29-1'] - data['29-2'];
-data['29a-3'] = data['29a-1'] - data['29a-2'];
-data['30-3'] = data['30-1'] - data['30-2'];
 data['29'] = data['29-3'] * data['29-4'];
+data['29-6'] = data['29-3'] * data['29-5'];
+
+data['29a-3'] = data['29a-1'] - data['29a-2'];
 data['29a'] = data['29a-3'] * data['29a-4'];
+data['29a-6'] = data['29a-3'] * data['29a-5'];
+
+data['30-3'] = data['30-1'] - data['30-2'];
 data['30'] = data['30-3'] * data['30-4'];
+data['30-6'] = data['30-3'] * data['30-5'];
+
+// Total area of external elements 
 data['31'] = data['26-1'] + data['27-1'] + data['27a-1'] + data['28-1'] + data['28a-1'] + data['28b-1'] + data['29-3'] + data['29a-3'] + data['30-3'];
-data['32'] = data['32-1'] * data['32-2'];
+
+data['32'] = data['32-1'] * data['32-2'];	// Party wall - loss calc
+data['32-4'] = data['32-3'] * data['32-1'];	// Party wall - therm mass calc
+data['32a-3'] = data['32a-2'] * data['32a-1'];	// Party floor
+data['32b-3'] = data['32b-2'] * data['32b-1'];	// Party ceiling
+data['32c-3'] = data['32c-2'] * data['32c-1'];  // Internal wall **
+data['32d-3'] = data['32d-2'] * data['32d-1'];	// Internal floor
+data['32e-3'] = data['32e-2'] * data['32e-1'];	// Internal ceiling
+
+// Fabric heat loss
 data['33'] = data['26'] + data['27'] + data['27a'] + data['28'] + data['28a'] + data['28b'] + data['29'] + data['29a'] + data['30'] + data['32'];
+
+// Heat capacity
 data['34'] = data['28-4'] + data['28a-4'] + data['28b-4'] + data['29-6'] + data['29a-6'] + data['30-6'] + data['32-4'] + data['32a-3'] + data['32b-3'] + data['32c-3'] + data['32d-3'] + data['32e-3'];
-data['35'] = data['34'] / 4;
+
+// Thermal mass parameter
+data['35'] = data['34'] / data['4'];
+
 data['37'] = data['33'] + data['36'];
-for (var i=1; i<13; i++) { data['38-'+i] = 0.33 * data['25-'+i] * 5; }
+for (var i=1; i<13; i++) { data['38-'+i] = 0.33 * data['25-'+i] * data['5']; }
 for (var i=1; i<13; i++) { data['39-'+i] = data['37'] + data['38-'+i]; }
-data['39'] = data['39o1'] + data['39o2'] + data['39o3'] + data['39o4'] + data['39o5'] + data['39o6'] + data['39o7'] + data['39o8'] + data['39o9'] + data['39o10'] + data['39o11'] + data['39o12'];
+
+// Average (39)
+data['39'] = 0;
+for (var i=1; i<13; i++) { data['39'] += data['39-'+i]; }
+data['39'] = data['39'] / 12;
+
 for (var i=1; i<13; i++) { data['40-'+i] = data['39-'+i] / 4; }
-data['40'] = data['40o1'] + data['40o2'] + data['40o3'] + data['40o4'] + data['40o5'] + data['40o6'] + data['40o7'] + data['40o8'] + data['40o9'] + data['40o10'] + data['40o11'] + data['40o12'];
-data['41'] = data['41o1'] + data['41o2'] + data['41o3'] + data['41o4'] + data['41o5'] + data['41o6'] + data['41o7'] + data['41o8'] + data['41o9'] + data['41o10'] + data['41o11'] + data['41o12'];
-data['44'] = data['44o1'] + data['44o2'] + data['44o3'] + data['44o4'] + data['44o5'] + data['44o6'] + data['44o7'] + data['44o8'] + data['44o9'] + data['44o10'] + data['44o11'] + data['44o12'];
-data['45'] = data['45o1'] + data['45o2'] + data['45o3'] + data['45o4'] + data['45o5'] + data['45o6'] + data['45o7'] + data['45o8'] + data['45o9'] + data['45o10'] + data['45o11'] + data['45o12'];
+
+// Average (40)
+data['40'] = 0;
+for (var i=1; i<13; i++) { data['40'] += data['40-'+i]; }
+data['40'] = data['40'] / 12;
+
+// Annual average hot water usage in litres per day
+data['43'] = (data['42']*25) + 36;
+
+// Average (44)
+data['44'] = 0;
+for (var i=1; i<13; i++) { data['44'] += data['44-'+i]; }
+data['44'] = data['44'] / 12;
+
+// Average (45)
+data['45'] = 0;
+for (var i=1; i<13; i++) { data['45'] += data['45-'+i]; }
+data['45'] = data['45'] / 12;
+
 for (var i=1; i<13; i++) { data['46-'+i] = 0.15 * data['45-'+i]; }
 data['46'] = data['46o1'] + data['46o2'] + data['46o3'] + data['46o4'] + data['46o5'] + data['46o6'] + data['46o7'] + data['46o8'] + data['46o9'] + data['46o10'] + data['46o11'] + data['46o12'];
 data['49'] = data['47'] + data['48'];
