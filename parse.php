@@ -8,18 +8,26 @@
   $out = '';
   $eqs = "function calculate(data) { \n";
 
+  //$desc = '';
+
 while(!feof($fh))
 {
+
   $line = fgets($fh);
+
+  // Remove equations from descriptor file
+  // if ($line[0]!='$' && $line[0]!='t') $desc .= $line;
+
   $line = trim($line);
 
   // Headings
-  if ($line[0] == '#' && !$table) {$line = substr($line,1); $out .= "<h3>".$line."</h3>\n";}
+  if ($line[0] == '#' && !$table) {$line = substr($line,1); $out .= "<h3>".$line."</h3>\n"; }
   if ($line[0] == 'p' && !$table) {$line = substr($line,1); $out .= "<p>".$line."</p>\n";}
 
   if ($line[0] == 't' && $line[2]=='1')  {$br = 1;}
   if ($line[0] == 't' && $line[2]=='0')  {$br = 0;}
 
+  /*
   if ($line[0] == '$') {
     $line = preg_replace('/[^\w\s=+÷.-]/','|',$line);
     $items = explode('|', $line);
@@ -67,6 +75,7 @@ while(!feof($fh))
       $eqs .= ";\n";
     }
   }
+  */
 
   if ($line[0] == '>') {$table = false; $out .= "</table>\n";}
 
@@ -89,21 +98,33 @@ while(!feof($fh))
     $out .= "  </tr>\n";
   }
 
-  if ($line[0] == '<') {$table = true; $out .= "<table class='table table-bordered'>\n";}
+  if ($line[0] == '<' && !$table) {$table = true; $out .= "<table class='table table-bordered'>\n";}
 
   // Parse monthly table automatically
   if ($line[0] == 'm' && !$table)
   {
     $tag = substr($line, 3,-1);
     $d='-';
-    $out .= "<table class='table table-bordered'>\n  <tr>\n    <td style='padding-top:13px'>(".$tag.")m</td>\n";
+    $out .= "<table class='table table-bordered'>\n  <tr>\n    <td style='padding-top:8px'>(".$tag.")m</td>\n";
     for ($i=1; $i<13; $i++)
     {
       $id = $tag.$d.$i;
-      $out .= "    <td style='padding:8px 0px 6px 6px'><input style='width:45px;' class='".$id."' type='text' placeholder='".$id."' value='0' /></td>\n";
+      $out .= "    <td style='padding:3px'><input style='width:32px;' class='".$id."' type='text' placeholder='".$id."' value='0' /></td>\n";
     }
     $out .= "  </tr>\n</table>\n";
   }
+
+  if ($line[0] == 'F' && !$table)
+  {
+    $line = substr($line, 2);
+    // Export to html file
+    $outfile = "compiled/".$line;
+    $out_fh = fopen($outfile, 'w');
+    fwrite($out_fh, $out);
+    fclose($out_fh);
+    $out = "";
+  }
+
 }
 
 fclose($fh);
@@ -120,17 +141,19 @@ function getid($str)
 
 echo "Parsing complete";
 
+
+
 // Export to html file
-$outfile = "form.html";
-$out_fh = fopen($outfile, 'w');
-fwrite($out_fh, $out);
-fclose($out_fh);
+// $outfile = "desc2.txt";
+// $out_fh = fopen($outfile, 'w');
+// fwrite($out_fh, $desc);
+// fclose($out_fh);
 
 $eqs .= "return data; \n";
 $eqs .= '}';
 // Export to quations file
-$outfile = "equations.js";
-$out_fh = fopen($outfile, 'w');
-fwrite($out_fh, $eqs);
-fclose($out_fh);
+//$outfile = "equations.js";
+//$out_fh = fopen($outfile, 'w');
+//fwrite($out_fh, $eqs);
+//fclose($out_fh);
 ?>

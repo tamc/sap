@@ -1,4 +1,15 @@
 function calculate(data) { 
+
+// Table 1a: Number of days in month, nm
+data['table1a'] = [31,28,31,30,31,30,31,31,30,31,30,31];
+
+// Table 1c: Monthly factors for hot water use
+data['table1c'] = [1.1,1.06,1.02,0.98,0.94,0.90,0.90,0.94,0.98,1.02,1.06,1.10];
+
+// Table 1d: Temperature rise of hot water drawn off (∆Tm, in K)
+data['table1d'] = [41.2,41.4,40.1,37.6,36.4,33.9,30.4,33.4,33.5,36.3,39.4,39.9];
+
+
 data['3a'] = data['1a'] * data['2a'];
 data['3b'] = data['1b'] * data['2b'];
 data['3c'] = data['1c'] * data['2c'];
@@ -106,27 +117,48 @@ data['40'] = 0;
 for (var i=1; i<13; i++) { data['40'] += data['40-'+i]; }
 data['40'] = data['40'] / 12;
 
+
+// Copy days in month from table 1a
+for (var i=1; i<13; i++) { data['41-'+i] = data['table1a'][i-1]; }
+
+/*
+
+  4. Water heating energy requirement
+
+*/
+
+
 // Annual average hot water usage in litres per day
 data['43'] = (data['42']*25) + 36;
 
-// Average (44)
-data['44'] = 0;
-for (var i=1; i<13; i++) { data['44'] += data['44-'+i]; }
-data['44'] = data['44'] / 12;
+// Hot water usage in litres per day for each month V d,m = factor from Table 1c × (43)
+for (var i=1; i<13; i++) { data['44-'+i] = data['table1c'][i-1] * data['43']; }
 
-// Average (45)
-data['45'] = 0;
-for (var i=1; i<13; i++) { data['45'] += data['45-'+i]; }
-data['45'] = data['45'] / 12;
+// Total (44)
+data['44'] = 0; for (var i=1; i<13; i++) { data['44'] += data['44-'+i]; }
 
+// Energy content of hot water used - calculated monthly = 4.190 × Vd,m × nm × ∆Tm / 3600 kWh/month (see Tables 1b, 1c, 1d)
+for (var i=1; i<13; i++) { data['45-'+i] = 4.190 * data['44-'+i] * data['41-'+i] * data['table1d'][i-1] / 3600; }
+
+// Total (45)
+data['45'] = 0; for (var i=1; i<13; i++) { data['45'] += data['45-'+i]; }
+
+// Distribution loss (46)m = 0.15 x (45)m
 for (var i=1; i<13; i++) { data['46-'+i] = 0.15 * data['45-'+i]; }
-data['46'] = data['46o1'] + data['46o2'] + data['46o3'] + data['46o4'] + data['46o5'] + data['46o6'] + data['46o7'] + data['46o8'] + data['46o9'] + data['46o10'] + data['46o11'] + data['46o12'];
+
+// Energy lost from water storage, kWh/day
 data['49'] = data['47'] + data['48'];
-data['54'] = data['50'] + data['51'] + data['52'] + data['53'];
+
+// Energy lost from water storage, kWh/day (54) = (50) × (51) × (52) × (53) 
+data['54'] = data['50'] * data['51'] * data['52'] * data['53'];
+
+// Water storage loss calculated for each month (56)m = (55) × (41)m
 for (var i=1; i<13; i++) { data['56-'+i] = data['55'] * data['41-'+i]; }
-data['56'] = data['56o1'] + data['56o2'] + data['56o3'] + data['56o4'] + data['56o5'] + data['56o6'] + data['56o7'] + data['56o8'] + data['56o9'] + data['56o10'] + data['56o11'] + data['56o12'];
-for (var i=1; i<13; i++) { data['57-'+i] = data['50'] - data['H11'] / data['50'] * data['56-'+i]; }
-data['57'] = data['57o1'] + data['57o2'] + data['57o3'] + data['57o4'] + data['57o5'] + data['57o6'] + data['57o7'] + data['57o8'] + data['57o9'] + data['57o10'] + data['57o11'] + data['57o12'];
+
+// If cylinder contains dedicated solar storage, (57)m = (56)m × [(50) – (H11)] ÷ (50), else (57)m = (56)m where (H11) is from Appendix H
+for (var i=1; i<13; i++) { data['57-'+i] = data['56-'+i] * (data['50'] - data['H11']) / data['50']; }
+
+
 for (var i=1; i<13; i++) { data['59-'+i] = data['58'] / 365 * data['41-'+i]; }
 data['59'] = data['59o1'] + data['59o2'] + data['59o3'] + data['59o4'] + data['59o5'] + data['59o6'] + data['59o7'] + data['59o8'] + data['59o9'] + data['59o10'] + data['59o11'] + data['59o12'];
 data['61'] = data['61o1'] + data['61o2'] + data['61o3'] + data['61o4'] + data['61o5'] + data['61o6'] + data['61o7'] + data['61o8'] + data['61o9'] + data['61o10'] + data['61o11'] + data['61o12'];

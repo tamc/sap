@@ -23,18 +23,20 @@
     $output['content'] = "";
     $output['message'] = "";
 
-    if ($action == '' && $session['write'])
-    {
-      $data = sap_get($session['userid'], 1);
-      $output['content'] = view("sap/sap_view.php",array('data'=>$data));
-    }
-    elseif ($action == 'save' && $session['write'])
+
+    if ($action == 'save' && $session['write'])
     {
       $data = post('data');
       sap_save($session['userid'],1,$data);
     }
+    elseif ($session['write'])
+    {
+      if (!$action) $action = 1;
+      $data = sap_get($session['userid'], 1);
+      $output['content'] = view("sap/sap_view.php",array('data'=>$data, 'page'=>$action));
+    }
   
-
+    $output['fullwidth'] = true;
     return $output;
   }
 
