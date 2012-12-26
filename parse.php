@@ -88,7 +88,7 @@ while(!feof($fh))
       if ($td[0]=='(') 
       {
         $id = getid($td);
-        $out .= "    <td style='padding:8px 6px 6px 6px; width:60px'><input style='width:60px' class='".$id."' type='text' placeholder='".$id."' value='0' /></td>\n";
+        $out .= "    <td style='padding:8px 6px 6px 6px; width:85px;'><input style='width:36px; ' class='".$id."' type='text' placeholder='".$id."' value='0' /><div class='tag' >(".$id.")</div></td>\n";
       }
       else
       {

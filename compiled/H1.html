@@ -1,0 +1,130 @@
+<h3> H1 Calculation of solar input for solar water heating</h3>
+<table class='table table-bordered'>
+  <tr>
+    <td>Aperture area of solar collector, m2</td>
+    <td style='padding:8px 6px 6px 6px; width:85px;'><input style='width:36px; ' class='H1' type='text' placeholder='H1' value='0' /><div class='tag' >(H1)</div></td>
+  </tr>
+  <tr>
+    <td>If only the gross area can be established reliably, multiply it by ratio in Table H1</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Zero-loss collector efficiency, η0, from test certificate or Table H1</td>
+    <td style='padding:8px 6px 6px 6px; width:85px;'><input style='width:36px; ' class='H2' type='text' placeholder='H2' value='0' /><div class='tag' >(H2)</div></td>
+  </tr>
+  <tr>
+    <td>Collector linear heat loss coefficient, a1, from test certificate</td>
+    <td style='padding:8px 6px 6px 6px; width:85px;'><input style='width:36px; ' class='H3' type='text' placeholder='H3' value='0' /><div class='tag' >(H3)</div></td>
+  </tr>
+  <tr>
+    <td>Collector 2nd order heat loss coefficient, a2, from test certificate</td>
+    <td style='padding:8px 6px 6px 6px; width:85px;'><input style='width:36px; ' class='H3a' type='text' placeholder='H3a' value='0' /><div class='tag' >(H3a)</div></td>
+  </tr>
+  <tr>
+    <td>a* = 0.892 (a1 + 45 a2) or a* from Table H1</td>
+    <td style='padding:8px 6px 6px 6px; width:85px;'><input style='width:36px; ' class='H3b' type='text' placeholder='H3b' value='0' /><div class='tag' >(H3b)</div></td>
+  </tr>
+  <tr>
+    <td>Collector performance ratio a*/η0 (H3b) ÷ (H2) = </td>
+    <td style='padding:8px 6px 6px 6px; width:85px;'><input style='width:36px; ' class='H4' type='text' placeholder='H4' value='0' /><div class='tag' >(H4)</div></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>UK Region index</td>
+    <td style='padding:8px 6px 6px 6px; width:85px;'><input style='width:36px; ' class='H5a' type='text' placeholder='H5a' value='0' /><div class='tag' >(H5a)</div></td>
+  </tr>
+  <tr>
+    <td>Collector Orientation</td>
+    <td style='padding:8px 6px 6px 6px; width:85px;'><input style='width:36px; ' class='H5b' type='text' placeholder='H5b' value='0' /><div class='tag' >(H5b)</div></td>
+  </tr>
+  <tr>
+    <td>Collector Inclination</td>
+    <td style='padding:8px 6px 6px 6px; width:85px;'><input style='width:36px; ' class='H5c' type='text' placeholder='H5c' value='0' /><div class='tag' >(H5c)</div></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Annual solar radiation per m2 from U3.3 in Appendix U for the orientation and tilt of the collector</td>
+    <td style='padding:8px 6px 6px 6px; width:85px;'><input style='width:36px; ' class='H5' type='text' placeholder='H5' value='0' /><div class='tag' >(H5)</div></td>
+  </tr>
+  <tr>
+    <td>Overshading factor from Table H2</td>
+    <td style='padding:8px 6px 6px 6px; width:85px;'><input style='width:36px; ' class='H6' type='text' placeholder='H6' value='0' /><div class='tag' >(H6)</div></td>
+  </tr>
+  <tr>
+    <td>Solar energy available (H1) × (H2) × (H5) × (H6) = </td>
+    <td style='padding:8px 6px 6px 6px; width:85px;'><input style='width:36px; ' class='H7' type='text' placeholder='H7' value='0' /><div class='tag' >(H7)</div></td>
+  </tr>
+  <tr>
+    <td>Solar-to-load ratio (H7) ÷ ∑ (45)m = </td>
+    <td style='padding:8px 6px 6px 6px; width:85px;'><input style='width:36px; ' class='H8' type='text' placeholder='H8' value='0' /><div class='tag' >(H8)</div></td>
+  </tr>
+  <tr>
+    <td>if a WWHRS is fitted this becomes (H7) ÷ [∑ (45)m – ∑Sm], see Appendix G</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Utilisation factor if (H8) > 0, 1 - exp[-1/(H8)], otherwise enter “0” in box (H9)</td>
+    <td style='padding:8px 6px 6px 6px; width:85px;'><input style='width:36px; ' class='H9' type='text' placeholder='H9' value='0' /><div class='tag' >(H9)</div></td>
+  </tr>
+  <tr>
+    <td>if the cylinder is heated by a boiler and there is no cylinderstat, reduce the utilisation factor by 10%</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Collector performance factor f1: if (H4) < 20 0.97 - 0.0367 × (H4) + 0.0006 × (H4)^2 = <br> else 0.693 – 0.0108 × (H4) = </td>
+    <td style='padding:8px 6px 6px 6px; width:85px;'><input style='width:36px; ' class='H10' type='text' placeholder='H10' value='0' /><div class='tag' >(H10)</div></td>
+  </tr>
+  <tr>
+    <td>Dedicated solar storage volume, Vs, litres</td>
+    <td style='padding:8px 6px 6px 6px; width:85px;'><input style='width:36px; ' class='H11' type='text' placeholder='H11' value='0' /><div class='tag' >(H11)</div></td>
+  </tr>
+  <tr>
+    <td>volume of pre-heat store, or dedicated solar volume of a combined cylinder</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>If combined cylinder, total volume of cylinder, litres</td>
+    <td style='padding:8px 6px 6px 6px; width:85px;'><input style='width:36px; ' class='H12' type='text' placeholder='H12' value='0' /><div class='tag' >(H12)</div></td>
+  </tr>
+  <tr>
+    <td>Effective solar volume, Veff</td>
+    <td style='padding:8px 6px 6px 6px; width:85px;'><input style='width:36px; ' class='H13' type='text' placeholder='H13' value='0' /><div class='tag' >(H13)</div></td>
+  </tr>
+  <tr>
+    <td>if separate pre-heat solar storage, (H13) = (H11)</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>if combined cylinder, (H13) = (H11) + 0.3 × [(H12) – (H11)]</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Daily hot water demand, Vd,average, (litres) (H14) = (43)</td>
+    <td style='padding:8px 6px 6px 6px; width:85px;'><input style='width:36px; ' class='H14' type='text' placeholder='H14' value='0' /><div class='tag' >(H14)</div></td>
+  </tr>
+  <tr>
+    <td>Volume ratio Veff/Vd,average (H13) ÷ (H14) = </td>
+    <td style='padding:8px 6px 6px 6px; width:85px;'><input style='width:36px; ' class='H15' type='text' placeholder='H15' value='0' /><div class='tag' >(H15)</div></td>
+  </tr>
+  <tr>
+    <td>Solar storage volume factor f2 1 + 0.2 × ln(H15) =</td>
+  </tr>
+  <tr>
+    <td><br>(not greater than 1.0)</td>
+    <td style='padding:8px 6px 6px 6px; width:85px;'><input style='width:36px; ' class='H16' type='text' placeholder='H16' value='0' /><div class='tag' >(H16)</div></td>
+  </tr>
+  <tr>
+    <td>Annual solar input Qs (kWh) (H7) × (H9) × (H10) × (H16) = </td>
+    <td style='padding:8px 6px 6px 6px; width:85px;'><input style='width:36px; ' class='H17' type='text' placeholder='H17' value='0' /><div class='tag' >(H17)</div></td>
+  </tr>
+  <tr>
+    <td>Note: (43) and (45) are box numbers of the main worksheet</td>
+    <td></td>
+  </tr>
+</table>

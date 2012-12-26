@@ -2,7 +2,7 @@
 
 <script type="text/javascript" src="<?php echo $path; ?>Lib/flot/jquery.min.js"></script>
 <script type="text/javascript" src="<?php echo $path; ?>/Modules/sap/equations.js"></script>
-
+<script type="text/javascript" src="<?php echo $path; ?>/Modules/sap/solar.js"></script>
 <style>
   p {
     color:#222;
@@ -11,6 +11,14 @@
 
   input {
     width:80px;
+  }
+
+  .tag
+  {
+    font-size:12px; 
+    color:#888; 
+    padding:6px 2px 0px 2px; 
+    float:right;
   }
 
 .table tbody tr:hover td,
@@ -37,6 +45,7 @@
           <li><a href="<?php echo $path; ?>sap/9">9. Energy requirements</a></li>
           <li><a href="<?php echo $path; ?>sap/10">10. Fuel costs</a></li>
           <li><a href="<?php echo $path; ?>sap/11">11. SAP rating</a></li>
+          <li><a href="<?php echo $path; ?>sap/H1">Appendix H1. Solar input for solar water heating</a></li>
         </ul>
     </div>
     <div class="span9">
@@ -71,7 +80,7 @@
       data = calculate(data);
       for (z in data)
       {
-        if (z!=id && last[z]!=data[z]) $("."+z).val(data[z]);
+        if (z!=id && last[z]!=data[z]) { $("."+z).val(data[z]); $("."+z).attr('readonly', 'readonly');}
       }
 
       $.ajax({                                      
