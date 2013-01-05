@@ -56,7 +56,7 @@
 
     <script>
   var path = "<?php echo $path; ?>";
-    var data = <?php echo $data; ?>;
+  var data = <?php echo $data; ?>;
     
     if (data==0)
     {
@@ -64,33 +64,98 @@
       $('input').each(function()
       {
         var id = $(this).attr('class');
-        data[id] = $(this).val()*1;
+        if (id) data[id] = $(this).val()*1;
       });
     }
     else
     {
-      for (z in data) $('.'+z).val(data[z]);
+      for (z in data) {if (z) $('.'+z).val(data[z]);}
     }
 
     $('input').change(function()
     {
       var id = $(this).attr('class');
-      data[id] = $(this).val()*1;
-      var last = JSON.parse(JSON.stringify(data));
-      data = calculate(data);
-      for (z in data)
+      if (id)
       {
-        if (z!=id && last[z]!=data[z]) { $("."+z).val(data[z]); $("."+z).attr('readonly', 'readonly');}
-      }
+        data[id] = $(this).val()*1;
+        var last = JSON.parse(JSON.stringify(data));
+        data = calculate(data);
+        for (z in data)
+        {
+          if (z!=id && last[z]!=data[z]) { $("."+z).val(data[z]); $("."+z).attr('readonly', 'readonly');}
+        }
 
-      $.ajax({                                      
-        type: "POST",
-        url: path+"sap/save.json",           
-        data: "&data="+encodeURIComponent(JSON.stringify(data)),
-        success: function(msg) {console.log(msg);} 
-      });
+        $.ajax({                                      
+          type: "POST",
+          url: path+"sap/save.json",           
+          data: "&data="+encodeURIComponent(JSON.stringify(data)),
+          success: function(msg) {console.log(msg);} 
+        });
+      }
     });
 
+    var orientation = ['North','Northeast','East','Southeast','South','Southwest','West','Northwest'];
+    var overshading = ['Heavy > 80%','More than average > 60%-80%','Average or unknown 20%-60%','Very little < 20%'];
+    if (data['window']==undefined) data['window'] = [];
+
+    solar_gains();
+ 
+    function solar_gains()
+    {
+      var rows = "";
+      for (i in data['window']) rows += solargainrow(i,data['window'][i]);
+      $("#solargainstable tr:last").before(rows);
+
+      $('#window_add').click(function()
+      {
+        data['window'].push({
+          'orientation': $('#window_orientation').val(), 
+          'area': $('#window_area').val(), 
+          'overshading': $('#window_overshading').val(), 
+          'g': $('#window_g').val(),  
+          'ff': $('#window_ff').val()
+        });
+
+        var i = data['window'].length-1;
+        $("#solargainstable tr:last").before( solargainrow(i,data['window'][i]) );
+
+        $.ajax({                                      
+          type: "POST",
+          url: path+"sap/save.json",           
+          data: "&data="+encodeURIComponent(JSON.stringify(data)),
+          success: function(msg) {console.log(msg);} 
+        });
+      });
+
+      $(".delete").live('click', function(event) {
+        var rowid = $(this).attr("rowid");
+        data['window'].splice(rowid,1);
+
+        $.ajax({                                      
+          type: "POST",
+          url: path+"sap/save.json",           
+          data: "&data="+encodeURIComponent(JSON.stringify(data)),
+          success: function(msg) {console.log(msg);} 
+        });
+
+	$(this).parent().parent().remove();
+      });
+
+    }
+
+    function solargainrow(i,window)
+    {
+      var row = "";
+      row += "<tr>";
+      row += "<td>"+orientation[window['orientation']]+"</td>";
+      row += "<td>"+window['area']+" m2</td>";
+      row += "<td>"+overshading[window['overshading']]+"</td>";
+      row += "<td>"+window['g']+"</td>";
+      row += "<td>"+window['ff']+"</td>";
+      row += "<td><input class='delete' type='button' value='x' rowid='"+i+"' / ></td>";
+      row += "</tr>";
+      return row;
+    }
 
     </script>
 

@@ -225,11 +225,31 @@ for (var i=1; i<13; i++) {
   data['72-'+i] = 1000 * data['65-'+i] / (data['41-'+i] * 24);
 }
 
-
-
-
 // SUM of all gains
 for (var i=1; i<13; i++) { data['73-'+i] = data['66-'+i] + data['67-'+i] + data['68-'+i] + data['69-'+i] + data['70-'+i] + data['71-'+i] + data['72-'+i]; }
+
+
+/*
+
+SOLAR GAINS
+
+// Calculate solar flux for January
+data['74c'] = solar_rad(data['H5a'],0,90,0);
+data['75c'] = solar_rad(data['H5a'],1,90,0);
+data['76c'] = solar_rad(data['H5a'],2,90,0);
+data['77c'] = solar_rad(data['H5a'],3,90,0);
+data['78c'] = solar_rad(data['H5a'],4,90,0);
+data['79c'] = solar_rad(data['H5a'],3,90,0);
+data['80c'] = solar_rad(data['H5a'],2,90,0);
+data['81c'] = solar_rad(data['H5a'],1,90,0);
+data['82c'] = solar_rad(data['H5a'],4,0,0);
+
+// Gains (W)
+for (var i=74; i<83; i++) { 
+  data[i+''] = data[i+'a'] * data[i+'b'] * data[i+'c'] * 0.9 * data[i+'d'] * data[i+'e'];
+}
+
+*/
 
 for (var i=1; i<13; i++) { data['83-'+i] = data['74-'+i] + data['75-'+i] + data['76-'+i] + data['77-'+i] + data['78-'+i] + data['79-'+i] + data['80-'+i] + data['81-'+i] + data['82-'+i]; }
 for (var i=1; i<13; i++) { data['84-'+i] = data['73-'+i] + data['83-'+i]; }
