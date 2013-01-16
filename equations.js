@@ -249,10 +249,13 @@ for (var i=74; i<83; i++) {
   data[i+''] = data[i+'a'] * data[i+'b'] * data[i+'c'] * 0.9 * data[i+'d'] * data[i+'e'];
 }
 
+for (var i=1; i<13; i++) { data['83-'+i] = data['74-'+i] + data['75-'+i] + data['76-'+i] + data['77-'+i] + data['78-'+i] + data['79-'+i] + data['80-'+i] + data['81-'+i] + data['82-'+i]; }
+
 */
 
-for (var i=1; i<13; i++) { data['83-'+i] = data['74-'+i] + data['75-'+i] + data['76-'+i] + data['77-'+i] + data['78-'+i] + data['79-'+i] + data['80-'+i] + data['81-'+i] + data['82-'+i]; }
+// Total gains – internal and solar (84)m = (73)m + (83)m , watts
 for (var i=1; i<13; i++) { data['84-'+i] = data['73-'+i] + data['83-'+i]; }
+
 for (var i=1; i<13; i++) { data['95-'+i] = data['94-'+i] * data['84-'+i]; }
 for (var i=1; i<13; i++) { data['97-'+i] = data['93-'+i] - data['96-'+i] * data['39-'+i]; }
 for (var i=1; i<13; i++) { data['98-'+i] = data['97-'+i] - data['95-'+i] * 0.024 * data['41-'+i] * data['97-'+i]; }

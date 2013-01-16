@@ -3,6 +3,7 @@
 <script type="text/javascript" src="<?php echo $path; ?>Lib/flot/jquery.min.js"></script>
 <script type="text/javascript" src="<?php echo $path; ?>/Modules/sap/equations.js"></script>
 <script type="text/javascript" src="<?php echo $path; ?>/Modules/sap/solar.js"></script>
+<script type="text/javascript" src="<?php echo $path; ?>/Modules/sap/windowgains.js"></script>
 <style>
   p {
     color:#222;
@@ -119,6 +120,14 @@
         var i = data['window'].length-1;
         $("#solargainstable tr:last").before( solargainrow(i,data['window'][i]) );
 
+        // calculate solar gains from windows
+        var gains = calc_solar_gains_from_windows(data['window'],data['H5a']);
+        // copy over the calc results into the worksheet cells
+        for (var z=1; z<13; z++) data['83-'+z] = gains[z-1];
+        // recalculate and draw the worksheet
+        data = calculate(data);
+        for (z in data) if (z) $("."+z).val(data[z]);
+
         $.ajax({                                      
           type: "POST",
           url: path+"sap/save.json",           
@@ -130,6 +139,14 @@
       $(".delete").live('click', function(event) {
         var rowid = $(this).attr("rowid");
         data['window'].splice(rowid,1);
+
+        // calculate solar gains from windows
+        var gains = calc_solar_gains_from_windows(data['window'],data['H5a']);
+        // copy over the calc results into the worksheet cells
+        for (var z=1; z<13; z++) data['83-'+z] = gains[z-1];
+        // recalculate and draw the worksheet
+        data = calculate(data);
+        for (z in data) if (z) $("."+z).val(data[z]);
 
         $.ajax({                                      
           type: "POST",
