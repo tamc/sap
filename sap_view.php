@@ -4,6 +4,7 @@
 <script type="text/javascript" src="<?php echo $path; ?>/Modules/sap/equations.js"></script>
 <script type="text/javascript" src="<?php echo $path; ?>/Modules/sap/solar.js"></script>
 <script type="text/javascript" src="<?php echo $path; ?>/Modules/sap/windowgains.js"></script>
+<script type="text/javascript" src="<?php echo $path; ?>/Modules/sap/utilisationfactor.js"></script>
 <style>
   p {
     color:#222;
