@@ -278,6 +278,7 @@ for (var i=1; i<13; i++) { data['83-'+i] = data['74-'+i] + data['75-'+i] + data[
 
 // Monthly average external temperature from Table U1
 var region = data['H5a'];
+if (region ==0) region =1;
 for (var i=1; i<13; i++) data['96-'+i] = table_u1[region][i-1];
 
 // Total gains – internal and solar (84)m = (73)m + (83)m , watts

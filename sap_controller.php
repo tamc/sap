@@ -14,30 +14,25 @@
 
   function sap_controller()
   {
+    global $mysqli, $session, $route;
+
     require "Modules/sap/sap_model.php";
-    global $session, $route;
+    $sap = new Sap($mysqli);
 
-    $format = $route['format'];
-    $action = $route['action'];
-
-    $output['content'] = "";
-    $output['message'] = "";
-
-
-    if ($action == 'save' && $session['write'])
+    if ($route->action == 'save' && $session['write'])
     {
       $data = post('data');
-      sap_save($session['userid'],1,$data);
+      $sap->save($session['userid'],1,$data);
+      $result = true;
     }
     elseif ($session['write'])
     {
-      if (!$action) $action = 1;
-      $data = sap_get($session['userid'], 1);
-      $output['content'] = view("sap/sap_view.php",array('data'=>$data, 'page'=>$action));
+      if (!$route->action) $route->action = 1;
+      $data = $sap->get($session['userid'], 1);
+      $result = view("Modules/sap/sap_view.php",array('data'=>$data, 'page'=>$route->action));
     }
   
-    $output['fullwidth'] = true;
-    return $output;
+    return array('content'=>$result, 'fullwidth'=>true);
   }
 
 ?>

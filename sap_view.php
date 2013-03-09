@@ -1,6 +1,5 @@
 <?php global $path; ?>
 
-<script type="text/javascript" src="<?php echo $path; ?>Lib/flot/jquery.min.js"></script>
 <script type="text/javascript" src="<?php echo $path; ?>/Modules/sap/equations.js"></script>
 <script type="text/javascript" src="<?php echo $path; ?>/Modules/sap/solar.js"></script>
 <script type="text/javascript" src="<?php echo $path; ?>/Modules/sap/windowgains.js"></script>
@@ -31,7 +30,7 @@
 
 
 <div class="container">
-
+<br>
   <div class="row-fluid">
     <div class="span3">
       <h3>SAP 2012</h3>
@@ -137,7 +136,7 @@
         });
       });
 
-      $(".delete").live('click', function(event) {
+      $(".delete").on('click', function(event) {
         var rowid = $(this).attr("rowid");
         data['window'].splice(rowid,1);
 

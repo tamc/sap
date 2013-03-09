@@ -1,25 +1,36 @@
 <?php
+// no direct access
+defined('EMONCMS_EXEC') or die('Restricted access');
 
-function sap_save($userid, $docid, $data)
+class Sap
 {
-  $result = db_query("SELECT `docid` FROM sap WHERE `userid` = '$userid' AND `docid` = '$docid'");
-  $row = db_fetch_object($result);
+    private $mysqli;
 
-  if (!$row)
-  {
-    db_query("INSERT INTO sap (`userid`, `docid`, `data`) VALUES ('$userid','$docid','$data')");
-  }
-  else
-  {
-    db_query("UPDATE sap SET `data` = '$data' WHERE `userid` = '$userid' AND `docid` = '$docid'");
-  }
+    public function __construct($mysqli)
+    {
+        $this->mysqli = $mysqli;
+    }
+
+    public function save($userid, $docid, $data)
+    {
+        $result = $this->mysqli->query("SELECT `docid` FROM sap WHERE `userid` = '$userid' AND `docid` = '$docid'");
+        $row = $result->fetch_object();
+
+        if (!$row)
+        {
+            $this->mysqli->query("INSERT INTO sap (`userid`, `docid`, `data`) VALUES ('$userid','$docid','$data')");
+        }
+        else
+        {
+            $this->mysqli->query("UPDATE sap SET `data` = '$data' WHERE `userid` = '$userid' AND `docid` = '$docid'");
+        }
+    }
+
+    public function get($userid,$docid)
+    {
+        $result = $this->mysqli->query("SELECT `data` FROM sap WHERE `userid` = '$userid' AND `docid` = '$docid'");
+        $row = $result->fetch_array();
+        if ($row) return $row['data']; else return '0';
+    }
 }
-
-function sap_get($userid,$docid)
-{
-  $result = db_query("SELECT `data` FROM sap WHERE `userid` = '$userid' AND `docid` = '$docid'");
-  $row = db_fetch_array($result);
-  if ($row) return $row['data']; else return '0';
-}
-
 ?>
