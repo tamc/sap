@@ -121,7 +121,6 @@ data['32e-3'] = data['32e-2'] * data['32e-1'];	// Internal ceiling
 
 data['33'] = data['externalheatloss'] + data['32'];
 
-
 // Heat capacity
 data['34'] = data['28-4'] + data['28a-4'] + data['28b-4'] + data['29-6'] + data['29a-6'] + data['30-6'] + data['32-4'] + data['32a-3'] + data['32b-3'] + data['32c-3'] + data['32d-3'] + data['32e-3'];
 
