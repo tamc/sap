@@ -162,7 +162,7 @@
           success: function(msg) {console.log(msg);} 
         });
 
-	$(this).parent().parent().remove();
+       	$(this).parent().parent().remove();
       });
 
     }
@@ -176,6 +176,105 @@
       row += "<td>"+overshading[window['overshading']]+"</td>";
       row += "<td>"+window['g']+"</td>";
       row += "<td>"+window['ff']+"</td>";
+      row += "<td><input class='delete' type='button' value='x' rowid='"+i+"' / ></td>";
+      row += "</tr>";
+      return row;
+    }
+
+    /*
+
+    Heat loss interface
+
+    */
+    if (data['heatlossitems']==undefined) data['heatlossitems'] = [];
+    heatlossitems();
+
+    function heatlossitems()
+    {
+      var rows = "";
+      for (i in data['heatlossitems']) rows += heatlossitemrow(i,data['heatlossitems'][i]);
+      $("#heatlosstable tr:last").before(rows);
+
+      $('#heatlossitem_add').click(function()
+      {
+        data['heatlossitems'].push({
+          'itemname': $('#heatlossitem-itemname').val(), 
+          'grossarea': parseFloat($('#heatlossitem-grossarea').val()), 
+          'openings': parseFloat($('#heatlossitem-openings').val()), 
+          'netarea': parseFloat($('#heatlossitem-netarea').val()), 
+          'uvalue': parseFloat($('#heatlossitem-uvalue').val()),  
+          'axu': parseFloat($('#heatlossitem-axu').val()),
+          'kvalue': parseFloat($('#heatlossitem-kvalue').val()),
+          'axk': parseFloat($('#heatlossitem-axk').val())
+        });
+
+        var i = data['heatlossitems'].length-1;
+
+        data['heatlossitems'][i].netarea = data['heatlossitems'][i].grossarea - data['heatlossitems'][i].openings;
+        data['heatlossitems'][i].axu = data['heatlossitems'][i].netarea * data['heatlossitems'][i].uvalue;
+        data['heatlossitems'][i].axk = data['heatlossitems'][i].netarea * data['heatlossitems'][i].kvalue;
+
+        $("#heatlosstable tr:last").before( heatlossitemrow(i,data['heatlossitems'][i]) );
+
+
+        var totalarea = 0, totalheatloss = 0;
+        for (z in data['heatlossitems']) {
+          totalarea += data['heatlossitems'][z].netarea;
+          totalheatloss += data['heatlossitems'][z].axu;
+        }
+        data['31'] = totalarea;
+        data['externalheatloss'] = totalheatloss;
+
+        // copy over the calc results into the worksheet cells
+        //for (var z=1; z<13; z++) data['83-'+z] = gains[z-1];
+        // recalculate and draw the worksheet
+        data = calculate(data);
+        for (z in data) if (z) $("."+z).val(data[z]);
+
+        $.ajax({                                      
+          type: "POST",
+          url: path+"sap/save.json",           
+          data: "&data="+encodeURIComponent(JSON.stringify(data)),
+          success: function(msg) {console.log(msg);} 
+        });
+      });
+
+      $(".delete").on('click', function(event) {
+        var rowid = $(this).attr("rowid");
+        data['heatlossitems'].splice(rowid,1);
+
+        // calculate solar gains from windows
+        // var gains = calc_solar_gains_from_windows(data['heatlossitems'],data['H5a']);
+        // copy over the calc results into the worksheet cells
+        // for (var z=1; z<13; z++) data['83-'+z] = gains[z-1];
+        // recalculate and draw the worksheet
+        data = calculate(data);
+        for (z in data) if (z) $("."+z).val(data[z]);
+
+        $.ajax({                                      
+          type: "POST",
+          url: path+"sap/save.json",           
+          data: "&data="+encodeURIComponent(JSON.stringify(data)),
+          success: function(msg) {console.log(msg);} 
+        });
+
+       	$(this).parent().parent().remove();
+      });
+
+    }
+
+    function heatlossitemrow(i,heatlossitem)
+    {
+      var row = "";
+      row += "<tr>";
+      row += "<td>"+heatlossitem.itemname+"</td>";
+      row += "<td>"+heatlossitem.grossarea+"</td><td></td>";
+      row += "<td>"+heatlossitem.openings+"</td><td></td>";
+      row += "<td>"+heatlossitem.netarea+"</td><td></td>";
+      row += "<td>"+heatlossitem.uvalue+"</td><td></td>";
+      row += "<td>"+heatlossitem.axu+"</td>";
+      row += "<td>"+heatlossitem.kvalue+"</td>";
+      row += "<td>"+heatlossitem.axk+"</td>";
       row += "<td><input class='delete' type='button' value='x' rowid='"+i+"' / ></td>";
       row += "</tr>";
       return row;
