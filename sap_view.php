@@ -54,14 +54,14 @@
     </div>
   </div>
 </div>
-
     <script>
-  var path = "<?php echo $path; ?>";
-  var data = <?php echo $data; ?>;
-    
+
+    var path = "<?php echo $path; ?>";
+    var data = <?php echo $data; ?>;
+
     if (data==0)
     {
-      data = {};
+      data = {'H5a':1};
       $('input').each(function()
       {
         var id = $(this).attr('class');
@@ -70,6 +70,11 @@
     }
     else
     {
+      $('input').each(function()
+      {
+        var id = $(this).attr('class');
+        if (id && data[id]==undefined) data[id] = $(this).val()*1;
+      });
       for (z in data) {if (z) $('.'+z).val(data[z]);}
     }
 
@@ -78,6 +83,7 @@
       var id = $(this).attr('class');
       if (id)
       {
+        console.log(data);
         data[id] = $(this).val()*1;
         var last = JSON.parse(JSON.stringify(data));
         data = calculate(data);
@@ -86,6 +92,7 @@
           if (z!=id && last[z]!=data[z]) { $("."+z).val(data[z]); $("."+z).attr('readonly', 'readonly');}
         }
 
+        console.log(data);
         $.ajax({                                      
           type: "POST",
           url: path+"sap/save.json",           
