@@ -424,34 +424,35 @@ data['219'] = 0; for (var i=1; i<13; i++) { data['219'] += data['219-'+i]; }
 
 data['231'] = data['230a'] + data['230b'] + data['230c'] + data['230d'] + data['230e'] + data['230f'] + data['230g'];
 data['232'] = data['L8'];
-/*
-data['98'] = data['98o1'] + data['98o2'] + data['98o3'] + data['98o4'] + data['98o5'] + data['98o6'] + data['98o7'] + data['98o8'] + data['98o9'] + data['98o10'] + data['98o11'] + data['98o12'];
-data['99'] = data['98'] / data['4'];
-for (var i=1; i<13; i++) { data['102-'+i] = data['100-'+i] * data['101-'+i]; }
-data['104'] = data['104o1'] + data['104o2'] + data['104o3'] + data['104o4'] + data['104o5'] + data['104o6'] + data['104o7'] + data['104o8'] + data['104o9'] + data['104o10'] + data['104o11'] + data['104o12'];
-data['106'] = data['106o1'] + data['106o2'] + data['106o3'] + data['106o4'] + data['106o5'] + data['106o6'] + data['106o7'] + data['106o8'] + data['106o9'] + data['106o10'] + data['106o11'] + data['106o12'];
-for (var i=1; i<13; i++) { data['107-'+i] = data['104-'+i] * data['105'] * data['106-'+i]; }
-data['107'] = data['107o1'] + data['107o2'] + data['107o3'] + data['107o4'] + data['107o5'] + data['107o6'] + data['107o7'] + data['107o8'] + data['107o9'] + data['107o10'] + data['107o11'] + data['107o12'];
-data['108'] = data['107'] / data['4'];
-data['109'] = data['99'] + data['108'];
 
-data['204'] = data['203'] - 1 * data['202'];
-data['205'] = data['202'] * data['203'];
-for (var i=1; i<13; i++) { data['211-'+i] = data['98-'+i] * data['204'] * 100 / data['206']; }
-data['211'] = data['211o1'] + data['211o2'] + data['211o3'] + data['211o4'] + data['211o5'] + data['211o6'] + data['211o7'] + data['211o8'] + data['211o9'] + data['211o10'] + data['211o11'] + data['211o12'];
-for (var i=1; i<13; i++) { data['213-'+i] = data['98-'+i] * data['205'] * 100 / data['207']; }
-data['213'] = data['213o1'] + data['213o2'] + data['213o3'] + data['213o4'] + data['213o5'] + data['213o6'] + data['213o7'] + data['213o8'] + data['213o9'] + data['213o10'] + data['213o11'] + data['213o12'];
-for (var i=1; i<13; i++) { data['215-'+i] = data['98-'+i] * data['201'] * 100 / data['208']; }
-data['215'] = data['215o1'] + data['215o2'] + data['215o3'] + data['215o4'] + data['215o5'] + data['215o6'] + data['215o7'] + data['215o8'] + data['215o9'] + data['215o10'] + data['215o11'] + data['215o12'];
-data['217'] = data['64o1'] + data['64o2'] + data['64o3'] + data['64o4'] + data['64o5'] + data['64o6'] + data['64o7'] + data['64o8'] + data['64o9'] + data['64o10'] + data['64o11'] + data['64o12'];
-data['217'] = data['217o1'] + data['217o2'] + data['217o3'] + data['217o4'] + data['217o5'] + data['217o6'] + data['217o7'] + data['217o8'] + data['217o9'] + data['217o10'] + data['217o11'] + data['217o12'];
-for (var i=1; i<13; i++) { data['219-'+i] = data['64-'+i] * 100 / data['217-'+i]; }
-data['219'] = data['219o1'] + data['219o2'] + data['219o3'] + data['219o4'] + data['219o5'] + data['219o6'] + data['219o7'] + data['219o8'] + data['219o9'] + data['219o10'] + data['219o11'] + data['219o12'];
-for (var i=1; i<13; i++) { data['221-'+i] = data['107-'+i] * 100 / data['209']; }
-data['221'] = data['221o1'] + data['221o2'] + data['221o3'] + data['221o4'] + data['221o5'] + data['221o6'] + data['221o7'] + data['221o8'] + data['221o9'] + data['221o10'] + data['221o11'] + data['221o12'];
+data['240'] = data['211'] * data['240b'] * 0.01;
+data['241'] = data['213'] * data['241b'] * 0.01;
+data['242'] = data['215'] * data['242b'] * 0.01;
 
-data['255'] = data['240'] + data['241'] + data['242'] + data['243'] + data['244'] + data['245'] + data['246'] + data['247'] + data['248'] + data['249'] + data['250'] + data['251'];
-*/
+data['244'] = 1 - data['243'];
+
+data['245'] = data['219'] * data['243'] * data['245a'] * 0.01;
+data['246'] = data['219'] * data['244'] * data['246a'] * 0.01;
+data['247'] = data['219'] * data['247a'] * 0.01;
+
+data['248'] = data['221'] * data['248a'] * 0.01;
+data['249'] = data['231'] * data['249a'] * 0.01;
+
+data['250'] = data['232'] * data['250a'] * 0.01;
+
+data['255'] = data['240'] + data['241'] + data['242'] + data['245'] + data['246'] + data['247'] + data['248'] + data['249'] + data['250'] + data['251'];
+
+data['257'] = (data['255'] * data['256']) / (data['4'] + 45.0);
+
+var ECF = data['257'];
+
+if (ECF >= 3.5) data['258'] = 117 - 121 * (Math.log(ECF) / Math.LN10);
+if (ECF < 3.5) data['258'] = 100 - 13.95 * ECF;
+
+
+
+
+
 data['H4'] = data['H3b'] / data['H2'];
 
 // test: region wales (index:13), orient south (index: 4), inclination 35 degrees
