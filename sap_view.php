@@ -47,6 +47,7 @@
           <li><a href="<?php echo $path; ?>sap/10">10. Fuel costs</a></li>
           <li><a href="<?php echo $path; ?>sap/11">11. SAP rating</a></li>
           <li><a href="<?php echo $path; ?>sap/H1">Appendix H1. Solar input for solar water heating</a></li>
+          <li><a href="<?php echo $path; ?>sap/AppendixL">Appendix L. Lighting and Appliances</a></li>
         </ul>
     </div>
     <div class="span9">
@@ -75,6 +76,7 @@
         var id = $(this).attr('class');
         if (id && data[id]==undefined) data[id] = $(this).val()*1;
       });
+      data = calculate(data);
       for (z in data) {if (z) $('.'+z).val(data[z]);}
     }
 

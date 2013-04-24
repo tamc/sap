@@ -19,16 +19,16 @@ function calc_utilisation_factor(TMP,HLP,H,Ti,Te,G)
 
   // Calculation of utilisation factor
   var tau = TMP / (3.6 * HLP);
-  var a = 1 + tau / 15;
+  var a = 1.0 + tau / 15.0;
   var L = H * (Ti - Te);
   var y = G / L;
 
   // Note: to avoid instability when γ is close to 1 round γ to 8 decimal places
-  y = y.toFixed(8);
-
-  var n = 0;
-  if (y>0 && y!=1) n = (1 - Math.pow(y,a)) / (1 - Math.pow(y,a+1));
-  if (y == 1) n = a / (a + 1);
+  // y = y.toFixed(8);
+  y = Math.round(y*100000000.0) / 100000000.0;
+  var n = 0.0;
+  if (y>0.0 && y!=1.0) n = (1.0 - Math.pow(y,a)) / (1.0 - Math.pow(y,a+1.0));
+  if (y == 1.0) n = a / (a + 1.0);
 
   return n;
 }

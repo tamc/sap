@@ -364,5 +364,110 @@ if (data['H16']>1) data['H16'] = 1;
 //Annual solar input Qs (kWh)
 data['H17'] = data['H7'] * data['H9'] * data['H10']* data['H16'];
 
+/*
+
+Lighting 
+
+*/
+
+data['L1'] = 59.73 * Math.pow((data['4'] * data['42']),0.4714);
+
+data['L2'] = 1 - (0.50 * data['LLE'] / data['L']);
+
+var windows = data['window'];
+
+var sum = 0;
+for (z in windows) 
+{
+  var overshading = windows[z].overshading;
+  var accessfactor = [0.5,0.67,0.83,1.0];
+  sum += 0.9 * windows[z].area * windows[z].g * windows[z].ff * accessfactor[overshading];
+}
+
+data['L5'] = sum / data['4'];
+
+if (data['L5']<=0.095) {
+  data['L3'] = 52.2 * Math.pow(data['L5'],2) - 9.94 * data['L5'] + 1.433;
+} else {
+  data['L3'] = 0.96;
+}
+
+data['L6'] = data['L1'] * data['L2'] * data['L3'];
+
+for (var i=1; i<13; i++) { data['L7-'+i] = data['L6'] * (1.0 + (0.5 * Math.cos((2*Math.PI * (i - 0.2)) / 12.0))) * data['41-'+i] / 365.0;}
+
+data['L8'] = 0; for (var i=1; i<13; i++) data['L8'] += data['L7-'+i];
+
+for (var i=1; i<13; i++) { data['L9-'+i] = data['L7-'+i] * 0.85 * 1000 / (24 * data['41-'+i]); }
+for (var i=1; i<13; i++) { data['L9a-'+i] = 0.4 * data['L9-'+i]; }
+for (var i=1; i<13; i++) { data['67-'+i] = data['L9-'+i]; }
+
+/*
+
+Electrical appliances
+
+*/
+
+data['L10'] = 207.8 * Math.pow((data['4'] * data['42']),0.4714);
+
+for (var i=1; i<13; i++) { data['L11-'+i] = data['L10'] * (1.0 + (0.157 * Math.cos((2*Math.PI * (i - 1.78)) / 12.0))) * data['41-'+i] / 365.0;}
+
+data['L12'] = 0; for (var i=1; i<13; i++) data['L12'] += data['L11-'+i];
+
+for (var i=1; i<13; i++) { data['L13-'+i] = data['L11-'+i] * 1000 / (24 * data['41-'+i]); }
+for (var i=1; i<13; i++) { data['L13a-'+i] = 0.67 * data['L13-'+i]; }
+for (var i=1; i<13; i++) { data['68-'+i] = data['L13-'+i]; }
+
+data['L14'] =  (data['L12'] * 0.522 ) / data['4'];
+
+/*
+
+Cooking
+
+*/
+
+data['L15'] = 35 + 7 * data['42']; 
+
+data['L15a'] = 23 + 5 * data['42']; 
+
+data['L16'] = (119 + 24 * data['42']) / data['4'];
+
+/*
+
+Table 9c: Heating requirement
+
+Living area
+
+1. Set Ti to the temperature for the living area during heating periods (Table 9)
+
+2. Calculate the utilisation factor (Table 9a)
+
+3 Calculate the temperature reduction (Table 9b) for each off period (Table 9), u1 and u2, for weekdays
+
+4. Tweekday = Th – (u1 + u2)
+
+5 Calculate the temperature reduction (Table 9b) for each off period (Table 9), u1 and u2, for weekends
+
+6. Tweekend = Th – (u1 + u2)
+
+7. Mean temperature (living area) T1 = ( 5 Tweekday + 2 Tweekend) / 7
+
+*/
+
+// Weighted average
+// var R = data['203'] * Rsystem2 + (1 - data['203']) * Rsystem1;
+/*
+var tc = 4 + 0.25 τ;
+
+Tsc = (1 - R) * (Th - 2.0) + R (Te + η G / H);
+
+var u;
+if (toff <= tc) u = 0.5 * toff * toff * (Th - Tsc) / (24 * tc);
+if (toff > tc) u = (Th - Tsc) * (toff - 0.5 * tc) / 24;*/
+
+
+
+
 return data; 
 }
+

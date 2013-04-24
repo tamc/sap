@@ -20,51 +20,8 @@ By implementing the worksheet as a module within emoncms we could potentially li
 
 # Development
 
-The worksheet is not yet complete we have reached end of section 9a of 12a in a rough way (there are still more complex equations to complete) its quite a long form!
-See development section below for details on how to help with development.
-
 The initial plan is to create the worksheet in a rough and just functional form, nothing fancy to start with and to fill the form close reference to the SAP specification document will be needed in order to understand what the inputs are and to get the table data etc. In future version we can imagine there being options to automatically bring in the table data depending on your location, ability to minimize/maximise sections, miss out and hide sections that are not applicable and so on.
 
-The idea behind the initial approach for implementing the worksheet is to first convert the pdf worksheet into a 'descriptor' file type format, which is then parsed using php and JavaScript into a functioning form. The idea being that it is likely that as development goes on the implementation will need to change and a descriptor would make it easier to parse it into a different form at a later date. The descriptor can be used to build html or even JavaScript. The intention being to try and avoid the need to rewrite the form at a later stage when we discover it needs to be implemented slightly differently. Whether this will hold out to be true is an other matter, but hopefully it will.
-
-The descriptor syntax also aims for easy of entry so is very minimal. For example to create a table with input boxes that are identifiable by the SAP worksheet numbering scheme the descriptor looks like this:
-
-<pre>
-&lt;
-Number of sides on which dwelling is sheltered|(19)
-&gt;
-</pre>
-
-This is parsed into:
-
-<pre>
-&lt;table&gt;
-&lt;tr>&lt;td&gt;Number of sides on which dwelling is sheltered</td>&lt;td&gt;&lt;input id='(19)' type='text' /&gt; (19)&lt;/td&gt;&lt;/tr&gt;
-&lt;/table&gt;
-</pre>
-
-The second main feature of the descriptor is the specification of equations, lets say (19)=(17)+(18), we write:
-
-<pre>
-$ (19)=(17)+(18)
-</pre>
-
-php converts this into an array and passes it to the JavaScript part: [{'result':'(19)', 'items':['(17)','x','(18)']}]
-JavaScript then executes this equation automatically putting the result of the sum of the values entered in form input 17 and 18 into form input 19.
-
-Here's the descriptor syntax so far:
-
-<pre>
-# - heading
-p - paragraph
-&lt; - open table
-&gt; - close table
-$ equation
-t 0 - input labels in-line
-t 1 - input labels below input box
-m (23a) - automatic monthly table for item id 23a
-$ (m23a)=(m22a)x(v4) - automatic monthly calculations (note preceding m befor monthly item)
-</pre>
 If you would like to get involved with developing this, please get in contact on the OpenEnergyMonitor forums.
 
 Thanks!

@@ -18,7 +18,7 @@ function calc_solar_gains_from_windows(windows,region)
           for (var month=0; month<12; month++)
           {
             // Access factor table: first dimention is shading factor, 2nd in winter, summer.
-            var table_6d = [[0.3,0.5],[0.54,0.7],[0.77,0.9],[1.0,1.0]];                                       
+            var table_6d = [[0.3,0.5],[0.54,0.7],[0.77,0.9],[1.0,1.0]];
          
             // access factor is time of year dependent
             // Summer months: 5:June, 6:July, 7:August and 8:September (where jan = month 0)
