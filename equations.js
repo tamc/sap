@@ -302,9 +302,103 @@ for (var i=1; i<13; i++)
 }
 
 
+/*
+
+Table 9c: Heating requirement
+
+Living area
+
+1. Set Ti to the temperature for the living area during heating periods (Table 9)
+
+2. Calculate the utilisation factor (Table 9a)
+
+3 Calculate the temperature reduction (Table 9b) for each off period (Table 9), u1 and u2, for weekdays
+*/
+
+for (var i=1; i<13; i++) 
+{ 
+  var Th = data['85']; // 21C;
+  var R = 1.0; 
+
+  var u1a = calc_temperature_reduction(data['35'],data['40-'+i],data['39-'+i],data['85'],data['96-'+i],data['84-'+i],R,Th,7);
+
+  var u1b = calc_temperature_reduction(data['35'],data['40-'+i],data['39-'+i],data['85'],data['96-'+i],data['84-'+i],R,Th,0);
+
+  var u2 = calc_temperature_reduction(data['35'],data['40-'+i],data['39-'+i],data['85'],data['96-'+i],data['84-'+i],R,Th,8);
+
+  var Tweekday = Th - (u1a + u2);
+  var Tweekend = Th - (u1b + u2);
+  data['87-'+i] = (5*Tweekday + 2*Tweekend) / 7;
+}
+
+// rest of dwelling
+
+for (var i=1; i<13; i++) 
+{ 
+  var Th = 21;
+  var R = 1.0; 
+
+  var u1a = calc_temperature_reduction(data['35'],data['40-'+i],data['39-'+i],data['85'],data['96-'+i],data['84-'+i],R,Th,7);
+
+  var u1b = calc_temperature_reduction(data['35'],data['40-'+i],data['39-'+i],data['85'],data['96-'+i],data['84-'+i],R,Th,0);
+
+  var u2 = calc_temperature_reduction(data['35'],data['40-'+i],data['39-'+i],data['85'],data['96-'+i],data['84-'+i],R,Th,8);
+
+  var Tweekday = Th - (u1a + u2);
+  var Tweekend = Th - (u1b + u2);
+  data['88-'+i] = (5*Tweekday + 2*Tweekend) / 7;
+}
+
+for (var i=1; i<13; i++) 
+{ 
+  var Th = 21 - 0.5 * data['40-'+i];
+  var R = 1.0; 
+
+  var u1a = calc_temperature_reduction(data['35'],data['40-'+i],data['39-'+i],data['85'],data['96-'+i],data['84-'+i],R,Th,7);
+
+  var u1b = calc_temperature_reduction(data['35'],data['40-'+i],data['39-'+i],data['85'],data['96-'+i],data['84-'+i],R,Th,0);
+
+  var u2 = calc_temperature_reduction(data['35'],data['40-'+i],data['39-'+i],data['85'],data['96-'+i],data['84-'+i],R,Th,8);
+
+  var Tweekday = Th - (u1a + u2);
+  var Tweekend = Th - (u1b + u2);
+  data['90-'+i] = (5*Tweekday + 2*Tweekend) / 7;
+}
+
+for (var i=1; i<13; i++) 
+{ 
+  var Ti = 21 - 0.5 * data['40-'+i];
+  var HLP = data['40-'+i];
+  if (HLP>6.0) HLP = 6.0;
+  data['89-'+i] = calc_utilisation_factor(data['35'],HLP,data['39-'+i],Ti,data['96-'+i],data['84-'+i]);
+}
+
+data['91'] = data['4b'] / data['4'];
+
+for (var i=1; i<13; i++) 
+{ 
+  data['92-'+i] = (data['91'] * data['87-'+i]) + (1 - data['91']) * data['90-'+i];
+}
+
+/*
+  8. Space heating requirement
+*/
+
+for (var i=1; i<13; i++) 
+{ 
+  data['94-'+i] = calc_utilisation_factor(data['35'],data['40-'+i],data['39-'+i],data['92-'+i],data['96-'+i],data['84-'+i]);
+}
+
 for (var i=1; i<13; i++) { data['95-'+i] = data['94-'+i] * data['84-'+i]; }
-for (var i=1; i<13; i++) { data['97-'+i] = data['93-'+i] - data['96-'+i] * data['39-'+i]; }
-for (var i=1; i<13; i++) { data['98-'+i] = data['97-'+i] - data['95-'+i] * 0.024 * data['41-'+i] * data['97-'+i]; }
+
+for (var i=1; i<13; i++) { data['97-'+i] = data['39-'+i] * (data['92-'+i] - data['96-'+i]); }
+
+for (var i=1; i<13; i++) { data['98-'+i] = data['97-'+i] - data['95-'+i] * 0.024 * data['41-'+i] * data['97a-'+i]; }
+
+data['98'] = 0; for (var i=1; i<13; i++) { data['98'] += data['98-'+i]; }
+
+data['99'] = data['98'] / data['4'];
+/*
 data['98'] = data['98o1'] + data['98o2'] + data['98o3'] + data['98o4'] + data['98o5'] + data['98o6'] + data['98o7'] + data['98o8'] + data['98o9'] + data['98o10'] + data['98o11'] + data['98o12'];
 data['99'] = data['98'] / data['4'];
 for (var i=1; i<13; i++) { data['102-'+i] = data['100-'+i] * data['101-'+i]; }
@@ -331,7 +425,7 @@ for (var i=1; i<13; i++) { data['221-'+i] = data['107-'+i] * 100 / data['209']; 
 data['221'] = data['221o1'] + data['221o2'] + data['221o3'] + data['221o4'] + data['221o5'] + data['221o6'] + data['221o7'] + data['221o8'] + data['221o9'] + data['221o10'] + data['221o11'] + data['221o12'];
 data['231'] = data['230a'] + data['230b'] + data['230c'] + data['230d'] + data['230e'] + data['230f'] + data['230g'];
 data['255'] = data['240'] + data['241'] + data['242'] + data['243'] + data['244'] + data['245'] + data['246'] + data['247'] + data['248'] + data['249'] + data['250'] + data['251'];
-
+*/
 data['H4'] = data['H3b'] / data['H2'];
 
 // test: region wales (index:13), orient south (index: 4), inclination 35 degrees
@@ -431,42 +525,6 @@ data['L15'] = 35 + 7 * data['42'];
 data['L15a'] = 23 + 5 * data['42']; 
 
 data['L16'] = (119 + 24 * data['42']) / data['4'];
-
-/*
-
-Table 9c: Heating requirement
-
-Living area
-
-1. Set Ti to the temperature for the living area during heating periods (Table 9)
-
-2. Calculate the utilisation factor (Table 9a)
-
-3 Calculate the temperature reduction (Table 9b) for each off period (Table 9), u1 and u2, for weekdays
-
-4. Tweekday = Th – (u1 + u2)
-
-5 Calculate the temperature reduction (Table 9b) for each off period (Table 9), u1 and u2, for weekends
-
-6. Tweekend = Th – (u1 + u2)
-
-7. Mean temperature (living area) T1 = ( 5 Tweekday + 2 Tweekend) / 7
-
-*/
-
-// Weighted average
-// var R = data['203'] * Rsystem2 + (1 - data['203']) * Rsystem1;
-/*
-var tc = 4 + 0.25 τ;
-
-Tsc = (1 - R) * (Th - 2.0) + R (Te + η G / H);
-
-var u;
-if (toff <= tc) u = 0.5 * toff * toff * (Th - Tsc) / (24 * tc);
-if (toff > tc) u = (Th - Tsc) * (toff - 0.5 * tc) / 24;*/
-
-
-
 
 return data; 
 }
