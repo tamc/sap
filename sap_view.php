@@ -218,9 +218,11 @@
 
 
         var totalarea = 0, totalheatloss = 0;
+        data['itemsheatcapacity'] = 0;
         for (z in data['heatlossitems']) {
           totalarea += data['heatlossitems'][z].netarea;
           totalheatloss += data['heatlossitems'][z].axu;
+          data['itemsheatcapacity'] += data['heatlossitems'][z].axk;
         }
         data['31'] = totalarea;
         data['externalheatloss'] = totalheatloss;

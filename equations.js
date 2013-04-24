@@ -122,7 +122,7 @@ data['32e-3'] = data['32e-2'] * data['32e-1'];	// Internal ceiling
 data['33'] = data['externalheatloss'] + data['32'];
 
 // Heat capacity
-data['34'] = data['28-4'] + data['28a-4'] + data['28b-4'] + data['29-6'] + data['29a-6'] + data['30-6'] + data['32-4'] + data['32a-3'] + data['32b-3'] + data['32c-3'] + data['32d-3'] + data['32e-3'];
+data['34'] = data['itemsheatcapacity'] + data['32-4'] + data['32a-3'] + data['32b-3'] + data['32c-3'] + data['32d-3'] + data['32e-3'];
 
 // Thermal mass parameter
 data['35'] = data['34'] / data['4'];
@@ -136,7 +136,7 @@ data['39'] = 0;
 for (var i=1; i<13; i++) { data['39'] += data['39-'+i]; }
 data['39'] = data['39'] / 12;
 
-for (var i=1; i<13; i++) { data['40-'+i] = data['39-'+i] / 4; }
+for (var i=1; i<13; i++) { data['40-'+i] = data['39-'+i] / data['4']; }
 
 // Average (40)
 data['40'] = 0;
@@ -182,7 +182,11 @@ data['54'] = data['50'] * data['51'] * data['52'] * data['53'];
 for (var i=1; i<13; i++) { data['56-'+i] = data['55'] * data['41-'+i]; }
 
 // If cylinder contains dedicated solar storage, (57)m = (56)m × [(50) – (H11)] ÷ (50), else (57)m = (56)m where (H11) is from Appendix H
-for (var i=1; i<13; i++) { data['57-'+i] = data['56-'+i] * (data['50'] - data['H11']) / data['50']; }
+for (var i=1; i<13; i++) { 
+
+ if (data['50']>0) data['57-'+i] = data['56-'+i] * (data['50'] - data['H11']) / data['50']; else data['57-'+i] = 0;
+
+}
 
 // Good to review this calculation:
 // Primary loss on a daily basis
@@ -190,7 +194,7 @@ var summer = 14 * ( (0.0091 * data['58a'] + 0.0245 * (1 - data['58a'])) * data['
 var winter = 14 * ( (0.0091 * data['58a'] + 0.0245 * (1 - data['58a'])) * data['58c'] + 0.0263 );
 
 //Use summer value for June, July, August and September and winter value for other months.
-data['59-1'] = data['table1a'][0] * winter;
+/*data['59-1'] = data['table1a'][0] * winter;
 data['59-2'] = data['table1a'][1] * winter;
 data['59-3'] = data['table1a'][2] * winter;
 data['59-4'] = data['table1a'][3] * winter;
@@ -203,15 +207,20 @@ data['59-9'] = data['table1a'][8] * summer;
 
 data['59-10'] = data['table1a'][9] * winter;
 data['59-11'] = data['table1a'][10] * winter;
-data['59-12'] = data['table1a'][11] * winter;
+data['59-12'] = data['table1a'][11] * winter;*/
+
+for (var i=1; i<13; i++) { data['59-'+i] = (data['58'] / 365.0) * data['41-'+i]; }
 
 // Total (58)
-data['58'] = 0; for (var i=1; i<13; i++) { data['58'] += data['59-'+i]; }
+//data['58'] = 0; for (var i=1; i<13; i++) { data['58'] += data['59-'+i]; }
 // for (var i=1; i<13; i++) { data['59-'+i] = data['58'] / 365 * data['41-'+i]; }
 
 data['59'] = data['59o1'] + data['59o2'] + data['59o3'] + data['59o4'] + data['59o5'] + data['59o6'] + data['59o7'] + data['59o8'] + data['59o9'] + data['59o10'] + data['59o11'] + data['59o12'];
 data['61'] = data['61o1'] + data['61o2'] + data['61o3'] + data['61o4'] + data['61o5'] + data['61o6'] + data['61o7'] + data['61o8'] + data['61o9'] + data['61o10'] + data['61o11'] + data['61o12'];
-for (var i=1; i<13; i++) { data['62-'+i] = data['45-'+i] + data['46-'+i] + data['57-'+i] + data['59-'+i] + data['61-'+i] * 0.85; }
+
+
+for (var i=1; i<13; i++) { data['62-'+i] = 0.85 * data['45-'+i] + data['46-'+i] + data['57-'+i] + data['59-'+i] + data['61-'+i];}
+
 data['62'] = data['62o1'] + data['62o2'] + data['62o3'] + data['62o4'] + data['62o5'] + data['62o6'] + data['62o7'] + data['62o8'] + data['62o9'] + data['62o10'] + data['62o11'] + data['62o12'];
 data['63'] = data['63o1'] + data['63o2'] + data['63o3'] + data['63o4'] + data['63o5'] + data['63o6'] + data['63o7'] + data['63o8'] + data['63o9'] + data['63o10'] + data['63o11'] + data['63o12'];
 for (var i=1; i<13; i++) { data['64-'+i] = data['62-'+i] + data['63-'+i]; }
