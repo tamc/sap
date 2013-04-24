@@ -418,6 +418,12 @@ if (data['208']>0){
   for (var i=1; i<13; i++) { data['215-'+i] = data['98-'+i] * data['201'] * 100 / data['208']; }
   data['215'] = 0; for (var i=1; i<13; i++) { data['215'] += data['215-'+i]; }
 }
+
+for (var i=1; i<13; i++) { data['219-'+i] = data['64-'+i] * 100 / data['217-'+i]; }
+data['219'] = 0; for (var i=1; i<13; i++) { data['219'] += data['219-'+i]; }
+
+data['231'] = data['230a'] + data['230b'] + data['230c'] + data['230d'] + data['230e'] + data['230f'] + data['230g'];
+data['232'] = data['L8'];
 /*
 data['98'] = data['98o1'] + data['98o2'] + data['98o3'] + data['98o4'] + data['98o5'] + data['98o6'] + data['98o7'] + data['98o8'] + data['98o9'] + data['98o10'] + data['98o11'] + data['98o12'];
 data['99'] = data['98'] / data['4'];
@@ -443,7 +449,7 @@ for (var i=1; i<13; i++) { data['219-'+i] = data['64-'+i] * 100 / data['217-'+i]
 data['219'] = data['219o1'] + data['219o2'] + data['219o3'] + data['219o4'] + data['219o5'] + data['219o6'] + data['219o7'] + data['219o8'] + data['219o9'] + data['219o10'] + data['219o11'] + data['219o12'];
 for (var i=1; i<13; i++) { data['221-'+i] = data['107-'+i] * 100 / data['209']; }
 data['221'] = data['221o1'] + data['221o2'] + data['221o3'] + data['221o4'] + data['221o5'] + data['221o6'] + data['221o7'] + data['221o8'] + data['221o9'] + data['221o10'] + data['221o11'] + data['221o12'];
-data['231'] = data['230a'] + data['230b'] + data['230c'] + data['230d'] + data['230e'] + data['230f'] + data['230g'];
+
 data['255'] = data['240'] + data['241'] + data['242'] + data['243'] + data['244'] + data['245'] + data['246'] + data['247'] + data['248'] + data['249'] + data['250'] + data['251'];
 */
 data['H4'] = data['H3b'] / data['H2'];
