@@ -398,6 +398,26 @@ for (var i=1; i<13; i++) { data['98-'+i] = data['97-'+i] - data['95-'+i] * 0.024
 data['98'] = 0; for (var i=1; i<13; i++) { data['98'] += data['98-'+i]; }
 
 data['99'] = data['98'] / data['4'];
+
+data['202'] = 1 - data['201'];
+
+data['204'] = data['202'] * (1 - data['203']);
+
+data['205'] = data['202'] * data['203'];
+
+for (var i=1; i<13; i++) { data['211-'+i] = data['98-'+i] * data['204'] * 100 / data['206']; }
+
+data['211'] = 0; for (var i=1; i<13; i++) { data['211'] += data['211-'+i]; }
+
+if (data['207']>0){
+  for (var i=1; i<13; i++) { data['213-'+i] = data['98-'+i] * data['205'] * 100 / data['207']; }
+  data['213'] = 0; for (var i=1; i<13; i++) { data['213'] += data['213-'+i]; }
+}
+
+if (data['208']>0){
+  for (var i=1; i<13; i++) { data['215-'+i] = data['98-'+i] * data['201'] * 100 / data['208']; }
+  data['215'] = 0; for (var i=1; i<13; i++) { data['215'] += data['215-'+i]; }
+}
 /*
 data['98'] = data['98o1'] + data['98o2'] + data['98o3'] + data['98o4'] + data['98o5'] + data['98o6'] + data['98o7'] + data['98o8'] + data['98o9'] + data['98o10'] + data['98o11'] + data['98o12'];
 data['99'] = data['98'] / data['4'];
@@ -408,7 +428,7 @@ for (var i=1; i<13; i++) { data['107-'+i] = data['104-'+i] * data['105'] * data[
 data['107'] = data['107o1'] + data['107o2'] + data['107o3'] + data['107o4'] + data['107o5'] + data['107o6'] + data['107o7'] + data['107o8'] + data['107o9'] + data['107o10'] + data['107o11'] + data['107o12'];
 data['108'] = data['107'] / data['4'];
 data['109'] = data['99'] + data['108'];
-data['202'] = data['201'] - 1;
+
 data['204'] = data['203'] - 1 * data['202'];
 data['205'] = data['202'] * data['203'];
 for (var i=1; i<13; i++) { data['211-'+i] = data['98-'+i] * data['204'] * 100 / data['206']; }
