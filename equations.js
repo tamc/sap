@@ -328,7 +328,7 @@ for (var i=1; i<13; i++)
 
   var u2 = calc_temperature_reduction(data['35'],data['40-'+i],data['39-'+i],Ti,data['96-'+i],data['84-'+i],R,Th,8);
 
-  console.log('u1a: '+u1a.toFixed(2)+' u1b: '+u1b.toFixed(2)+' u2: '+u2.toFixed(2));
+  //console.log('u1a: '+u1a.toFixed(2)+' u1b: '+u1b.toFixed(2)+' u2: '+u2.toFixed(2));
 
   var Tweekday = Th - (u1a + u2);
   var Tweekend = Th - (u1b + u2);
@@ -419,9 +419,6 @@ for (var i=1; i<13; i++) {
   var tau = data['35'] / (3.6 * data['40-'+i]);
   var a = 1.0 + tau / 15.0;
   var ylimit = (1+a) / a;
-
-  console.log("y2: "+y2);
-  console.log("yl: "+ylimit);
 
   if (y2 < ylimit) {
     frm = 1;
