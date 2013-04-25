@@ -18,6 +18,7 @@ function calc_utilisation_factor(TMP,HLP,H,Ti,Te,G)
   */
 
   // Calculation of utilisation factor
+
   var tau = TMP / (3.6 * HLP);
   var a = 1.0 + tau / 15.0;
   var L = H * (Ti - Te);
@@ -26,6 +27,7 @@ function calc_utilisation_factor(TMP,HLP,H,Ti,Te,G)
   // Note: to avoid instability when γ is close to 1 round γ to 8 decimal places
   // y = y.toFixed(8);
   y = Math.round(y*100000000.0) / 100000000.0;
+
   var n = 0.0;
   if (y>0.0 && y!=1.0) n = (1.0 - Math.pow(y,a)) / (1.0 - Math.pow(y,a+1.0));
   if (y == 1.0) n = a / (a + 1.0);
@@ -49,11 +51,14 @@ function calc_temperature_reduction(TMP,HLP,H,Ti,Te,G, R,Th,toff)
   if (y == 1.0) n = a / (a + 1.0);
 
   var tc = 4.0 + 0.25 * tau;
+
   var Tsc = (1.0 - R) * (Th - 2.0) + R * (Te + n * G / H);
 
   var u;
   if (toff <= tc) u = 0.5 * toff * toff * (Th - Tsc) / (24 * tc);
   if (toff > tc) u = (Th - Tsc) * (toff - 0.5 * tc) / 24;
+
+  //console.log(Tsc);
 
   return u;
 }

@@ -52,7 +52,7 @@ k[9] = [-1.21,-1.88,-0.405,0.807,1.83];
 function solar_rad(region,orient,p,m)
 {
   // convert degrees into radians
-  var radians = (p/360)*2*Math.PI;
+  var radians = (p/360.0)*2.0*Math.PI;
  
   var sinp = Math.sin(radians);
   var sin2p = sinp * sinp;

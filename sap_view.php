@@ -76,6 +76,12 @@
         var id = $(this).attr('class');
         if (id && data[id]==undefined) data[id] = $(this).val()*1;
       });
+
+      // calculate solar gains from windows
+      var gains = calc_solar_gains_from_windows(data['window'],data['H5a']);
+      // copy over the calc results into the worksheet cells
+      for (var z=1; z<13; z++) data['83-'+z] = gains[z-1];
+
       data = calculate(data);
       for (z in data) {if (z) $('.'+z).val(data[z]);}
     }
@@ -109,6 +115,7 @@
     if (data['window']==undefined) data['window'] = [];
 
     solar_gains();
+
  
     function solar_gains()
     {
@@ -188,6 +195,10 @@
     Heat loss interface
 
     */
+
+
+  console.log(data['heatlossitems']);
+
     if (data['heatlossitems']==undefined) data['heatlossitems'] = [];
     heatlossitems();
 

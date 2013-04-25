@@ -11,8 +11,6 @@ function calc_solar_gains_from_windows(windows,region)
           var g = windows[z]['g'];
           var ff = windows[z]['ff'];
 
-          console.log(orientation+" "+area+" "+overshading+" "+g+" "+ff);
-
           // The gains for a given window are calculated for each month
           // the result of which needs to be put in a bin for totals for jan, feb etc..
           for (var month=0; month<12; month++)

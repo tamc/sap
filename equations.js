@@ -291,7 +291,7 @@ for (var i=1; i<13; i++) { data['83-'+i] = data['74-'+i] + data['75-'+i] + data[
 // Monthly average external temperature from Table U1
 var region = data['H5a'];
 if (region ==0) region =1;
-for (var i=1; i<13; i++) data['96-'+i] = table_u1[region][i-1];
+for (var i=1; i<13; i++) data['96-'+i] = table_u1[region][i-1]-(0.3*data['altitude']/50);
 
 // Total gains – internal and solar (84)m = (73)m + (83)m , watts
 for (var i=1; i<13; i++) { data['84-'+i] = data['73-'+i] + data['83-'+i]; }
@@ -319,12 +319,16 @@ for (var i=1; i<13; i++)
 { 
   var Th = data['85']; // 21C;
   var R = 1.0; 
+  var Ti = data['85'];
 
-  var u1a = calc_temperature_reduction(data['35'],data['40-'+i],data['39-'+i],data['85'],data['96-'+i],data['84-'+i],R,Th,7);
+  // (TMP,HLP,H,Ti,Te,G, R,Th,toff)
+  var u1a = calc_temperature_reduction(data['35'],data['40-'+i],data['39-'+i],Ti,data['96-'+i],data['84-'+i],R,Th,7);
 
-  var u1b = calc_temperature_reduction(data['35'],data['40-'+i],data['39-'+i],data['85'],data['96-'+i],data['84-'+i],R,Th,0);
+  var u1b = calc_temperature_reduction(data['35'],data['40-'+i],data['39-'+i],Ti,data['96-'+i],data['84-'+i],R,Th,0);
 
-  var u2 = calc_temperature_reduction(data['35'],data['40-'+i],data['39-'+i],data['85'],data['96-'+i],data['84-'+i],R,Th,8);
+  var u2 = calc_temperature_reduction(data['35'],data['40-'+i],data['39-'+i],Ti,data['96-'+i],data['84-'+i],R,Th,8);
+
+  console.log('u1a: '+u1a.toFixed(2)+' u1b: '+u1b.toFixed(2)+' u2: '+u2.toFixed(2));
 
   var Tweekday = Th - (u1a + u2);
   var Tweekend = Th - (u1b + u2);
@@ -335,43 +339,37 @@ for (var i=1; i<13; i++)
 
 for (var i=1; i<13; i++) 
 { 
-  var Th = 21;
-  var R = 1.0; 
+  data['88-'+i] = 21 - data['40-'+i] + 0.085 *(data['40-'+i]*data['40-'+i]);
+}
 
-  var u1a = calc_temperature_reduction(data['35'],data['40-'+i],data['39-'+i],data['85'],data['96-'+i],data['84-'+i],R,Th,7);
 
-  var u1b = calc_temperature_reduction(data['35'],data['40-'+i],data['39-'+i],data['85'],data['96-'+i],data['84-'+i],R,Th,0);
-
-  var u2 = calc_temperature_reduction(data['35'],data['40-'+i],data['39-'+i],data['85'],data['96-'+i],data['84-'+i],R,Th,8);
-
-  var Tweekday = Th - (u1a + u2);
-  var Tweekend = Th - (u1b + u2);
-  data['88-'+i] = (5*Tweekday + 2*Tweekend) / 7;
+for (var i=1; i<13; i++) 
+{ 
+  var Ti = data['88-'+i];
+  var HLP = data['40-'+i];
+  if (HLP>6.0) HLP = 6.0;
+  // TMP,HLP,H,Ti,Te,G  
+  data['89-'+i] = calc_utilisation_factor(data['35'],HLP,data['39-'+i],Ti,data['96-'+i],data['84-'+i]);
 }
 
 for (var i=1; i<13; i++) 
 { 
-  var Th = 21 - 0.5 * data['40-'+i];
+  var Th = data['88-'+i];
   var R = 1.0; 
+  var Ti = data['88-'+i];
 
-  var u1a = calc_temperature_reduction(data['35'],data['40-'+i],data['39-'+i],data['85'],data['96-'+i],data['84-'+i],R,Th,7);
+  var u1a = calc_temperature_reduction(data['35'],data['40-'+i],data['39-'+i],Ti,data['96-'+i],data['84-'+i],R,Th,7);
 
-  var u1b = calc_temperature_reduction(data['35'],data['40-'+i],data['39-'+i],data['85'],data['96-'+i],data['84-'+i],R,Th,0);
+  var u1b = calc_temperature_reduction(data['35'],data['40-'+i],data['39-'+i],Ti,data['96-'+i],data['84-'+i],R,Th,0);
 
-  var u2 = calc_temperature_reduction(data['35'],data['40-'+i],data['39-'+i],data['85'],data['96-'+i],data['84-'+i],R,Th,8);
+  var u2 = calc_temperature_reduction(data['35'],data['40-'+i],data['39-'+i],Ti,data['96-'+i],data['84-'+i],R,Th,8);
 
   var Tweekday = Th - (u1a + u2);
   var Tweekend = Th - (u1b + u2);
   data['90-'+i] = (5*Tweekday + 2*Tweekend) / 7;
 }
 
-for (var i=1; i<13; i++) 
-{ 
-  var Ti = 21 - 0.5 * data['40-'+i];
-  var HLP = data['40-'+i];
-  if (HLP>6.0) HLP = 6.0;
-  data['89-'+i] = calc_utilisation_factor(data['35'],HLP,data['39-'+i],Ti,data['96-'+i],data['84-'+i]);
-}
+
 
 data['91'] = data['4b'] / data['4'];
 
@@ -387,13 +385,57 @@ for (var i=1; i<13; i++)
 for (var i=1; i<13; i++) 
 { 
   data['94-'+i] = calc_utilisation_factor(data['35'],data['40-'+i],data['39-'+i],data['92-'+i],data['96-'+i],data['84-'+i]);
+//  if (data['94-'+i]==0) data['94-'+i] = 1;
 }
 
 for (var i=1; i<13; i++) { data['95-'+i] = data['94-'+i] * data['84-'+i]; }
 
 for (var i=1; i<13; i++) { data['97-'+i] = data['39-'+i] * (data['92-'+i] - data['96-'+i]); }
 
-for (var i=1; i<13; i++) { data['98-'+i] = data['97-'+i] - data['95-'+i] * 0.024 * data['41-'+i] * data['97a-'+i]; }
+// Not sure about this bit
+
+for (var i=1; i<13; i++) {
+  if (data['39-'+i] == 0) { data['ymean-'+i] = 0; } else { data['ymean-'+i] = data['84-'+i] / (data['39-'+i] * (data['92-'+i] - data['96-'+i])); }
+}
+
+for (var i=1; i<13; i++) {
+
+  var a = i - 1; if (a==0) a = 12;
+  var beginning = (data['ymean-'+i] + data['ymean-'+a]) / 2;
+
+
+  var a = i + 1; if (a==13) a = 1;
+  var end = (data['ymean-'+i] + data['ymean-'+a]);
+
+  var y1, y2;
+
+  if (beginning < end) y1 = beginning; else y1 = end;
+  if (beginning < end) y2 = end; else y2 = beginning;
+
+  var y = data['ymean-'+i];
+
+  var frm = 0;
+
+  var tau = data['35'] / (3.6 * data['40-'+i]);
+  var a = 1.0 + tau / 15.0;
+  var ylimit = (1+a) / a;
+
+  console.log("y2: "+y2);
+  console.log("yl: "+ylimit);
+
+  if (y2 < ylimit) {
+    frm = 1;
+  } else if (y1 > ylimit) { 
+    frm = 0;
+  } else {
+    if (y > ylimit) frm = 0.5 * (ylimit - y1) / (y - y1);
+    if (y <= ylimit) frm = 0.5 + 0.5 * (ylimit - y) / (y2 - y);
+  }
+
+  //data['97a-'+i] = frm;
+}
+
+for (var i=1; i<13; i++) { data['98-'+i] = 0.024 * (data['97-'+i] - data['95-'+i]) * data['41-'+i] * data['97a-'+i]; }
 
 data['98'] = 0; for (var i=1; i<13; i++) { data['98'] += data['98-'+i]; }
 
