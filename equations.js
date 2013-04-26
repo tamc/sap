@@ -79,34 +79,16 @@ for (var i=1; i<13; i++)
     data['24d-'+i] = 0.5 + (data['22b-'+i]*data['22b-'+i]*0.5);
 }
 
-/*
-data['26'] = data['26-1'] * data['26-2'];
-data['27'] = data['27-1'] * data['27-2'];
-data['27a'] = data['27a-1'] * data['27a-2'];
+var totalarea = 0, totalheatloss = 0;
+data['itemsheatcapacity'] = 0;
+for (z in data['heatlossitems']) {
+  totalarea += data['heatlossitems'][z].netarea;
+  totalheatloss += data['heatlossitems'][z].axu;
+  data['itemsheatcapacity'] += data['heatlossitems'][z].axk;
+}
+data['31'] = totalarea;
+data['externalheatloss'] = totalheatloss;
 
-data['28'] = data['28-1'] * data['28-2'];
-data['28-4'] = data['28-1'] * data['28-3'];
-
-data['28a'] = data['28a-1'] * data['28a-2'];
-data['28a-4'] = data['28a-1'] * data['28a-3'];
-
-data['28b'] = data['28b-1'] * data['28b-2'];
-data['28b-4'] = data['28b-1'] * data['28b-3'];
-
-data['29-3'] = data['29-1'] - data['29-2'];
-data['29'] = data['29-3'] * data['29-4'];
-data['29-6'] = data['29-3'] * data['29-5'];
-
-data['29a-3'] = data['29a-1'] - data['29a-2'];
-data['29a'] = data['29a-3'] * data['29a-4'];
-data['29a-6'] = data['29a-3'] * data['29a-5'];
-
-data['30-3'] = data['30-1'] - data['30-2'];
-data['30'] = data['30-3'] * data['30-4'];
-data['30-6'] = data['30-3'] * data['30-5'];
-
-// Total area of external elements 
-data['31'] = data['26-1'] + data['27-1'] + data['27a-1'] + data['28-1'] + data['28a-1'] + data['28b-1'] + data['29-3'] + data['29a-3'] + data['30-3'];*/
 
 data['32'] = data['32-1'] * data['32-2'];	// Party wall - loss calc
 data['32-4'] = data['32-3'] * data['32-1'];	// Party wall - therm mass calc

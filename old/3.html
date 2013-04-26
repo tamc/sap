@@ -1,145 +1,43 @@
 <h3> 3. Heat losses and heat loss parameter</h3>
 <p> Items in the table below are to be expanded as necessary to allow for all different types of element e.g. 4 wall types.</p>
-<?php 
-  global $path; 
-?>
+<p> The κ-value is the heat capacity per unit area, see Table 1e</p>
+<table id="heatlosstable" class='table table-bordered'>
+  <tr>
+    <td>Element</td>
+    <td>Gross<br>area, m2</td>
+    <td></td>
+    <td>Openings<br>m2</td>
+    <td></td>
+    <td>Net area<br>A, m2</td>
+    <td></td>
+    <td>U-value<br>W/m2K</td>
+    <td>=</td>
+    <td>A×U<br>W/K</td>
+    <td>κ-value<br>kJ/m2·K</td>
+    <td>A×κ<br>kJ/K</td>
+  </tr>
 
-<script type="text/javascript" src="<?php echo $path; ?>Modules/sap/heatloss-table.js"></script>
+  <tr>
+    <td style='padding:8px 6px 6px 6px; width:100px;'><input style='width:100px' id='heatlossitem-itemname' type='text' placeholder='' value='' /></td>
 
-<style>
+    <td style='padding:8px 6px 6px 6px; width:85px;'><input style='width:36px' id='heatlossitem-grossarea' type='text' placeholder='' value='0' /></td>
+    <td>-</td>
+    <td style='padding:8px 6px 6px 6px; width:85px;'><input style='width:36px' id='heatlossitem-openings' type='text' placeholder='' value='0' /></td>
+    <td>=</td>
+    <td style='padding:8px 6px 6px 6px; width:85px;'><input style='width:36px' id='heatlossitem-netarea' type='text' placeholder='' value='0' /></td>
+    <td>×</td>
+    <td style='padding:8px 6px 6px 6px; width:85px;'><input style='width:36px' id='heatlossitem-uvalue' type='text' placeholder='' value='0' /></td>
+    <td>=</td>
+    <td style='padding:8px 6px 6px 6px; width:85px;'></td>
 
-  #heatlosstbl th:nth-of-type(2) { width:60px; text-align: center; }
-  #heatlosstbl th:nth-of-type(3) { width:60px; text-align: center; }
-  #heatlosstbl th:nth-of-type(4) { width:60px; text-align: center; background-color:#eee; }
-  #heatlosstbl th:nth-of-type(5) { width:60px; text-align: center; }
-  #heatlosstbl th:nth-of-type(6) { width:60px; text-align: center; background-color:#eee; }
-  #heatlosstbl th:nth-of-type(7) { width:60px; text-align: center; }
-  #heatlosstbl th:nth-of-type(8) { width:60px; text-align: center; background-color:#eee; }
+    <td style='padding:8px 6px 6px 6px; width:85px;'><input style='width:36px' id='heatlossitem-kvalue' type='text' placeholder='' value='0' /></td>
 
-  #heatlosstbl td:nth-of-type(2) { width:60px; text-align: center; }
-  #heatlosstbl td:nth-of-type(3) { width:60px; text-align: center; }
-  #heatlosstbl td:nth-of-type(4) { width:60px; text-align: center; background-color:#eee; }
-  #heatlosstbl td:nth-of-type(5) { width:60px; text-align: center; }
-  #heatlosstbl td:nth-of-type(6) { width:60px; text-align: center; background-color:#eee; }
-  #heatlosstbl td:nth-of-type(7) { width:60px; text-align: center; }
-  #heatlosstbl td:nth-of-type(8) { width:60px; text-align: center; background-color:#eee; }
+    <td style='padding:8px 6px 6px 6px; width:85px;'></td>
 
-  #heatlosstbl td:nth-of-type(9) { width:30px; text-align: center; }
-  #heatlosstbl td:nth-of-type(10) { width:30px; text-align: center; }
+    <td><input id="heatlossitem_add" type='button' value='Add' style="margin-top:3px" /></td>
 
-  #heatlosstbl input[type=text] {
-    height:20px;
-    margin-bottom:0px;
-    margin-left:-3px;
-  }
-</style>
-
-<div id="heatlosstbl"></div>
-
-<script>
-
-  jQuery(function ($) {
-
-    var path = "<?php echo $path; ?>";
-    table.element = "#heatlosstbl";
-
-    table.fields = {
-      'itemname':{'title':"<?php echo _('Element'); ?>", 'type':"text"},
-      //'tag':{'title':"<?php echo _('Group'); ?>", 'type':"text"},
-      'grossarea':{'title':"<?php echo _('Gross area, m2'); ?>", 'type':"number", dp:2},
-      'openings':{'title':"<?php echo _('Openings m2'); ?>", 'type':"number", dp:2},
-      'netarea':{'title':"<?php echo _('Net area A, m2'); ?>", 'type':"fixednumber", dp:2},
-      'uvalue':{'title':"<?php echo _('U-value W/m2K'); ?>", 'type':"number", dp:2},
-      'axu':{'title':"<?php echo _('A×U W/K'); ?>", 'type':"fixednumber", dp:0},
-      'kvalue':{'title':"<?php echo _('κ-value kJ/m2·K'); ?>", 'type':"number"},
-      'axk':{'title':"<?php echo _('A×κ kJ/K'); ?>", 'type':"fixednumber", dp:0},
-
-      'edit-action':{'title':'', 'type':"edit"},
-      'delete-action':{'title':'', 'type':"delete"}
-    }
-
-    table.data = data['heatlossitems'];
-    //table.groupby = 'tag';
-    //table.deletedata = false;
-    table.allowadd = true;
-
-    table.draw();
-
-    $("#heatlosstbl").bind("onSave", function(e,id,fields_to_update){
-
-      for (z in table.data)
-      {   
-        table.data[z].netarea = table.data[z].grossarea - table.data[z].openings;
-        table.data[z].axu = table.data[z].netarea * table.data[z].uvalue;
-        table.data[z].axk = table.data[z].netarea * table.data[z].kvalue;
-      }
-
-      table.draw();
-
-      data = calculate(data);
-      for (z in data) if (z) $("."+z).val(data[z]);
-
-      $.ajax({                                      
-        type: "POST",
-        url: path+"sap/save.json",           
-        data: "&data="+encodeURIComponent(JSON.stringify(data)),
-        success: function(msg) {console.log(msg);} 
-      });
-    });
-
-    $("#heatlosstbl").bind("onDelete", function(e,id,row){
-      console.log(row);
-      data['heatlossitems'].splice(row,1);
-
-      data = calculate(data);
-      for (z in data) if (z) $("."+z).val(data[z]);
-
-      $.ajax({                                      
-        type: "POST",
-        url: path+"sap/save.json",           
-        data: "&data="+encodeURIComponent(JSON.stringify(data)),
-        success: function(msg) {console.log(msg);} 
-      });
-    });
-
-    $("#heatlosstbl").bind("onAdd", function(e){
-
-      var itemname = $(".addrow[field=itemname] input").val();
-      var grossarea = parseFloat($(".addrow[field=grossarea] input").val());
-      var openings = parseFloat($(".addrow[field=openings] input").val());
-      var uvalue = parseFloat($(".addrow[field=uvalue] input").val());
-      var kvalue = parseFloat($(".addrow[field=kvalue] input").val());
-
-      var netarea = grossarea - openings;
-      var axu = netarea * uvalue;
-      var axk = netarea * kvalue;
-
-      table.data.push({
-        itemname: itemname, 
-        grossarea: grossarea, openings: openings, netarea: netarea,
-        uvalue: uvalue, axu: axu, kvalue: kvalue, axk: axk
-      });
-
-      table.draw();
-
-      data = calculate(data);
-      for (z in data) if (z) $("."+z).val(data[z]);
-
-      $.ajax({                                      
-        type: "POST",
-        url: path+"sap/save.json",           
-        data: "&data="+encodeURIComponent(JSON.stringify(data)),
-        success: function(msg) {console.log(msg);} 
-      });
-
-    });
-
-  });
-
-</script>
-
-
-
+  </tr>
+</table>
 <table class='table table-bordered'>
   <tr>
     <td>Total area of external elements ΣA, m2</td>
