@@ -125,6 +125,13 @@
     data = calculate(data);
 
     for (z in data) $("."+z).val(data[z]);
+
+      $.ajax({                                      
+        type: "POST",
+        url: path+"sap/save.json",           
+        data: "&data="+encodeURIComponent(JSON.stringify(data)),
+        success: function(msg) {console.log(msg);} 
+      });
   });
 
 </script>
