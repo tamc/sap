@@ -65,7 +65,7 @@
 
   if (data==0)
   {
-    data = {'H5a':1};
+    data = {'region':0};
     $('input').each(function()
     {
       var id = $(this).attr('class');
@@ -112,6 +112,19 @@
         success: function(msg) {console.log(msg);} 
       });
     }
+  });
+
+  $("#ventilationtype-button").click(function(){
+    var type = $("#ventilationtype-select").val();
+
+    if (type==0) for (var i=1; i<13; i++) data['25-'+i] = data['24a-'+i];
+    if (type==1) for (var i=1; i<13; i++) data['25-'+i] = data['24b-'+i];
+    if (type==2) for (var i=1; i<13; i++) data['25-'+i] = data['24c-'+i];
+    if (type==3) for (var i=1; i<13; i++) data['25-'+i] = data['24d-'+i];
+
+    data = calculate(data);
+
+    for (z in data) $("."+z).val(data[z]);
   });
 
 </script>
