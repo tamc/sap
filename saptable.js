@@ -214,7 +214,7 @@ var table = {
         {
             'draw': function (row,field) { 
               var dp = 0; if (table.fields[field].dp!=undefined) dp = table.fields[field].dp;
-              return table.data[row][field].toFixed(dp); 
+              return (parseFloat(table.data[row][field])).toFixed(dp); 
             },
             'edit': function (row,field) { return "<input type='text' style='width: 88%' value='"+table.data[row][field]+"' / >" },
             'add': function (field) { return "<input type='text' style='width: 88%' value='0' / >" },
@@ -248,6 +248,16 @@ var table = {
                 }
                 return "<select style='width:120px'>"+options+"</select>";
             },
+
+            'add': function (field) { 
+                var options = "";
+                for (option in table.fields[field].options) 
+                {
+                  options += "<option value='"+option+"' >"+table.fields[field].options[option]+"</option>";
+                }
+                return "<select style='width:120px'>"+options+"</select>";
+            },
+
             'save': function (row,field) { return $("[row="+row+"][field="+field+"] select").val() },
         },
 
