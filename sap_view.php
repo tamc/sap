@@ -7,7 +7,6 @@
 <style>
   p {
     color:#222;
-    font-style:italic;
   }
 
   input {
@@ -29,8 +28,25 @@
 </style>
 
 
+<?php if ($page==1) { ?>
+<div class="hero-unit">
+  <div class="container">
+    <div class="wall">
+      <div class="span6">
+        <h1>Open SAP 2012</h1>
+        <p>This is an open source implementation of the 2012 SAP worksheet for calculating energy performance and heating demand of buildings.</p>
+        <p>Early beta version, errors expected, help us with development <a href="github.com/emoncms/sap" >here</a></p>
+      </div>
+      <div class="span5">
+        <div style="float:right;">
+        <img src="<?php echo $path; ?>/Modules/sap/graph.png" style="width:500px"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<?php } ?>
 <div class="container">
-<br>
   <div class="row-fluid">
     <div class="span3">
       <h3>SAP 2012</h3>
