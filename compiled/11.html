@@ -94,7 +94,7 @@
         y += barheight+barspacing;
         width += widthinc;
 
-        if (value>ratings[z].start && value<ratings[z].end) {
+        if (value>=ratings[z].start && value<=ratings[z].end) {
           height = (barheight+barspacing)*(parseInt(z))+padding;
           ctx.fillStyle = ratings[z].color;
 
