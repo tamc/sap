@@ -226,18 +226,8 @@ data['59-12'] = data['table1a'][11] * winter;*/
 
 for (var i=1; i<13; i++) { data['59-'+i] = (data['58'] / 365.0) * data['41-'+i]; }
 
-// Total (58)
-//data['58'] = 0; for (var i=1; i<13; i++) { data['58'] += data['59-'+i]; }
-// for (var i=1; i<13; i++) { data['59-'+i] = data['58'] / 365 * data['41-'+i]; }
-
-data['59'] = data['59o1'] + data['59o2'] + data['59o3'] + data['59o4'] + data['59o5'] + data['59o6'] + data['59o7'] + data['59o8'] + data['59o9'] + data['59o10'] + data['59o11'] + data['59o12'];
-data['61'] = data['61o1'] + data['61o2'] + data['61o3'] + data['61o4'] + data['61o5'] + data['61o6'] + data['61o7'] + data['61o8'] + data['61o9'] + data['61o10'] + data['61o11'] + data['61o12'];
-
-
 for (var i=1; i<13; i++) { data['62-'+i] = 0.85 * data['45-'+i] + data['46-'+i] + data['57-'+i] + data['59-'+i] + data['61-'+i];}
 
-data['62'] = data['62o1'] + data['62o2'] + data['62o3'] + data['62o4'] + data['62o5'] + data['62o6'] + data['62o7'] + data['62o8'] + data['62o9'] + data['62o10'] + data['62o11'] + data['62o12'];
-data['63'] = data['63o1'] + data['63o2'] + data['63o3'] + data['63o4'] + data['63o5'] + data['63o6'] + data['63o7'] + data['63o8'] + data['63o9'] + data['63o10'] + data['63o11'] + data['63o12'];
 for (var i=1; i<13; i++) { data['64-'+i] = data['62-'+i] + data['63-'+i]; }
 
 // Total (64)
@@ -504,7 +494,7 @@ if (ECF < 3.5) data['258'] = 100 - 13.95 * ECF;
 
 
 
-
+data['H3b'] = 0.892 * (data['H3'] + 45 * data['H3a']);
 
 data['H4'] = data['H3b'] / data['H2'];
 
@@ -537,6 +527,23 @@ if (data['H16']>1) data['H16'] = 1;
 
 //Annual solar input Qs (kWh)
 data['H17'] = data['H7'] * data['H9'] * data['H10']* data['H16'];
+
+// Monthly solar input (kWh)
+var sum = 0;
+for (var m=0; m<12; m++) sum += solar_rad(data['H5a'],data['H5b'],data['H5c'],m);
+var annualAverageSolarIrradiance = sum / 12;
+
+for (var i=1; i<13; i++) {
+  data['63-'+i] = -1 * data['H17'] * (solar_rad(data['H5a'],data['H5b'],data['H5c'],i-1) / annualAverageSolarIrradiance) * data['table1a'][i-1] / 365.0;
+  data['shw-'+i] = data['H17'] * (solar_rad(data['H5a'],data['H5b'],data['H5c'],i-1) / annualAverageSolarIrradiance) / 365.0;
+
+  data['shwB-'+i] = (data['shw-'+i] * 3600000) / (4185.5 * data['H13']);
+
+  data['shwC-'+i] = (data['H7'] * 1 * data['H10']* data['H16']) * (solar_rad(data['H5a'],data['H5b'],data['H5c'],i-1) / annualAverageSolarIrradiance) / 365.0;
+
+  data['shwD-'+i] = (data['shwC-'+i] * 3600000) / (4185.5 * data['H13']);
+  data['shwE-'+i] = data['96-'+i] + data['shwD-'+i];
+}
 
 /*
 

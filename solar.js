@@ -49,6 +49,7 @@ k[7] = [-2.7,-2.58,-1.79,-2.0,-1.31];
 k[8] = [3.45,3.96,2.06,2.28,1.27];
 k[9] = [-1.21,-1.88,-0.405,0.807,1.83];
 
+// U3.2 Solar radiation on vertical and inclined surfaces
 function solar_rad(region,orient,p,m)
 {
   // convert degrees into radians

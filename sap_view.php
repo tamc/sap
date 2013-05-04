@@ -5,9 +5,6 @@
 <script type="text/javascript" src="<?php echo $path; ?>/Modules/sap/windowgains.js"></script>
 <script type="text/javascript" src="<?php echo $path; ?>/Modules/sap/utilisationfactor.js"></script>
 <style>
-  p {
-    color:#222;
-  }
 
   input {
     width:80px;
