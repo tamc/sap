@@ -42,8 +42,18 @@
     </div>
   </div>
 </div>
+
+
+
 <?php } ?>
+
+
 <div class="container">
+
+<?php if ($example==true && $page==1) { ?>
+  <div class="alert alert-info"><b>Example data:</b> The following example data is for a small single-story old welsh stone cottage.</div>
+<?php } ?>
+
   <div class="row-fluid">
     <div class="span3">
       <h3>SAP 2012</h3>
@@ -62,6 +72,7 @@
           <li><a href="<?php echo $path; ?>sap/graph">Graph</a></li>
           <li><a href="<?php echo $path; ?>sap/H1">Appendix H1. Solar input for solar water heating</a></li>
           <li><a href="<?php echo $path; ?>sap/AppendixL">Appendix L. Lighting and Appliances</a></li>
+          <li><a href="<?php echo $path; ?>sap/dynamicsim"><b>Simple Dynamic Simulation</b></a></li>
         </ul>
     </div>
     <div class="span9">
@@ -79,6 +90,7 @@
 
   if (data==0)
   {
+    console.log("No data, using example data");
     data = {'region':0};
     $('input').each(function()
     {

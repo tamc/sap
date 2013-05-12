@@ -25,11 +25,19 @@
       $sap->save($session['userid'],1,$data);
       $result = true;
     }
-    elseif ($session['write'])
+    else
     {
       if (!$route->action) $route->action = 1;
-      $data = $sap->get($session['userid'], 1);
-      $result = view("Modules/sap/sap_view.php",array('data'=>$data, 'page'=>$route->action));
+
+      $example = false;
+      if ($session['write']) {
+        $data = $sap->get($session['userid'], 1); 
+      } else { 
+        $example = true;
+        $data = file_get_contents('Modules/sap/example.data');
+      }
+
+      $result = view("Modules/sap/sap_view.php",array('data'=>$data, 'page'=>$route->action, 'example'=>$example));
     }
   
     return array('content'=>$result, 'fullwidth'=>true);
