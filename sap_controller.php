@@ -19,10 +19,17 @@
     require "Modules/sap/sap_model.php";
     $sap = new Sap($mysqli);
 
-    if ($route->action == 'save' && $session['write'])
+    if ($route->action == 'save')
     {
       $data = post('data');
-      $sap->save($session['userid'],1,$data);
+
+      if ($session['write']) {
+        $sap->save($session['userid'],1,$data);
+      } else {
+        $data = preg_replace('/[^\w\s-.",:{}\[\]]/','',$data);
+        $_SESSION['sapdata'] = $data;
+      }
+
       $result = true;
     }
     else
@@ -30,14 +37,25 @@
       if (!$route->action) $route->action = 1;
 
       $example = false;
+      $datafromsession = false;
+
       if ($session['write']) {
         $data = $sap->get($session['userid'], 1); 
+        if (!$data && isset($_SESSION['sapdata'])) {
+          $data = $_SESSION['sapdata'];
+          $sap->save($session['userid'],1,$data);
+        }
       } else { 
-        $example = true;
-        $data = file_get_contents('Modules/sap/example.data');
+        if (isset($_SESSION['sapdata'])) {
+          $data = $_SESSION['sapdata'];
+          $datafromsession = true;
+        } else {
+          $example = true;
+          $data = file_get_contents('Modules/sap/example.data');
+        }
       }
 
-      $result = view("Modules/sap/sap_view.php",array('data'=>$data, 'page'=>$route->action, 'example'=>$example));
+      $result = view("Modules/sap/sap_view.php",array('data'=>$data, 'page'=>$route->action, 'example'=>$example, 'datafromsession'=>$datafromsession));
     }
   
     return array('content'=>$result, 'fullwidth'=>true);

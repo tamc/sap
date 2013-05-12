@@ -57,6 +57,10 @@
   <div class="row-fluid">
     <div class="span3">
       <h3>SAP 2012</h3>
+
+<?php if ($datafromsession==true) { ?>
+  <div class="alert alert-info"><b>Editing as guest!</b><br><a href="<?php echo $path; ?>user/login" >Login or create an account</a> to save your data permanently. Once logged in navigate to Extras > SAP to complete saving process.</div>
+<?php } ?>
         <ul class="nav nav-tabs nav-stacked" style="padding-left: 0px;">
           <li><a href="<?php echo $path; ?>sap/1" >1. Overall dwelling dimensions</a></li>
           <li><a href="<?php echo $path; ?>sap/2">2. Ventilation rate</a></li>
