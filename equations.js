@@ -545,6 +545,11 @@ for (var i=1; i<13; i++) {
   data['shwE-'+i] = data['96-'+i] + data['shwD-'+i];
 }
 
+
+data['shwMAX1'] = 1.6 * (data['H7'] * 1 * data['H10']* data['H16']) * (solar_rad(data['H5a'],data['H5b'],data['H5c'],5) / annualAverageSolarIrradiance) / 365.0;
+data['shwMAX2'] = (data['shwMAX1'] * 3600000) / (4185.5 * data['H13']);
+data['shwMAX3'] = data['96-6'] + data['shwMAX2'];
+
 /*
 
 Lighting 
