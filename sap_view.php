@@ -32,7 +32,7 @@
       <div class="span6">
         <h1>Open SAP 2012</h1>
         <p>This is an open source implementation of the 2012 SAP worksheet for calculating energy performance and heating demand of buildings.</p>
-        <p>Early beta version, errors expected, help us with development <a href="github.com/emoncms/sap" >here</a></p>
+        <p>Early beta version, errors expected, help us with development <a href="http://github.com/emoncms/sap" >here</a></p>
       </div>
       <div class="span5">
         <div style="float:right;">
