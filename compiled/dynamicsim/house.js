@@ -1,6 +1,6 @@
-function draw_house(ctx)
+function draw_house(ctx,x,y)
 {
-  var x = 100, y = 480;
+
 
   var width = 350;
   var height = 290;

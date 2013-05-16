@@ -63,39 +63,110 @@ var table_u2 = [
 [8.9,8.6,8.5,7.4,6.9,6.5,6.2,6.2,7.0,7.6,8.0,8.6],
 [6.0,5.7,5.7,5.0,4.6,4.4,4.2,4.2,4.7,5.1,5.4,5.7]];
 
+//----------------------------------------------------------------------------------------------------------------
+// 1. Overall dwelling dimension
+//----------------------------------------------------------------------------------------------------------------
 
-data['3a'] = data['1a'] * data['2a'];
-data['3b'] = data['1b'] * data['2b'];
-data['3c'] = data['1c'] * data['2c'];
-data['3d'] = data['1d'] * data['2d'];
-data['3e'] = data['1e'] * data['2e'];
-data['3f'] = data['1f'] * data['2f'];
-data['3g'] = data['1g'] * data['2g'];
-data['3h'] = data['1h'] * data['2h'];
+// Volume  = Floor Area * Height
+data['3a'] = data['1a'] * data['2a']; // Volume of basement
+data['3b'] = data['1b'] * data['2b']; // Volume of ground floor
+data['3c'] = data['1c'] * data['2c']; // Volume of first floor
+data['3d'] = data['1d'] * data['2d']; // Volume of second floor
+data['3e'] = data['1e'] * data['2e']; // Volume of third floor
+data['3f'] = data['1f'] * data['2f']; // Volume of other floor 1
+data['3g'] = data['1g'] * data['2g']; // Volume of other floor 2
+data['3h'] = data['1h'] * data['2h']; // Volume of other floor 3
+
+// Calculate total floor area TFA
 data['4'] = data['1a'] + data['1b'] + data['1c'] + data['1d'] + data['1e'] + data['1f'] + data['1g'] + data['1h'];
+
+// Calculate dwelling volume
 data['5'] = data['3a'] + data['3b'] + data['3c'] + data['3d'] + data['3e'] + data['3f'] + data['3g'] + data['3h'];
-data['6ad'] = data['6aa'] + data['6ab'] + data['6ac'];
-data['6a'] = data['6ad'] * 40;
-data['6bd'] = data['6ba'] + data['6bb'] + data['6bc'];
-data['6b'] = data['6bd'] * 20;
-data['7a'] = data['7aa'] * 10;
-data['7b'] = data['7ba'] * 10;
-data['7c'] = data['7ca'] * 40;
+
+//----------------------------------------------------------------------------------------------------------------
+// 2. Ventilation rate
+//----------------------------------------------------------------------------------------------------------------
+
+/*
+   FACTORS: 
+ - Number of chimneys, flues, fans and vents
+ - Number of floors
+ - Extent of window and door draught proofing
+ - Degree of shelter
+ - Modified for wind speed = (wind speed / 4) x infiltration rate
+ - Modified for type of ventilation system
+*/
+
+// The following calculation provides a method to estimate air-changes per hour in a building
+
+data['6ad'] = data['6aa'] + data['6ab'] + data['6ac'];  // total number of chimneys
+data['6a'] = data['6ad'] * 40;                          // m3 per hour from chimneys
+
+data['6bd'] = data['6ba'] + data['6bb'] + data['6bc'];  // total number of open flues
+data['6b'] = data['6bd'] * 20;                          // m3 per hour from open flues
+
+data['7a'] = data['7aa'] * 10;                          // m3 per hour from intermittent fans
+data['7b'] = data['7ba'] * 10;                          // m3 per hour from passive vents
+data['7c'] = data['7ca'] * 40;                          // m3 per hour from flueless gas fires
+
+// Calculate total m3 per hour from above
 data['8a'] = data['6a'] + data['6b'] + data['7a'] + data['7b'] + data['7c'];
+
+// Caclulate m3 per hour / dwelling volume = air changes per hour from above 
 data['8'] = data['8a'] / data['5'];
+
+// Calculate additional infiltration proportional to number of floors
 data['10'] = (data['9'] - 1) * 0.1;
-data['15'] = -0.2 * data['14'] / 100 + 0.25;
+
+// Calculate window infiltration: 
+// data['14'] = percentage of windows and doors draught proofed
+data['15'] = 0.25 - (0.2 * data['14'] / 100);
+
+// Sum of all infiltration sources:
+// data['11'] = Structural infiltration: 0.25 for steel or timber frame or 0.35 for masonry construction
+// data['12'] = If suspended wooden floor, enter 0.2 (unsealed) or 0.1 (sealed), else enter 0
+// data['13'] = If no draught lobby, enter 0.05, else enter 0
 data['16'] = data['8'] + data['10'] + data['11'] + data['12'] + data['13'] + data['15'];
+
+
+// !!!! NOT FULLY IMPLEMENTED !!!!
+// If based on air permeability value, then (18) = [(17) ÷ 20]+(8), otherwise (18) = (16)
+// data['17'] = Air permeability value, q50, expressed in cubic metres per hour per square metre of envelope area
+// Air permeability value applies if a pressurisation test has been done, or a design or specified air permeability is being used
 data['18'] = data['16'] * 1;
-data['20'] = -0.075 * data['19'] + 1;
+
+// Take into account shelter
+// Shelter factor (20) = 1 - [0.075 × (19)]
+// data['19'] = Number of sides on which dwelling is sheltered
+data['20'] = 1 - (0.075 * data['19']);
+
+// Infiltration rate incorporating shelter factor (18) × (20)
 data['21'] = data['18'] * data['20'];
 
+// Infiltration rate modified for monthly wind speed
+
+// Copy in wind speed figures for region from table_u2
 for (var i=1; i<13; i++) data['22-'+i] = table_u2[region][i-1];
+
+// Calculate Wind Factor (22a)m = (22)m ÷ 4
 for (var i=1; i<13; i++) { data['22a-'+i] = data['22-'+i] / 4; }
+
+// Adjusted infiltration rate (allowing for shelter and wind speed) = (21) × (22a)m
 for (var i=1; i<13; i++) { data['22b-'+i] = data['22a-'+i] * data['21']; }
+
+
+// data['23a'] = If mechanical ventilation: air change rate through system
+// data['23b'] = If exhaust air heat pump using Appendix N, (23b) = (23a) × Fmv (equation (N4)) , otherwise (23b) = (23a)
+// data['23c'] = If balanced with heat recovery: efficiency in % allowing for in-use factor (from Table 4h)
+
+// a) If balanced mechanical ventilation with heat recovery (MVHR) (24a)m = (22b)m + (23b) × [1 – (23c) ÷ 100]
 for (var i=1; i<13; i++) { data['24a-'+i] = data['23c'] / -100 + 1 * data['23b'] + data['22b-'+i]; }
+
+// b) If balanced mechanical ventilation without heat recovery (MV) (24b)m = (22b)m + (23b)
 for (var i=1; i<13; i++) { data['24b-'+i] = data['22b-'+i] + data['23b']; }
 
+//c) If whole house extract ventilation or positive input ventilation from outside
+//if (22b)m < 0.5 × (23b), then (24c) = (23b); otherwise (24c) = (22b) m + 0.5 × (23b)
 for (var i=1; i<13; i++) 
 { 
   if (data['24b-'+i] < (0.5*data['23b'])) 
@@ -104,6 +175,8 @@ for (var i=1; i<13; i++)
     data['24c-'+i] = data['22b-'+i] + 0.5*data['23b'];
 }
 
+// d) If natural ventilation or whole house positive input ventilation from loft
+// if (22b)m ≥ 1, then (24d)m = (22b)m otherwise (24d)m = 0.5 + [(22b)m2 × 0.5]
 for (var i=1; i<13; i++) 
 { 
   if (data['22b-'+i] >= 1) 
@@ -111,6 +184,12 @@ for (var i=1; i<13; i++)
   else 
     data['24d-'+i] = 0.5 + (data['22b-'+i]*data['22b-'+i]*0.5);
 }
+
+// Figures are copied into (25)m by javascript on section 2 page
+
+//----------------------------------------------------------------------------------------------------------------
+// 3. Heat losses and heat loss parameter
+//----------------------------------------------------------------------------------------------------------------
 
 var totalarea = 0, totalheatloss = 0;
 data['itemsheatcapacity'] = 0;
@@ -162,12 +241,9 @@ data['40'] = data['40'] / 12;
 // Copy days in month from table 1a
 for (var i=1; i<13; i++) { data['41-'+i] = data['table1a'][i-1]; }
 
-/*
-
-  4. Water heating energy requirement
-
-*/
-
+//----------------------------------------------------------------------------------------------------------------
+// 4. Water heating energy requirement
+//----------------------------------------------------------------------------------------------------------------
 
 // Annual average hot water usage in litres per day
 data['43'] = (data['42']*25) + 36;
