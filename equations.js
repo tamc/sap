@@ -191,6 +191,8 @@ for (var i=1; i<13; i++)
 // 3. Heat losses and heat loss parameter
 //----------------------------------------------------------------------------------------------------------------
 
+// The U-value table calculations happen as part of the heatloss page.
+
 var totalarea = 0, totalheatloss = 0;
 data['itemsheatcapacity'] = 0;
 for (z in data['heatlossitems']) {
@@ -210,9 +212,6 @@ data['32c-3'] = data['32c-2'] * data['32c-1'];  // Internal wall **
 data['32d-3'] = data['32d-2'] * data['32d-1'];	// Internal floor
 data['32e-3'] = data['32e-2'] * data['32e-1'];	// Internal ceiling
 
-// Fabric heat loss
-// data['33'] = data['26'] + data['27'] + data['27a'] + data['28'] + data['28a'] + data['28b'] + data['29'] + data['29a'] + data['30'] + data['32'];
-
 data['33'] = data['externalheatloss'] + data['32'];
 
 // Heat capacity
@@ -222,11 +221,15 @@ data['34'] = data['itemsheatcapacity'] + data['32-4'] + data['32a-3'] + data['32
 data['35'] = data['34'] / data['4'];
 
 data['37'] = data['33'] + data['36'];
+
+// Ventilation heat loss
 for (var i=1; i<13; i++) { data['38-'+i] = 0.33 * data['25-'+i] * data['5']; }
+
+// Total heat loss
 for (var i=1; i<13; i++) { data['39-'+i] = data['37'] + data['38-'+i]; }
 
 // Average (39)
-data['39'] = 0;
+data['39'] = 0; 
 for (var i=1; i<13; i++) { data['39'] += data['39-'+i]; }
 data['39'] = data['39'] / 12;
 
@@ -315,85 +318,67 @@ for (var i=1; i<13; i++) {
   data['65-'+i] = 0.25 * (0.85 * data['45-'+i] + data['61-'+i]) + 0.8 * (data['46-'+i] + data['57-'+i] + data['59-'+i] );
 }
 
-/*
+//----------------------------------------------------------------------------------------------------------------
+// 5. Internal gains
+//----------------------------------------------------------------------------------------------------------------
 
-  Internal gains
 
-*/
-
-// Metabolic
+// Metabolic gains (Table 5), watts
 for (var i=1; i<13; i++) {
   data['66-'+i] = 60 * data['42'];
 }
 
-// Cooking
+// Lighting gains (calculated in Appendix L, equation L9 or L9a), also see Table 5
+
+// Appliances gains (calculated in Appendix L, equation L13 or L13a), also see Table 5
+
+// Cooking gains (calculated in Appendix L, equation L15 or L15a), also see Table 5
 for (var i=1; i<13; i++) {
   data['69-'+i] = 35 + 7 * data['42'];
 }
 
-// Losses
+// Pumps and fans gains (Table 5a) NOT IMPLEMENTED
+
+// Losses e.g. evaporation (negative values) (Table 5)
 for (var i=1; i<13; i++) {
   data['71-'+i] = -40 * data['42'];
 }
 
-// Water heating gains
+// Water heating gains (Table 5)
 for (var i=1; i<13; i++) {
   data['72-'+i] = 1000 * data['65-'+i] / (data['41-'+i] * 24);
 }
 
-// SUM of all gains
+// Total internal gains = (66)m + (67)m + (68)m + (69)m + (70)m + (71)m + (72)m
 for (var i=1; i<13; i++) { data['73-'+i] = data['66-'+i] + data['67-'+i] + data['68-'+i] + data['69-'+i] + data['70-'+i] + data['71-'+i] + data['72-'+i]; }
 
+//----------------------------------------------------------------------------------------------------------------
+// 6. Solar gains
+//----------------------------------------------------------------------------------------------------------------
 
-/*
-
-SOLAR GAINS
-
-// Calculate solar flux for January
-data['74c'] = solar_rad(data['H5a'],0,90,0);
-data['75c'] = solar_rad(data['H5a'],1,90,0);
-data['76c'] = solar_rad(data['H5a'],2,90,0);
-data['77c'] = solar_rad(data['H5a'],3,90,0);
-data['78c'] = solar_rad(data['H5a'],4,90,0);
-data['79c'] = solar_rad(data['H5a'],3,90,0);
-data['80c'] = solar_rad(data['H5a'],2,90,0);
-data['81c'] = solar_rad(data['H5a'],1,90,0);
-data['82c'] = solar_rad(data['H5a'],4,0,0);
-
-// Gains (W)
-for (var i=74; i<83; i++) { 
-  data[i+''] = data[i+'a'] * data[i+'b'] * data[i+'c'] * 0.9 * data[i+'d'] * data[i+'e'];
-}
-
-for (var i=1; i<13; i++) { data['83-'+i] = data['74-'+i] + data['75-'+i] + data['76-'+i] + data['77-'+i] + data['78-'+i] + data['79-'+i] + data['80-'+i] + data['81-'+i] + data['82-'+i]; }
-
-*/
-
-// Monthly average external temperature from Table U1
-
-for (var i=1; i<13; i++) data['96-'+i] = table_u1[region][i-1]-(0.3*data['altitude']/50);
+// (83)m = Carried out in compiled/6.html
 
 // Total gains – internal and solar (84)m = (73)m + (83)m , watts
 for (var i=1; i<13; i++) { data['84-'+i] = data['73-'+i] + data['83-'+i]; }
+
+//----------------------------------------------------------------------------------------------------------------
+// 7. Mean internal temperature (heating season)
+//----------------------------------------------------------------------------------------------------------------
+
+// Bring calculation of (96)m forward as its used in section 7.
+// Monthly average external temperature from Table U1
+for (var i=1; i<13; i++) data['96-'+i] = table_u1[region][i-1]-(0.3*data['altitude']/50);
 
 for (var i=1; i<13; i++) 
 { 
   data['86-'+i] = calc_utilisation_factor(data['35'],data['40-'+i],data['39-'+i],data['85'],data['96-'+i],data['84-'+i]);
 }
 
-
-/*
-
-Table 9c: Heating requirement
-
-Living area
-
-1. Set Ti to the temperature for the living area during heating periods (Table 9)
-
-2. Calculate the utilisation factor (Table 9a)
-
-3 Calculate the temperature reduction (Table 9b) for each off period (Table 9), u1 and u2, for weekdays
-*/
+// Table 9c: Heating requirement
+// Living area
+// 1. Set Ti to the temperature for the living area during heating periods (Table 9)
+// 2. Calculate the utilisation factor (Table 9a)
+// 3. Calculate the temperature reduction (Table 9b) for each off period (Table 9), u1 and u2, for weekdays
 
 for (var i=1; i<13; i++) 
 { 
@@ -403,11 +388,8 @@ for (var i=1; i<13; i++)
 
   // (TMP,HLP,H,Ti,Te,G, R,Th,toff)
   var u1a = calc_temperature_reduction(data['35'],data['40-'+i],data['39-'+i],Ti,data['96-'+i],data['84-'+i],R,Th,7);
-
   var u1b = calc_temperature_reduction(data['35'],data['40-'+i],data['39-'+i],Ti,data['96-'+i],data['84-'+i],R,Th,0);
-
   var u2 = calc_temperature_reduction(data['35'],data['40-'+i],data['39-'+i],Ti,data['96-'+i],data['84-'+i],R,Th,8);
-
   //console.log('u1a: '+u1a.toFixed(2)+' u1b: '+u1b.toFixed(2)+' u2: '+u2.toFixed(2));
 
   var Tweekday = Th - (u1a + u2);
@@ -416,12 +398,7 @@ for (var i=1; i<13; i++)
 }
 
 // rest of dwelling
-
-for (var i=1; i<13; i++) 
-{ 
-  data['88-'+i] = 21 - data['40-'+i] + 0.085 *(data['40-'+i]*data['40-'+i]);
-}
-
+for (var i=1; i<13; i++) data['88-'+i] = 21 - data['40-'+i] + 0.085 *(data['40-'+i]*data['40-'+i]);
 
 for (var i=1; i<13; i++) 
 { 
@@ -458,9 +435,11 @@ for (var i=1; i<13; i++)
   data['92-'+i] = (data['91'] * data['87-'+i]) + (1 - data['91']) * data['90-'+i];
 }
 
-/*
-  8. Space heating requirement
-*/
+//----------------------------------------------------------------------------------------------------------------
+// 8. Space heating requirement
+//----------------------------------------------------------------------------------------------------------------
+
+// See section 7 above for calc of (96)m external temperature.
 
 for (var i=1; i<13; i++) 
 { 
