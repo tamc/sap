@@ -19,10 +19,17 @@ function calc_utilisation_factor(TMP,HLP,H,Ti,Te,G)
 
   // Calculation of utilisation factor
 
+  // TMP = thermal Mass / Total floor area
+  // HLP = heat transfer coefficient (H) / Total floor area
+
   var tau = TMP / (3.6 * HLP);
   var a = 1.0 + tau / 15.0;
+
+  // calc losses
   var L = H * (Ti - Te);
-  var y = G / L;
+
+  // ratio of gains to losses
+  var y = G / L; 
 
   // Note: to avoid instability when γ is close to 1 round γ to 8 decimal places
   // y = y.toFixed(8);

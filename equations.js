@@ -369,6 +369,10 @@ for (var i=1; i<13; i++) { data['84-'+i] = data['73-'+i] + data['83-'+i]; }
 // Monthly average external temperature from Table U1
 for (var i=1; i<13; i++) data['96-'+i] = table_u1[region][i-1]-(0.3*data['altitude']/50);
 
+// See utilisationfactor.js for calculation
+// Calculation is described on page 149 of SAP document
+// Would be interesting to understand how utilisation factor equation 
+// was originally derived.
 for (var i=1; i<13; i++) 
 { 
   data['86-'+i] = calc_utilisation_factor(data['35'],data['40-'+i],data['39-'+i],data['85'],data['96-'+i],data['84-'+i]);
