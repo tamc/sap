@@ -21,6 +21,8 @@ class Sap
         $data = json_encode($data);
         $data = $this->mysqli->real_escape_string($data);
 
+        if ($data!=null) {
+
         $result = $this->mysqli->query("SELECT `docid` FROM sap WHERE `userid` = '$userid' AND `docid` = '$docid'");
         $row = $result->fetch_object();
 
@@ -31,6 +33,8 @@ class Sap
         else
         {
             $this->mysqli->query("UPDATE sap SET `data` = '$data' WHERE `userid` = '$userid' AND `docid` = '$docid'");
+        }
+
         }
     }
 
