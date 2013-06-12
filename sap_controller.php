@@ -24,8 +24,8 @@
       $data = null;
       if (isset($_POST['data'])) $data = $_POST['data'];
       if (!isset($_POST['data']) && isset($_GET['data'])) $data = $_GET['data'];
-
-      if ($data && $data!=null && $data!=0) {
+      //echo $data;
+      if ($data && $data!=null) {
 
         if ($session['write']) {
           $sap->save($session['userid'],1,$data);
