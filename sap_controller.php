@@ -32,7 +32,7 @@
 
       $result = true;
     }
-    elseif ($route->action == 'get')
+    elseif ($route->action == 'get' && $session['write'])
     {
       $result = json_decode($sap->get($session['userid'], 1)); 
     } 
