@@ -32,6 +32,10 @@
 
       $result = true;
     }
+    elseif ($route->action == 'get')
+    {
+      $result = json_decode($sap->get($session['userid'], 1)); 
+    } 
     else
     {
       if (!$route->action) $route->action = 1;
