@@ -244,6 +244,67 @@ data['40'] = data['40'] / 12;
 // Copy days in month from table 1a
 for (var i=1; i<13; i++) { data['41-'+i] = data['table1a'][i-1]; }
 
+
+//----------------------------------------------------------------------------------------------------------------
+// Solar Hot Water appendix
+//----------------------------------------------------------------------------------------------------------------
+
+data['H3b'] = 0.892 * (data['H3'] + 45 * data['H3a']);
+
+data['H4'] = data['H3b'] / data['H2'];
+
+// test: region wales (index:13), orient south (index: 4), inclination 35 degrees
+data['H5'] = annual_solar_rad(data['H5a'],data['H5b'],data['H5c']);
+
+data['H7'] = data['H1'] * data['H2'] * data['H5'] * data['H6'];
+
+data['H8'] = data['H7'] / data['45'];
+
+if (data['H8']>0) data['H9'] = 1 - Math.exp(-1/data['H8']); else data['H9'] = 0;
+
+if (data['H4'] < 20) 
+  data['H10'] = 0.97 - 0.0367 * data['H4'] + 0.0006 * data['H4'] * data['H4'];
+else 
+  data['H10'] = 0.693 - 0.0108 * data['H4'];
+
+// Effective solar volume, Veff
+data['H13'] = data['H11'] + 0.3 * (data['H12'] - data['H11']);
+
+// Daily hot water demand, Vd,average, (litres)
+data['H14'] = data['43'];
+
+// Volume ratio Veff/Vd,average (H13) ÷ (H14)
+data['H15'] = data['H13'] / data['H14'];
+
+// Solar storage volume factor
+data['H16'] = 1 + 0.2 * Math.log(data['H15']);
+if (data['H16']>1) data['H16'] = 1;
+
+//Annual solar input Qs (kWh)
+data['H17'] = data['H7'] * data['H9'] * data['H10']* data['H16'];
+
+// Monthly solar input (kWh)
+var sum = 0;
+for (var m=0; m<12; m++) sum += solar_rad(data['H5a'],data['H5b'],data['H5c'],m);
+var annualAverageSolarIrradiance = sum / 12;
+
+for (var i=1; i<13; i++) {
+  data['63-'+i] = -1 * data['H17'] * (solar_rad(data['H5a'],data['H5b'],data['H5c'],i-1) / annualAverageSolarIrradiance) * data['table1a'][i-1] / 365.0;
+  data['shw-'+i] = data['H17'] * (solar_rad(data['H5a'],data['H5b'],data['H5c'],i-1) / annualAverageSolarIrradiance) / 365.0;
+
+  data['shwB-'+i] = (data['shw-'+i] * 3600000) / (4185.5 * data['H13']);
+
+  data['shwC-'+i] = (data['H7'] * 1 * data['H10']* data['H16']) * (solar_rad(data['H5a'],data['H5b'],data['H5c'],i-1) / annualAverageSolarIrradiance) / 365.0;
+
+  data['shwD-'+i] = (data['shwC-'+i] * 3600000) / (4185.5 * data['H13']);
+  data['shwE-'+i] = data['96-'+i] + data['shwD-'+i];
+}
+
+
+data['shwMAX1'] = 1.6 * (data['H7'] * 1 * data['H10']* data['H16']) * (solar_rad(data['H5a'],data['H5b'],data['H5c'],5) / annualAverageSolarIrradiance) / 365.0;
+data['shwMAX2'] = (data['shwMAX1'] * 3600000) / (4185.5 * data['H13']);
+data['shwMAX3'] = data['96-6'] + data['shwMAX2'];
+
 //----------------------------------------------------------------------------------------------------------------
 // 4. Water heating energy requirement
 //----------------------------------------------------------------------------------------------------------------
@@ -276,10 +337,17 @@ data['54'] = data['50'] * data['51'] * data['52'] * data['53'];
 for (var i=1; i<13; i++) { data['56-'+i] = data['55'] * data['41-'+i]; }
 
 // If cylinder contains dedicated solar storage, (57)m = (56)m × [(50) – (H11)] ÷ (50), else (57)m = (56)m where (H11) is from Appendix H
-for (var i=1; i<13; i++) { 
 
- if (data['50']>0) data['57-'+i] = data['56-'+i] * (data['50'] - data['H11']) / data['50']; else data['57-'+i] = 0;
-
+if (data['solarcyl']==true) {
+  console.log("57m = deticated solar cyl");
+  for (var i=1; i<13; i++) { 
+    if (data['50']>0) data['57-'+i] = data['56-'+i] * (data['50'] - data['H11']) / data['50']; else data['57-'+i] = 0;
+  }
+} else {
+  console.log("57m = 56m");
+  for (var i=1; i<13; i++) { 
+    data['57-'+i] = data['56-'+i];
+  }
 }
 
 // Good to review this calculation:
@@ -306,6 +374,9 @@ data['59-12'] = data['table1a'][11] * winter;*/
 for (var i=1; i<13; i++) { data['59-'+i] = (data['58'] / 365.0) * data['41-'+i]; }
 
 for (var i=1; i<13; i++) { data['62-'+i] = 0.85 * data['45-'+i] + data['46-'+i] + data['57-'+i] + data['59-'+i] + data['61-'+i];}
+
+// Enter zero's in solar hot water contribution if solar hot water checkbox is not checked
+if (!data['solardhw']) for (var i=1; i<13; i++) { data['63-'+i] = 0; }
 
 for (var i=1; i<13; i++) { data['64-'+i] = data['62-'+i] + data['63-'+i]; }
 
@@ -553,61 +624,6 @@ if (ECF < 3.5) data['258'] = 100 - 13.95 * ECF;
 
 
 
-data['H3b'] = 0.892 * (data['H3'] + 45 * data['H3a']);
-
-data['H4'] = data['H3b'] / data['H2'];
-
-// test: region wales (index:13), orient south (index: 4), inclination 35 degrees
-data['H5'] = annual_solar_rad(data['H5a'],data['H5b'],data['H5c']);
-
-data['H7'] = data['H1'] * data['H2'] * data['H5'] * data['H6'];
-
-data['H8'] = data['H7'] / data['45'];
-
-if (data['H8']>0) data['H9'] = 1 - Math.exp(-1/data['H8']); else data['H9'] = 0;
-
-if (data['H4'] < 20) 
-  data['H10'] = 0.97 - 0.0367 * data['H4'] + 0.0006 * data['H4'] * data['H4'];
-else 
-  data['H10'] = 0.693 - 0.0108 * data['H4'];
-
-// Effective solar volume, Veff
-data['H13'] = data['H11'] + 0.3 * (data['H12'] - data['H11']);
-
-// Daily hot water demand, Vd,average, (litres)
-data['H14'] = data['43'];
-
-// Volume ratio Veff/Vd,average (H13) ÷ (H14)
-data['H15'] = data['H13'] / data['H14'];
-
-// Solar storage volume factor
-data['H16'] = 1 + 0.2 * Math.log(data['H15']);
-if (data['H16']>1) data['H16'] = 1;
-
-//Annual solar input Qs (kWh)
-data['H17'] = data['H7'] * data['H9'] * data['H10']* data['H16'];
-
-// Monthly solar input (kWh)
-var sum = 0;
-for (var m=0; m<12; m++) sum += solar_rad(data['H5a'],data['H5b'],data['H5c'],m);
-var annualAverageSolarIrradiance = sum / 12;
-
-for (var i=1; i<13; i++) {
-  data['63-'+i] = -1 * data['H17'] * (solar_rad(data['H5a'],data['H5b'],data['H5c'],i-1) / annualAverageSolarIrradiance) * data['table1a'][i-1] / 365.0;
-  data['shw-'+i] = data['H17'] * (solar_rad(data['H5a'],data['H5b'],data['H5c'],i-1) / annualAverageSolarIrradiance) / 365.0;
-
-  data['shwB-'+i] = (data['shw-'+i] * 3600000) / (4185.5 * data['H13']);
-
-  data['shwC-'+i] = (data['H7'] * 1 * data['H10']* data['H16']) * (solar_rad(data['H5a'],data['H5b'],data['H5c'],i-1) / annualAverageSolarIrradiance) / 365.0;
-
-  data['shwD-'+i] = (data['shwC-'+i] * 3600000) / (4185.5 * data['H13']);
-  data['shwE-'+i] = data['96-'+i] + data['shwD-'+i];
-}
-
-
-data['shwMAX1'] = 1.6 * (data['H7'] * 1 * data['H10']* data['H16']) * (solar_rad(data['H5a'],data['H5b'],data['H5c'],5) / annualAverageSolarIrradiance) / 365.0;
-data['shwMAX2'] = (data['shwMAX1'] * 3600000) / (4185.5 * data['H13']);
-data['shwMAX3'] = data['96-6'] + data['shwMAX2'];
 
 /*
 

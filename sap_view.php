@@ -100,7 +100,8 @@
   if (data==0)
   {
     console.log("No data, using example data");
-    data = {'region':0};
+    data = {'region':0, 'solarcyl':false, 'solardhw':false};
+    
     $('input').each(function()
     {
       var id = $(this).attr('class');
@@ -122,6 +123,9 @@
 
     data = calculate(data);
     for (z in data) {if (z) $('.'+z).val(data[z]);}
+
+  if (data['solardhw']) $("#solardhw-checkbox").attr('checked','checked');
+  if (data['solarcyl']) $("#solarcyl-checkbox").attr('checked','checked');
   }
 
   if (data['heatlossitems']==undefined) data['heatlossitems'] = [];
@@ -139,13 +143,7 @@
       {
         if (z!=id && last[z]!=data[z]) { $("."+z).val(data[z]); $("."+z).attr('readonly', 'readonly');}
       }
-
-      $.ajax({                                      
-        type: "POST",
-        url: path+"sap/save.json",           
-        data: "&data="+encodeURIComponent(JSON.stringify(data)),
-        success: function(msg) {console.log(msg);} 
-      });
+      save();
     }
   });
 
@@ -161,13 +159,40 @@
 
     for (z in data) $("."+z).val(data[z]);
 
-      $.ajax({                                      
-        type: "POST",
-        url: path+"sap/save.json",           
-        data: "&data="+encodeURIComponent(JSON.stringify(data)),
-        success: function(msg) {console.log(msg);} 
-      });
+    save();
   });
+
+  $("#solardhw-checkbox").click(function(){
+    data['solardhw'] = $(this)[0].checked;
+    var last = JSON.parse(JSON.stringify(data));
+    data = calculate(data);
+    for (z in data)
+    {
+      if (last[z]!=data[z]) { $("."+z).val(data[z]); $("."+z).attr('readonly', 'readonly');}
+    }
+    save();
+  });
+
+  $("#solarcyl-checkbox").click(function(){
+    data['solarcyl'] = $(this)[0].checked;
+    var last = JSON.parse(JSON.stringify(data));
+    data = calculate(data);
+    for (z in data)
+    {
+      if (last[z]!=data[z]) { $("."+z).val(data[z]); $("."+z).attr('readonly', 'readonly');}
+    }
+    save();
+  });
+
+  function save()
+  {
+    $.ajax({                                      
+      type: "POST",
+      url: path+"sap/save.json",           
+      data: "&data="+encodeURIComponent(JSON.stringify(data)),
+      success: function(msg) {console.log(msg);} 
+    });
+  }
 
 </script>
 
