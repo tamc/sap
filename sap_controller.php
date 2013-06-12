@@ -21,6 +21,7 @@
 
     if ($route->action == 'save')
     {
+      $result = false;
       $data = null;
       if (isset($_POST['data'])) $data = $_POST['data'];
       if (!isset($_POST['data']) && isset($_GET['data'])) $data = $_GET['data'];
@@ -28,15 +29,14 @@
       if ($data && $data!=null) {
 
         if ($session['write']) {
-          $sap->save($session['userid'],1,$data);
+          $result = $sap->save($session['userid'],1,$data);
         } else {
+          $result = true;
           $data = preg_replace('/[^\w\s-.",:{}\[\]]/','',$data);
           $_SESSION['sapdata'] = $data;
         }
  
       }
-
-      $result = true;
     }
     elseif ($route->action == 'get' && $session['write'])
     {

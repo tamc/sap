@@ -18,23 +18,29 @@ class Sap
         $data = preg_replace('/[^\w\s-.",:{}\[\]]/','',$data);
 
         $data = json_decode($data);
-        $data = json_encode($data);
-        $data = $this->mysqli->real_escape_string($data);
 
+        // Dont save if json_Decode fails
         if ($data!=null) {
 
-        $result = $this->mysqli->query("SELECT `docid` FROM sap WHERE `userid` = '$userid' AND `docid` = '$docid'");
-        $row = $result->fetch_object();
+          $data = json_encode($data);
+          $data = $this->mysqli->real_escape_string($data);
 
-        if (!$row)
-        {
-            $this->mysqli->query("INSERT INTO sap (`userid`, `docid`, `data`) VALUES ('$userid','$docid','$data')");
+          $result = $this->mysqli->query("SELECT `docid` FROM sap WHERE `userid` = '$userid' AND `docid` = '$docid'");
+          $row = $result->fetch_object();
+
+          if (!$row)
+          {
+              $this->mysqli->query("INSERT INTO sap (`userid`, `docid`, `data`) VALUES ('$userid','$docid','$data')");
+          }
+          else
+          {
+              $this->mysqli->query("UPDATE sap SET `data` = '$data' WHERE `userid` = '$userid' AND `docid` = '$docid'");
+          }
+          return true;
         }
         else
         {
-            $this->mysqli->query("UPDATE sap SET `data` = '$data' WHERE `userid` = '$userid' AND `docid` = '$docid'");
-        }
-
+          return false;
         }
     }
 
