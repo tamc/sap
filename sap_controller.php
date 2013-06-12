@@ -23,11 +23,15 @@
     {
       $data = post('data');
 
-      if ($session['write']) {
-        $sap->save($session['userid'],1,$data);
-      } else {
-        $data = preg_replace('/[^\w\s-.",:{}\[\]]/','',$data);
-        $_SESSION['sapdata'] = $data;
+      if ($data && $data!=null && $data!=0) {
+
+        if ($session['write']) {
+          $sap->save($session['userid'],1,$data);
+        } else {
+          $data = preg_replace('/[^\w\s-.",:{}\[\]]/','',$data);
+          $_SESSION['sapdata'] = $data;
+        }
+ 
       }
 
       $result = true;
