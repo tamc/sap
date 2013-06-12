@@ -21,7 +21,9 @@
 
     if ($route->action == 'save')
     {
-      $data = post('data');
+      $data = null;
+      if (isset($_POST['data']) $data = $_POST['data'];
+      if (!isset($_POST['data'] && isset($_GET['data']) $data = $_GET['data'];
 
       if ($data && $data!=null && $data!=0) {
 
