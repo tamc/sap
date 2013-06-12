@@ -328,7 +328,7 @@ data['45'] = 0; for (var i=1; i<13; i++) { data['45'] += data['45-'+i]; }
 for (var i=1; i<13; i++) { data['46-'+i] = 0.15 * data['45-'+i]; }
 
 // Energy lost from water storage, kWh/day
-data['49'] = data['47'] + data['48'];
+data['49'] = data['47'] * data['48'];
 
 // Energy lost from water storage, kWh/day (54) = (50) × (51) × (52) × (53) 
 data['54'] = data['50'] * data['51'] * data['52'] * data['53'];
