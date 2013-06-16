@@ -35,6 +35,7 @@
     table.element = "#solargaintbl";
 
     table.fields = {
+      'name':{'title':"<?php echo _('Name'); ?>", 'type':"text"},
       'orientation':{'title':"<?php echo _('Orientation'); ?>", 'type':"select", 'options':['North','Northeast','East','Southeast','South','Southwest','West','Northwest']},
       //'tag':{'title':"<?php echo _('Group'); ?>", 'type':"text"},
       'area':{'title':"<?php echo _('Area m2'); ?>", 'type':"number", dp:2},
@@ -95,13 +96,14 @@
 
     $("#solargaintbl").bind("onAdd", function(e){
       
+      var aname = $(".addrow[field=name] input").val();
       var orientation = parseInt($(".addrow[field=orientation] select").val());
       var area = parseFloat($(".addrow[field=area] input").val());
       var overshading = parseInt($(".addrow[field=overshading] select").val());
       var g = parseFloat($(".addrow[field=g] input").val());
       var ff = parseFloat($(".addrow[field=ff] input").val());
 
-      table.data.push({orientation:orientation, area:area, overshading:overshading, g:g, ff:ff});
+      table.data.push({'name':aname, orientation:orientation, area:area, overshading:overshading, g:g, ff:ff});
 
       table.draw();
 
